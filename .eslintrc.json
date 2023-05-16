@@ -1,0 +1,86 @@
+{
+    "root": true,
+    "env": {
+      "browser": false,
+      "node": true,
+      "es2021": true,
+      "jest": true
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2016,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-console": "warn",
+      "camelcase": "warn",
+      "arrow-parens": [
+        2,
+        "always"
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "consistent-return": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ],
+      "no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ],
+      "object-curly-newline": "off",
+      "max-params": [
+        "error",
+        4
+      ],
+      "max-lines": [
+        "error",
+        100
+      ],
+      "max-lines-per-function": [
+        "error",
+        {
+          "max": 22,
+          "skipBlankLines": true,
+          "skipComments": true
+        }
+      ],
+      "max-len": [
+        "error",
+        100,
+        {
+          "ignoreComments": true
+        }
+      ],
+      "complexity": [
+        "error",
+        5
+      ],
+      "import/no-extraneous-dependencies": [
+        "off"
+      ],
+      "@typescript-eslint/no-empty-interface": "warn",
+      "@typescript-eslint/lines-between-class-members": [
+        "error",
+        "always",
+        {
+          "exceptAfterSingleLine": true
+        }
+      ]
+    }
+  }
