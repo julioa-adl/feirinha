@@ -6,6 +6,7 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter
-  .post('/', validateUserBody, userController.create);
+  .post('/', validateUserBody, userController.create)
+  .delete('/', userController.delete);
 
 export default userRouter;

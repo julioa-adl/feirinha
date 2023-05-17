@@ -10,6 +10,7 @@ export default class UserController {
     this.service = new UserService();
     this.create = this.create.bind(this);
     this.login = this.login.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   public async create(req: Request, res: Response) {
@@ -43,6 +44,20 @@ export default class UserController {
         message: 'Erro ao fazer solicitação ao banco',
         error: String(err),
       });
+    }
+  }
+
+  public async delete(req: Request, res: Response) {
+    try {
+      const { id } = req.body;
+      const result = await this.service.delete(id);
+      if (result) return res.status(200).json({ 
+        message: `usuário ${result.name} excluido com sucesso`});
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'erro ao deletar usuário',
+        error: String(err),
+      })
     }
   }
 }

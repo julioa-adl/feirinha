@@ -44,4 +44,8 @@ export default class UserService {
       return { type: 404, payload: { token: null } };
     }
   }
+
+  public async delete(id: string) {
+    return await this.model.delete(id)
+  }
 }
