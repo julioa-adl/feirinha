@@ -1,4 +1,4 @@
-import MarketingModel from '../models/Marketing.Models';
+import MarketingModel from '../models/Marketing.Model';
 import Marketing from '../domains/Marketing';
 import IMarket from '../interfaces/IMarket';
 
