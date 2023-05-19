@@ -8,7 +8,7 @@ export default class ProductController {
   constructor() {
     this.service = new ProductService();
     this.create = this.create.bind(this);
-    this.delete = this.delete.bind(this);
+    this.update = this.update.bind(this);
   }
 
   public async create(req: Request, res: Response) {
@@ -27,14 +27,14 @@ export default class ProductController {
     }
   }
 
-  public async delete(req: Request, res: Response) {
+  public async update(req: Request, res: Response) {
     try {
-      const { id } = req.body;
-      const result = await this.service.delete(id);
-      return res.status(200).json({ message: `${result} excluido com sucesso`});
+      const { id, ...obj } = req.body;
+      const result = await this.service.update(id, obj);
+      return res.status(200).json({ message: `${result?.name} atualizado`});
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'erro ao deletar produto',
+        message: 'erro ao atualizar produto',
         error: String(err),
       })
     }

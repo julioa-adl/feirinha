@@ -6,6 +6,6 @@ const productController = new ProductController();
 
 productRouter
   .post('/', productController.create)
-  .delete('/', productController.delete)
+  .put('/', productController.update)
 
 export default productRouter;

@@ -21,7 +21,7 @@ export default class ProductService {
     return { type: null, message: `Product ${newProduct.name} successfuly registered`};
   }
 
-  public async delete(id: string) {
-    return await this.model.delete(id)
+  public async update(id: string, obj: object) {
+    return await this.model.update(id, obj)
   }
 }
