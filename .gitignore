@@ -2,4 +2,4 @@ node_modules
 
 env
 
-jwt.evaluation
+jwt.evaluation.key
