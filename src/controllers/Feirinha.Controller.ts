@@ -8,6 +8,7 @@ export default class FeirinhaController {
   constructor() {
     this.service = new FeirinhaService();
     this.create = this.create.bind(this);
+    this.getAll = this.getAll.bind(this);
   }
 
   public async create(req: Request, res: Response) {
@@ -21,6 +22,19 @@ export default class FeirinhaController {
     } catch(err: unknown) {
       return res.status(500).json({
         message: 'erro ao registrar feirinha',
+        error: String(err),
+      });
+    }
+  }
+
+  public async getAll(_req: Request, res: Response) {
+    try {
+      const { type, message } = await this.service.getAll();
+      if (!type) return res.status(200).json( message );
+      return res.status(type).json({ message });
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'erro ao buscar no banco',
         error: String(err),
       });
     }
