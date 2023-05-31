@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import IMarket from '../interfaces/IMarket';
-import MarketingService from '../services/Marketing.Service';
+import MarketService from '../services/Market.Service';
 
-export default class MarketingController {
-  public service: MarketingService;
+export default class MarketController {
+  public service: MarketService;
 
   constructor() {
-    this.service = new MarketingService();
+    this.service = new MarketService();
     this.create = this.create.bind(this);
     this.delete = this.delete.bind(this);
   }
 
   public async create(req: Request, res: Response) {
     try {
-      const name: IMarket = req.body;
-      const { type, message } = await this.service.create(name);
+      const marketInformation: IMarket = req.body;
+      const { type, message } = await this.service.create(marketInformation);
       if (type) {
         return res.status(type).json({ message });
       }
