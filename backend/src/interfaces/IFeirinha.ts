@@ -1,13 +1,13 @@
 export interface IList {
-  productId: string,
-  quantity: string,
-  price: string,
+  productId: number,
+  quantity: number,
+  price: number,
 }
 
 export interface IFeirinha {
-  id?: string,
-  userId: string,
-  marketId: string,
+  id?: number,
+  userId: number,
+  marketId: number,
   listCart: IList[],
   date: Date,
 }

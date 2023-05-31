@@ -1,4 +1,4 @@
 export default interface IMarket {
-  id?: string,
+  id?: number,
   name: string,
 }
