@@ -1,4 +1,4 @@
-# My Awesome Project
+# PROJECT FEIRINHA
 
 # Contexto
 Este projeto trata-se de uma Aplicação FullStack para Listar, Organizar, Precificar e Acompanhar suas Listas de Feiras em Super-mercados.
