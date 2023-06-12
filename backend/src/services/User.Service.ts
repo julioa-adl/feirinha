@@ -15,14 +15,14 @@ export default class UserService {
   }
 
   public async create(user: IUser) {
-    const { name, email, password } = user;
+    const { name, email, password, birthday, role } = user;
 
     const existingUser = await this.model.findOne({email: email});
     if (existingUser) return { type: 409, payload: { token: null } };
 
     const saltRounds = 10;
     const validPwd = await bcrypt.hash(password, saltRounds);
-    const newUser = await this.model.create({ name, email, password: validPwd });
+    const newUser = await this.model.create({ name, email, password: validPwd, birthday, role });
 
     const { password: _password, ...userWithoutPassword } = newUser;
     const token = createToken(userWithoutPassword);

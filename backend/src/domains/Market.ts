@@ -8,12 +8,12 @@ export default class Market {
   protected city: string;
   protected state: string;
 
-  constructor(marketing: IMarket) {
-    this.id = marketing.id;
-    this.name = marketing.name;
-    this.address = marketing.address;
-    this.neighborhood = marketing.neighborhood;
-    this.city = marketing.city;
-    this.state = marketing.state;
+  constructor(market: IMarket) {
+    this.id = market.id;
+    this.name = market.name;
+    this.address = market.address;
+    this.neighborhood = market.neighborhood;
+    this.city = market.city;
+    this.state = market.state;
   }
 }

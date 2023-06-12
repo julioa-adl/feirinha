@@ -14,7 +14,8 @@ export default class MarketService {
   public async create(market: IMarket) {
     const { name, address, neighborhood, city, state } = market;
 
-    const existingMarket = await this.model.findOne({name: name});
+    const existingMarket = await this.model.findOne(
+      {name: name, address: address, neighborhood: neighborhood});
     if (existingMarket) return { type: 409, message: 'Marketing alredy register'};
 
     const newMarket = await this.model.create({ name, address, neighborhood, city, state });

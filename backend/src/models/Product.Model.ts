@@ -8,6 +8,8 @@ export default class ProductModel extends AbstractODM<IProduct> {
       name: { type: String, required: true },
       category: { type: String, required: true },
       code: { type: String, required: true },
+      unitMeasure: { type: String, required: true },
+      size: { type: Number, required: true },
     })
     super(schema, 'Product')
   }
