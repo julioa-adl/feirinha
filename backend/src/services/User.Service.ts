@@ -14,6 +14,14 @@ export default class UserService {
     return null;
   }
 
+  public async getUsers() {
+    const allUsers = await this.model.findAll();
+    if (!allUsers) return { type: 404, payload: { token: null } };
+
+    const listUsers = allUsers.map((user) => user.name);
+    return { type: null, payload: listUsers };
+  }
+
   public async create(user: IUser) {
     const { name, email, password, birthday, role } = user;
 
@@ -24,8 +32,9 @@ export default class UserService {
     const validPwd = await bcrypt.hash(password, saltRounds);
     const newUser = await this.model.create({ name, email, password: validPwd, birthday, role });
 
-    const { password: _password, ...userWithoutPassword } = newUser;
-    const token = createToken(userWithoutPassword);
+    newUser.password = ''
+
+    const token = createToken(newUser);
     return { type: null, payload: { token } };
   }
 
@@ -37,15 +46,19 @@ export default class UserService {
 
     const match = await bcrypt.compare(password, existingUser.password);
     if (match) {
-      const { password: _password, ...userWithoutPassword } = existingUser;
-      const token = createToken(userWithoutPassword);
+      existingUser.password = '';
+      const token = createToken(existingUser);
       return { type: null, payload: { token } };
     } else {
       return { type: 404, payload: { token: null } };
     }
   }
 
-  public async delete(id: string) {
+  public async update(id: string, obj: object) {
+    return await this.model.update(id, obj)
+  }
+
+  public async deleteUser(id: string) {
     return await this.model.delete(id)
   }
 }

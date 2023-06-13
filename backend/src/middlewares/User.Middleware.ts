@@ -1,10 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
+import { verifyToken } from '../auth/jwtFunctions';
 
-const validateUserBody = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.name) return res.status(400).json({ message: 'Body needs a name key' });
-  if (!req.body.email) return res.status(400).json({ message: 'Body needs an email key' });
-  if (!req.body.password) return res.status(400).json({ message: 'Body needs a password' });
+const condition = (a: string, b: string, c: string, d: string) => a && b && c && d;
+
+const validateToken = async (req: Request, res: Response, next: NextFunction) => {
+  const verify = await verifyToken(req.headers.authorization);
+  if (!condition(verify.id, verify.name, verify.email, verify.role)) { 
+    return res.status(401).json({ error: 'Invalid token!' }); 
+  }
   next();
 };
 
-export default validateUserBody;
+// const validateUserUpdate = async (req: Request, res: Response, next: NextFunction) => {
+//   const verify = await verifyToken(req.headers.authorization);
+//   if (verify.) { 
+//     return res.status(401).json({ error: 'Invalid token!' }); 
+//   }
+//   next();
+// };
+
+export default {
+  validateToken,
+}

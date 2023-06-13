@@ -8,10 +8,27 @@ export default class UserController {
 
   constructor() {
     this.service = new UserService();
+    this.getUsers = this.getUsers.bind(this);
     this.create = this.create.bind(this);
     this.login = this.login.bind(this);
+    this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
   }
+
+  public async getUsers(_req: Request, res: Response) {
+    try {
+      const { type, payload } = await this.service.getUsers();
+      if (type) {
+        return res.status(404).json({ message: 'No Users Returned' }); 
+      } 
+      return res.status(200).json(payload);
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'Erro ao buscar usuário no banco',
+        error: String(err),
+      });
+    }
+  } 
 
   public async create(req: Request, res: Response) {
     try {
@@ -47,10 +64,23 @@ export default class UserController {
     }
   }
 
+  public async update(req: Request, res: Response) {
+    try {
+      const {id, ...obj} = req.body;
+      const result = await this.service.update(id, obj);
+      return res.status(200).json({ message: `Usuário ${result?.name} atualizado`});
+    } catch(err: unknown) {
+      return res.status(500).json({
+        message: 'erro ao atualizar usuario',
+        error: String(err),
+      })
+    }
+  }
+
   public async delete(req: Request, res: Response) {
     try {
       const { id } = req.body;
-      const result = await this.service.delete(id);
+      const result = await this.service.deleteUser(id);
       if (result) return res.status(200).json({ 
         message: `usuário ${result.name} excluido com sucesso`});
     } catch(err: unknown) {
