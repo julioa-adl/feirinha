@@ -80,6 +80,10 @@ export default class UserController {
   public async delete(req: Request, res: Response) {
     try {
       const { id } = req.body;
+      const findUser = await this.service.getById(id);
+      if (!findUser) return;
+      if (findUser.role === 'Super') return res.status(400).json({
+        message: 'Usuário SUper não pode ser Deletado!'})
       const result = await this.service.deleteUser(id);
       if (result) return res.status(200).json({ 
         message: `usuário ${result.name} excluido com sucesso`});

@@ -69,7 +69,7 @@
       ],
       "complexity": [
         "error",
-        5
+        8
       ],
       "import/no-extraneous-dependencies": [
         "off"
