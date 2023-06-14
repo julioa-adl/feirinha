@@ -67,6 +67,10 @@ export default class UserController {
   public async update(req: Request, res: Response) {
     try {
       const {id, ...obj} = req.body;
+      const findUser = await this.service.getById(id);
+      if (!findUser) return;
+      if (findUser.role === 'Super' && obj.role) return res.status(400).json({
+        message: 'Role de Super não pode ser Alterada!'})
       const result = await this.service.update(id, obj);
       return res.status(200).json({ message: `Usuário ${result?.name} atualizado`});
     } catch(err: unknown) {

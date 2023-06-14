@@ -26,6 +26,7 @@ export default class UserService {
     const listUsers = allUsers.map((user) => ({
       id: user.id,
       name: user.name,
+      email: user.email,
       role: user.role
     }));
     return { type: null, payload: listUsers };

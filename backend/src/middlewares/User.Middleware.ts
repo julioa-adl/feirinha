@@ -14,14 +14,16 @@ const validateToken = async (req: Request, res: Response, next: NextFunction) =>
 const validateUserUpdate = async (req: Request, res: Response, next: NextFunction) => {
   const { id, role } = req.body;
   const verify = await verifyToken(req.headers.authorization);
-  if (role === 'Super') return res.status(401).json({ error: 'Super is Lock for Changes' });
+  if (role === 'Super') {
+    return res.status(400).json({ error: 'Não autorizado, Só pode haver 1 Super' }); 
+  }
   if (role && verify.role !== 'Super') {
-    return res.status(401).json({ error: 'No autorized!' }); 
+    return res.status(401).json({ error: 'Só o Super pode designar Roles' }); 
   }
   if (verify._id === id || verify.role === 'Admin' || verify.role === 'Super') { 
     return next();
   }
-  return res.status(401).json({ error: 'No autorized!' }); 
+  return res.status(401).json({ error: 'Somente pessoal autorizado pode autializar' });
 };
 
 const validateRegister = async (req: Request, res: Response, next: NextFunction) => {
