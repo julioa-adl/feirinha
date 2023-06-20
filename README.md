@@ -54,3 +54,42 @@ npm install
   ```
     npm test
   ```
+
+# Requisitos do Projeto
+
+## Rota USER
+```
+01 - POST - Criar novos Usuários:
+  name: string,
+  email: string,
+  password: string: Salvo no BD com criptografia.
+  birthday: string,
+  role: string: a Role padrão será USER, só quem pode criar ADMINS é o SUPER.
+
+  O SUPER é auto-criado ao inserir o primeiro USER.
+
+02 - POST - Login:
+  email: string,
+  password: string.
+
+  Gera Token e salva nos Headers da requisiçao.
+
+03 - PUT - Atualiza informações dos usuários:
+  O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
+  Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
+  Só o SUPER pode dar ADMINs.
+
+04 - DELETE - Deletar Usuários:
+  O SUPER pode deletar todos menos a si mesmo.
+  Os ADMINs podem deletar os USERs e outros ADMINs.
+  Os USERs podem apenas se DELETAR, mas não a outros USERS.
+```
+
+
+{
+  "name": "julio adler",
+  "email": "julio@example.com",
+  "password": "123456",
+  "birthday": "01-01-2000",
+  "role": "User"
+}
