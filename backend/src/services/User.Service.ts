@@ -61,6 +61,7 @@ export default class UserService {
     newUser.password = '';
 
     const token = createToken(newUser);
+    // const token = newUser;
     return { type: null, payload: { token } };
   }
 

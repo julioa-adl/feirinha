@@ -1,7 +1,7 @@
 import IUser from '../interfaces/IUser';
 
 export default class User {
-  protected id?: number | undefined;
+  protected id?: string | undefined;
   protected name: string;
   protected email: string;
   protected password: string;
