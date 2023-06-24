@@ -10,6 +10,7 @@
     "test": "mocha -r ts-node/register tests/**/**/*.test.js --exit -t 60000",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration --runInBand ",
+    "db:reset": "docker exec feirinha_db mongo --eval feirinha.dropDatabase",
     "lint": "eslint . --ext .ts",
     "dev": "ts-node-dev src/server.ts",
     "prestart": "npm run build",

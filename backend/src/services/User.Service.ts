@@ -31,14 +31,14 @@ export default class UserService {
     }));
     return { type: null, payload: listUsers };
   }
-
+  
   public async firstUser() {
-    const superUser = {
-      name: 'Super',
-      email: 'julioader@gmail.com',
-      password: '$2b$10$gb0VWzCVlkyawResekje5e56.HVL0QFCvuLqnuy7Tw5ROyO72K19e',
-      birthday: '11-12-1994',
-      role: 'Super'
+    const superUser: IUser = {
+      name: process.env.USER_SUPER_NAME || 'Super',
+      email: process.env.USER_SUPER_EMAIL || 'super@example.com',
+      password: process.env.USER_SUPER_PASS || 'super_pass',
+      birthday: process.env.USER_SUPER_BTHD || '00-00-0000',
+      role: process.env.USER_SUPER_ROLE || 'Super',
     }
     const allUsers = await this.model.findAll();
     if (allUsers.length === 0) {
@@ -61,7 +61,6 @@ export default class UserService {
     newUser.password = '';
 
     const token = createToken(newUser);
-    // const token = newUser;
     return { type: null, payload: { token } };
   }
 
