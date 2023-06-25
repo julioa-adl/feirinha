@@ -64,107 +64,152 @@ npm install
 
 <details><summary>Rota USER</summary>
 
-> 01 - POST /user - Criar novos Usuários:
-``` {
-  "name": "string",
-  "email": "string",
-  "password": "string",
-  "birthday": "string",
-  "role": "string"
-}
-```
 
-  - O SUPER é auto-criado ao inserir o primeiro USER.
+  > 01 - POST /user - Criar novos Usuários:
+  <details><summary>Funcionalidades - POST /user</summary>
 
-> 02 - POST /login - Fazer login:
-``` {
-  "email": "string",
-  "password": "string"
-}
-```
+  ``` 
+  {
+    "name": "string",
+    "email": "string",
+    "password": "string",
+    "birthday": "string",
+    "role": "string"
+  }
+  ```
 
-  - Gera Token e salva nos Headers da requisiçao.
+    - O SUPER é auto-criado ao inserir o primeiro USER.
+  </details>
 
-> 03 - PUT /user - Atualiza informações dos usuários:
-``` {
-  "id": "String",
-  "...": "..."
-}
-```
-  - Basta passar o ID do usuário e as informações que você quer alterar.
-  - O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
-  - Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
-  - Só o SUPER pode dar ADMINs.
+  > 02 - POST /login - Fazer login:
+  <details><summary>Funcionalidades - POST /login</summary>
 
-> 04 - DELETE /user - Deletar Usuários:
-``` {
-  "id": "String"
-}
-```
+  ``` 
+  {
+    "email": "string",
+    "password": "string"
+  }
+  ```
 
-  - O SUPER pode deletar todos menos a si mesmo.
-  - Os ADMINs podem deletar os USERs e outros ADMINs.
-  - Os USERs podem apenas se DELETAR, mas não a outros USERS.
+    - Gera Token e salva nos Headers da requisiçao.
+  </details>
 
-> 05 - GET /user - puxa algumas informações dos usuários:
+  > 03 - PUT /user - Atualiza informações dos usuários:
+  <details><summary>Funcionalidades - PUT /user</summary>
 
-retorno: {
-  id: String,
-  name: String,
-  email: String,
-  role: String
-}
+  ``` 
+  {
+    "id": "String",
+    "...": "..."
+  }
+  ```
+    - Basta passar o ID do usuário e as informações que você quer alterar.
+    - O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
+    - Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
+    - Só o SUPER pode dar ADMINs.
+  </details>
 
-  - Apenas Admins e Super podem listar usuários.
+  > 04 - DELETE /user - Deletar Usuários:
+  <details><summary>Funcionalidades - DELETE /user</summary>
+
+  ``` 
+  {
+    "id": "String"
+  }
+  ```
+
+    - O SUPER pode deletar todos menos a si mesmo.
+    - Os ADMINs podem deletar os USERs e outros ADMINs.
+    - Os USERs podem apenas se DELETAR, mas não a outros USERS.
+  </details>
+
+  > 05 - GET /user - puxa algumas informações dos usuários:
+  <details><summary>Funcionalidades - GET /user</summary>
+
+  retorno: 
+  ```
+  [
+    {
+      "id": "String",
+      "name": "String",
+      "email": "String",
+      "role": "String"
+    },
+    {
+      "..."
+    }
+  ]
+  ```
+
+    - Apenas Admins e Super podem listar usuários.
+  </details>
 </details>
 
 <details><summary>Rota PRODUCT</summary>
 
-> 01 - POST /product - Cadastrar um novo produto:
+  > 01 - POST /product - Cadastrar um novo produto:
+  <details><summary>Funcionalidades - POST /product</summary>
 
-``` {
-  "name": "string",
-  "subName": "string,
-  "manufacturer": "string",
-  "category": "string",
-  "code": "string",
-  "unitMeasure": "string",
-  "size": "number",
-  "image": "string"
-}
-```
-  - O name deve vir com a descrição genérica ex: 'Macarrão'.
-  - O subName deve ser uma descrição mais detalhada ex: 'Espaguete'.
-  - A imagem deve vir a rota de onde ela foi salva.
-  - Qualquer pessoa pode cadastrar um novo produto.
-  - o Código de barras será lido pelo front e automáticamente mandado para o backend.
+  ``` 
+  {
+    "name": "string",
+    "subName": "string,
+    "manufacturer": "string",
+    "category": "string",
+    "code": "string",
+    "unitMeasure": "string",
+    "size": "number",
+    "image": "string"
+  }
+  ```
+    - O name deve vir com a descrição genérica ex: 'Macarrão'.
+    - O subName deve ser uma descrição mais detalhada ex: 'Espaguete'.
+    - A imagem deve vir a rota de onde ela foi salva.
+    - Qualquer pessoa pode cadastrar um novo produto.
+    - o Código de barras será lido pelo front e automáticamente mandado para o backend.
+  </details>
 
-> 02 - PUT /products - atualizar um produto:
-```
-"id": "String",
-"...": "..."
-```
-  - Basta passar o ID do produto e as informações que quer alterar.
+  > 02 - PUT /products - atualizar um produto:
+  <details><summary>Funcionalidades - PUT /products</summary>
 
-> 03 - GET /product - puxa todos os produtos:
+  ```
+  {
+  "id": "String",
+  "...": "..."
+  }
+  ```
+    - Basta passar o ID do produto e as informações que quer alterar.
+  </details>
 
-retorno: {
-  id: String,
-  name: String,
-  subName: String,
-  manufacturer: String,
-  category: String,
-  code: String,
-  unitMeasure: String,
-  size: Number,
-  image: String
-}
+  > 03 - GET /product - puxa todos os produtos:
+  <details><summary>Funcionalidades - GET /product</summary>
 
-> 04 - DELETE /product - deleta um produto do banco:
-``` {
-  "id": "String"
-}
-```
-  - Apenas Admins e Super podem deletar produtos.
-  
+  retorno: 
+  ```
+  [
+    {
+      "id": "String",
+      "name": "String",
+      "subName": "String",
+      "manufacturer": "String",
+      "category": "String",
+      "code": "String",
+      "unitMeasure": "String",
+      "size": "Number",
+      "image": "String"
+    }
+  ]
+  ```
+  </details>
+
+  > 04 - DELETE /product - deleta um produto do banco:
+  <details><summary>Funcionalidades - DELETE /product</summary>
+
+  ``` 
+  {
+    "id": "String"
+  }
+  ```
+    - Apenas Admins e Super podem deletar produtos.
+  </details>
 </details>
