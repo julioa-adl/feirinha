@@ -55,6 +55,9 @@ npm install
     npm test
   ```
 
+# Estrutura de Dados no Mongo
+![Estrutura de Dados](./backend/bd-feirinha.png)
+
 # Requisitos do Projeto
 
 <details><summary>Requisitos e funcionalidades do Back-End</summary>
@@ -96,7 +99,7 @@ npm install
 
   - Apenas Admins e Super podem listar usuários.
 
-## Rota USER
+## Rota PRODUCT
 
 > 01 - POST /product - Cadastrar um novo produto:
 
