@@ -57,6 +57,8 @@ npm install
 
 # Requisitos do Projeto
 
+<details><summary>BackEnd</summary>
+
 ## Rota USER
 
 > 01 - POST /user - Criar novos Usuários:
@@ -105,3 +107,5 @@ npm install
   - A imagem deve vir a rota de onde ela foi salva.
   - Qualquer pessoa pode cadastrar um novo produto.
   - o Código de barras será lido pelo front e automáticamente mandado para o backend.
+
+  </details>
