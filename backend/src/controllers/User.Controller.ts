@@ -24,8 +24,7 @@ export default class UserController {
       return res.status(200).json(payload);
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'Erro ao buscar usuário no banco',
-        error: String(err),
+        message: 'Erro ao buscar usuário no banco', error: String(err),
       });
     }
   } 
@@ -40,8 +39,7 @@ export default class UserController {
       return res.status(201).json({ token });
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'Erro ao criar usuário no banco',
-        error: String(err),
+        message: 'Erro ao criar usuário no banco', error: String(err),
       });
     }
   }
@@ -58,8 +56,7 @@ export default class UserController {
       return res.status(200).json({ token });
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'Erro ao fazer solicitação ao banco',
-        error: String(err),
+        message: 'Erro ao fazer solicitação ao banco', error: String(err),
       });
     }
   }
@@ -75,8 +72,7 @@ export default class UserController {
       return res.status(200).json({ message: `Usuário ${result?.name} atualizado`});
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'erro ao atualizar usuario',
-        error: String(err),
+        message: 'erro ao atualizar usuario', error: String(err),
       })
     }
   }
@@ -87,14 +83,13 @@ export default class UserController {
       const findUser = await this.service.getById(id);
       if (!findUser) return;
       if (findUser.role === 'Super') return res.status(400).json({
-        message: 'Usuário SUper não pode ser Deletado!'})
+        message: 'Usuário Super não pode ser Deletado!'})
       const result = await this.service.deleteUser(id);
       if (result) return res.status(200).json({ 
         message: `usuário ${result.name} excluido com sucesso`});
     } catch(err: unknown) {
       return res.status(500).json({
-        message: 'erro ao deletar usuário',
-        error: String(err),
+        message: 'erro ao deletar usuário', error: String(err),
       })
     }
   }
