@@ -1,7 +1,7 @@
 // tsconfig.json
 {
   "compilerOptions": {
-    "target": "es2016",                                 
+    "target": "es2019",                                 
     "module": "commonjs",                               
     "rootDir": "./",
     "outDir": "./dist",                                
@@ -10,20 +10,16 @@
     "types": [
       "@types/jest",
     ],
-		// "paths": { // path mapping
-		// 	"@controllers/*": ["./src/controllers/*"],
-		// 	"@services/*": ["./src/controllers/*"],
-		// 	"@models/*": ["./src/models/*"],
-		// 	"@errors/*": ["./src/errors/"]
-		// },
+    "typeRoots": [
+      "src/@types",
+      "./node_modules/@types"
+    ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
   },
-  "exclude": ["./dist"],
-  "include": [
-    "src/**/*"
-  ]
+  "exclude": ["./dist", "node_modules"],
+  "include": ["src/**/*"]
 }

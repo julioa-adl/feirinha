@@ -19,7 +19,7 @@ export default class FeirinhaService {
 
   public async getAll() {
     const search = await this.model.findAll();
-    if (!search) return { type: 404, message: 'nenhuma feinha encontrada' };
+    if (!search) return { type: 404, message: 'nenhuma feirinha encontrada' };
     return { type: null, message: search };
   }
 }

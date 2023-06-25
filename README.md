@@ -54,3 +54,54 @@ npm install
   ```
     npm test
   ```
+
+# Requisitos do Projeto
+
+## Rota USER
+
+> 01 - POST /user - Criar novos Usuários:
+```
+  name: string,
+  email: string,
+  password: string,
+  birthday: string,
+  role: string
+```
+
+  - O SUPER é auto-criado ao inserir o primeiro USER.
+
+> 02 - POST /login - Fazer login:
+  email: string,
+  password: string.
+
+  - Gera Token e salva nos Headers da requisiçao.
+
+> 03 - PUT /user - Atualiza informações dos usuários:
+  - O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
+  - Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
+  - Só o SUPER pode dar ADMINs.
+
+> 04 - DELETE /user - Deletar Usuários:
+  - O SUPER pode deletar todos menos a si mesmo.
+  - Os ADMINs podem deletar os USERs e outros ADMINs.
+  - Os USERs podem apenas se DELETAR, mas não a outros USERS.
+
+## Rota USER
+
+> 01 - POST /product - Cadastrar um novo produto:
+
+```
+  name: string,
+  subName: string,
+  manufacturer: string,
+  category: string,
+  code: string,
+  unitMeasure: string,
+  size: number,
+  image: string,
+```
+  - O name deve vir com a descrição genérica ex: 'Macarrão'.
+  - O subName deve ser uma descrição mais detalhada ex: 'Espaguete'.
+  - A imagem deve vir a rota de onde ela foi salva.
+  - Qualquer pessoa pode cadastrar um novo produto.
+  - o Código de barras será lido pelo front e automáticamente mandado para o backend.
