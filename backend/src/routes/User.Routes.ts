@@ -6,7 +6,7 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter
-  .get('/', userController.getUsers)
+  .get('/', mdws.validAdmin, userController.getUsers)
   .post('/', mdws.validateRegister, userController.create)
   .put('/', mdws.validateToken, mdws.validateUserUpdate, userController.update)
   .delete('/', mdws.validateToken, mdws.validateUserUpdate,userController.delete);

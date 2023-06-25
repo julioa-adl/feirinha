@@ -57,7 +57,7 @@ npm install
 
 # Requisitos do Projeto
 
-<details><summary>BackEnd</summary>
+<details><summary>Requisitos e funcionalidades do Back-End</summary>
 
 ## Rota USER
 
@@ -88,6 +88,14 @@ npm install
   - Os ADMINs podem deletar os USERs e outros ADMINs.
   - Os USERs podem apenas se DELETAR, mas não a outros USERS.
 
+> 05 - GET /user - puxa algumas informações dos usuários:
+  id: String,
+  name: String,
+  email: String,
+  role: String
+
+  - Apenas Admins e Super podem listar usuários.
+
 ## Rota USER
 
 > 01 - POST /product - Cadastrar um novo produto:
@@ -107,5 +115,7 @@ npm install
   - A imagem deve vir a rota de onde ela foi salva.
   - Qualquer pessoa pode cadastrar um novo produto.
   - o Código de barras será lido pelo front e automáticamente mandado para o backend.
+
+> 02 - 
 
   </details>

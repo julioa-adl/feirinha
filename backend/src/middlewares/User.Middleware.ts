@@ -40,8 +40,26 @@ const validateRegister = async (req: Request, res: Response, next: NextFunction)
   next();
 };
 
+const validSuper = async (req: Request, res: Response, next: NextFunction) => {
+  const verify = await verifyToken(req.headers.authorization);
+  if (verify.role === 'Super') {
+    return next();
+  }
+  return res.status(401).json({ error: 'YOU HAVE NO POWER HERE' });
+}
+
+const validAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  const verify = await verifyToken(req.headers.authorization);
+  if (verify.role === 'Admin' || verify.role === 'Super') {
+    return next();
+  }
+  return res.status(401).json({ error: 'YOU HAVE NO POWER HERE' });
+}
+
 export default {
   validateToken,
   validateUserUpdate,
   validateRegister,
+  validSuper,
+  validAdmin,
 }
