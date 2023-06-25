@@ -58,38 +58,50 @@ npm install
 # Requisitos do Projeto
 
 ## Rota USER
+
+> 01 - POST /user - Criar novos Usuários:
 ```
-01 - POST - Criar novos Usuários:
   name: string,
   email: string,
-  password: string: Salvo no BD com criptografia.
+  password: string,
   birthday: string,
-  role: string: a Role padrão será USER, só quem pode criar ADMINS é o SUPER.
+  role: string
+```
 
-  O SUPER é auto-criado ao inserir o primeiro USER.
+  - O SUPER é auto-criado ao inserir o primeiro USER.
 
-02 - POST - Login:
+> 02 - POST /login - Fazer login:
   email: string,
   password: string.
 
-  Gera Token e salva nos Headers da requisiçao.
+  - Gera Token e salva nos Headers da requisiçao.
 
-03 - PUT - Atualiza informações dos usuários:
-  O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
-  Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
-  Só o SUPER pode dar ADMINs.
+> 03 - PUT /user - Atualiza informações dos usuários:
+  - O usuário SUPER só pode ser editado por ele mesmo | Impossível mudar a ROLE do SUPER.
+  - Os USERs não podem mudar suas próprias ROLEs, apenas informações pessoais.
+  - Só o SUPER pode dar ADMINs.
 
-04 - DELETE - Deletar Usuários:
-  O SUPER pode deletar todos menos a si mesmo.
-  Os ADMINs podem deletar os USERs e outros ADMINs.
-  Os USERs podem apenas se DELETAR, mas não a outros USERS.
+> 04 - DELETE /user - Deletar Usuários:
+  - O SUPER pode deletar todos menos a si mesmo.
+  - Os ADMINs podem deletar os USERs e outros ADMINs.
+  - Os USERs podem apenas se DELETAR, mas não a outros USERS.
+
+## Rota USER
+
+> 01 - POST /product - Cadastrar um novo produto:
+
 ```
-
-
-{
-  "name": "julio adler",
-  "email": "julio@example.com",
-  "password": "123456",
-  "birthday": "01-01-2000",
-  "role": "User"
-}
+  name: string,
+  subName: string,
+  manufacturer: string,
+  category: string,
+  code: string,
+  unitMeasure: string,
+  size: number,
+  image: string,
+```
+  - O name deve vir com a descrição genérica ex: 'Macarrão'.
+  - O subName deve ser uma descrição mais detalhada ex: 'Espaguete'.
+  - A imagem deve vir a rota de onde ela foi salva.
+  - Qualquer pessoa pode cadastrar um novo produto.
+  - o Código de barras será lido pelo front e automáticamente mandado para o backend.
