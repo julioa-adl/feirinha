@@ -62,8 +62,7 @@ npm install
 
 ## Requisitos e funcionalidades do Back-End
 
-<details><summary>Rota USER</summary>
-
+## Rota USER
 
   > 01 - POST /user - Criar novos Usuários:
   <details><summary>Funcionalidades - POST /user</summary>
@@ -143,9 +142,8 @@ npm install
 
     - Apenas Admins e Super podem listar usuários.
   </details>
-</details>
 
-<details><summary>Rota PRODUCT</summary>
+## Rota PRODUCT
 
   > 01 - POST /product - Cadastrar um novo produto:
   <details><summary>Funcionalidades - POST /product</summary>
@@ -212,4 +210,3 @@ npm install
   ```
     - Apenas Admins e Super podem deletar produtos.
   </details>
-</details>
