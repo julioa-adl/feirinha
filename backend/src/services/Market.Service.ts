@@ -11,6 +11,13 @@ export default class MarketService {
     return null;
   }
 
+  public async getAll() {
+    const allMarket = await this.model.findAll();
+    if (!allMarket) return { type: 404, payload: { token: null } };
+
+    return { type: null, payload: allMarket };
+  }
+
   public async create(market: IMarket) {
     const { name, address, neighborhood, city, state } = market;
 
@@ -20,6 +27,10 @@ export default class MarketService {
 
     const newMarket = await this.model.create({ name, address, neighborhood, city, state });
     return { type: null, message: `Marketing ${newMarket.name} successfully registered`};
+  }
+
+  public async update(id: string, obj: object) {
+    return await this.model.update(id, obj)
   }
 
   public async delete(id: string) {
