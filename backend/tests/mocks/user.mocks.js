@@ -55,6 +55,7 @@ const tokenUserMock = {
 
 const noPasswordLoginBody = { email: userOutPut.email, password: '' };
 const noEmailLoginBody = { email: '', password: userOutPut.password };
+const okayUserLogin = { email: userOutPut.email, password: userOutPut.password };
 
 
 export {
@@ -66,4 +67,5 @@ export {
   mockPayloadSuper,
   tokenSuperMock,
   tokenUserMock,
+  okayUserLogin,
 }
