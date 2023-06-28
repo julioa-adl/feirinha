@@ -19,6 +19,7 @@ const userOutPut = {
 
 const mockPayload = {
   'data': {
+    '_id': 'a1b2c3d4e5f6g7h8i9',
     'name': 'example',
     'email': 'example@example.com',
     'password': '',
@@ -53,6 +54,20 @@ const tokenUserMock = {
   authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJleGFtcGxlIiwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwicGFzc3dvcmQiOiIiLCJiaXJ0aGRheSI6IjAxLTAxLTIwMDAiLCJyb2xlIjoiVXNlciIsIl9pZCI6IjY0OTYyYjU5NWY3MGQwNTdjNTgwMGE2MiIsIl9fdiI6MH0sImlhdCI6MTY4NzU2MzA5NywiZXhwIjoxNjg4MTY3ODk3fQ.N7jZNWTQmNUFSP_oEGR37yw-Y5lUdE3bnXVwf46Ayso'
 }
 
+const payLoadTokenUser = {
+  'data': {
+    'name': 'example',
+    'email': 'example@example.com',
+    'password': '',
+    'birthday': '01-01-2000',
+    'role': 'User',
+    '_id': '64962b595f70d057c5800a62',
+    '__v': 0
+  },
+  'iat': 1687563097,
+  'exp': 1688167897
+}
+
 const noPasswordLoginBody = { email: userOutPut.email, password: '' };
 const noEmailLoginBody = { email: '', password: userOutPut.password };
 const okayUserLogin = { email: userOutPut.email, password: userOutPut.password };
@@ -68,4 +83,5 @@ export {
   tokenSuperMock,
   tokenUserMock,
   okayUserLogin,
+  payLoadTokenUser,
 }

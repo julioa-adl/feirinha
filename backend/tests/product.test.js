@@ -15,7 +15,7 @@ import {
 describe('Product - Testando a Rota /product', function () { 
   beforeEach(function () { sinon.restore(); });
 
-  it('1 - /product ao não receber um name, retorne um erro', async () => {
+  it('1 - post /product product ao não receber um name, retorne um erro', async () => {
       sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
       sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -27,7 +27,7 @@ describe('Product - Testando a Rota /product', function () {
       expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('2 - /product ao não receber um subName, retorne um erro', async () => {
+  it('2 - post /product product ao não receber um subName, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -39,7 +39,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('3 - /product ao não receber um manufacturer, retorne um erro', async () => {
+  it('3 - post /product product ao não receber um manufacturer, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -51,7 +51,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('4 - /product ao não receber uma category, retorne um erro', async () => {
+  it('4 - post /product product ao não receber uma category, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -63,7 +63,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('5 - /product ao não receber um code, retorne um erro', async () => {
+  it('5 - post /product product ao não receber um code, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -75,7 +75,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('6 - /product ao não receber um unitMeasure, retorne um erro', async () => {
+  it('6 - post /product product ao não receber um unitMeasure, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -87,7 +87,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('7 - /product ao não receber um size, retorne um erro', async () => {
+  it('7 - post /product product ao não receber um size, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -99,7 +99,7 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('8 - /product ao não receber image, retorne um erro', async () => {
+  it('8 - post /product product ao não receber image, retorne um erro', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 
@@ -111,7 +111,18 @@ describe('Product - Testando a Rota /product', function () {
     expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
   });
 
-  it('9 - /product receber tudo okay, retorne status 201', async () => {
+  it('9 - post /product receber tudo okay, retorne status 201', async () => {
+    sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
+    sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
+
+    const httpResponse = await request(app).post('/product').send(prodInput);
+
+    expect(httpResponse.status).to.equal(201);
+    expect(httpResponse.body).to.be.deep.equal({ message: 
+      `Product ${prodOutPut.name}-${prodOutPut.subName}-${prodOutPut.size} successfuly registered` });
+  });
+
+  it('9 - post /product receber tudo okay, retorne status 201', async () => {
     sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
     sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
 

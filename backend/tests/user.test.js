@@ -16,12 +16,13 @@ import {
     mockPayload,
     mockPayloadSuper,
     okayUserLogin,
+    payLoadTokenUser,
  } from './mocks/user.mocks'
 
 describe('Login - Testando a Rota /login', function () { 
     beforeEach(function () { sinon.restore(); });
 
-    it('1 - /login ao não receber uma senha, retorne um erro', async () => {
+    it('1 - post /login ao não receber uma senha, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(userOutPut);
 
         const httpResponse = await request(app).post('/login').send(noPasswordLoginBody);
@@ -30,7 +31,7 @@ describe('Login - Testando a Rota /login', function () {
         expect(httpResponse.body).to.be.deep.equal({ message: 'Incorrect User or Password' });
     });
 
-    it('2 - /login ao não receber um email, retorne um erro', async () => {
+    it('2 - post /login ao não receber um email, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
 
         const httpResponse = await request(app).post('/login').send(noEmailLoginBody);
@@ -39,7 +40,7 @@ describe('Login - Testando a Rota /login', function () {
         expect(httpResponse.body).to.be.deep.equal({ message: 'User does not exist' });
     });
 
-    it('3 - /login ao receber tudo Okay, retorne 200', async () => {
+    it('3 - post /login ao receber tudo Okay, retorne 200', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(userOutPut);
         sinon.stub(jwt, 'sign').returns(tokenUserMock);
         sinon.stub(bcrypt, 'compare').returns(true);
@@ -168,7 +169,7 @@ describe('User - Testando a rota /user', function () {
         const httpResponse = await request(app).put('/user').send(fakeUpdate);
 
         expect(httpResponse.status).to.equal(401);
-        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Updated' });
+        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Changes' });
     });
 
     it('10 - put /user ao tentar atualizar a role de User sem ser o Super, retorne um erro', async () => {
@@ -212,5 +213,29 @@ describe('User - Testando a rota /user', function () {
         
         expect(httpResponse.status).to.equal(200);
         expect(httpResponse.body).to.be.deep.equal({ message: 'Usuário example da silva atualizado' });
+    });
+
+    it('13 - delete /user ao tentar deletar outro User, retorna um erro', async () => {
+        sinon.stub(jwt, 'verify').returns(payLoadTokenUser);
+        
+        const otherId = { id: 'a4a444a4a4a4a4a4a' };
+
+        const httpResponse = await request(app).delete('/user').set('headers', tokenUserMock).send(otherId);
+        
+        expect(httpResponse.status).to.equal(401);
+        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Changes' });
+    });
+
+    it('14 - delete /user ao tentar o próprio User, retorna um erro', async () => {
+        sinon.stub(jwt, 'verify').returns(payLoadTokenUser);
+        sinon.stub(UserModel.prototype, 'findById').returns(userOutPut);
+        sinon.stub(UserModel.prototype, 'delete').returns(userOutPut);
+        
+        const myId = { id: '64962b595f70d057c5800a62' };
+
+        const httpResponse = await request(app).delete('/user').set('headers', tokenUserMock).send(myId);
+        
+        expect(httpResponse.status).to.equal(200);
+        expect(httpResponse.body).to.be.deep.equal({ message: `usuário ${userOutPut.name} excluido com sucesso` });
     });
 });

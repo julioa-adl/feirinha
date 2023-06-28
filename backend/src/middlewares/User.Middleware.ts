@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../auth/jwtFunctions';
 
-const validateUserUpdate = async (req: Request, res: Response, next: NextFunction) => {
+const validateUser = async (req: Request, res: Response, next: NextFunction) => {
   const { id, role, name } = req.body;
   const verify = await verifyToken(req.headers.authorization);
   if (role === 'Super' || name === 'Super') {
@@ -13,7 +13,7 @@ const validateUserUpdate = async (req: Request, res: Response, next: NextFunctio
   if (verify._id === id || verify.role === 'Admin' || verify.role === 'Super') { 
     return next();
   }
-  return res.status(401).json({ error: 'Permission Danied - No Updated' });
+  return res.status(401).json({ error: 'Permission Danied - No Changes' });
 };
 
 const validateRegister = async (req: Request, res: Response, next: NextFunction) => {
@@ -47,7 +47,7 @@ const validAdmin = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 export default {
-  validateUserUpdate,
+  validateUser,
   validateRegister,
   validSuper,
   validAdmin,

@@ -81,7 +81,8 @@ export default class UserController {
     try {
       const { id } = req.body;
       const findUser = await this.service.getById(id);
-      if (!findUser) return;
+      if (!findUser) return res.status(404).json({
+        message: 'Usuário não existe'});
       if (findUser.role === 'Super') return res.status(400).json({
         message: 'Usuário Super não pode ser Deletado!'})
       const result = await this.service.deleteUser(id);
