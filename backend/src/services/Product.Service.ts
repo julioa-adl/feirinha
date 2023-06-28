@@ -28,8 +28,7 @@ export default class ProductService {
       name, subName, manufacturer, category, code, unitMeasure, size, image
     });
     return { type: null, message: 
-      `Product ${newProduct.name}-${newProduct.subName}-${newProduct.size}${newProduct.unitMeasure}
-    da ${newProduct.manufacturer} successfuly registered`};
+      `Product ${newProduct.name}-${newProduct.subName}-${newProduct.size} successfuly registered`};
   }
 
   public async update(id: string, obj: object) {

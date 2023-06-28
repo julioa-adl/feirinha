@@ -2,7 +2,7 @@
 import request from 'supertest';
 import sinon from 'sinon';
 import { expect } from 'chai';
-
+import bcrypt from 'bcrypt';
 import app from '../src/app';
 import jwt from 'jsonwebtoken';
 import UserModel from '../src/models/User.Model';
@@ -15,12 +15,14 @@ import {
     tokenUserMock,
     mockPayload,
     mockPayloadSuper,
+    okayUserLogin,
+    payLoadTokenUser,
  } from './mocks/user.mocks'
 
-describe('1 - Testando a Rota Login', function () { 
+describe('Login - Testando a Rota /login', function () { 
     beforeEach(function () { sinon.restore(); });
 
-    it('1.1 - /login ao não receber uma senha, retorne um erro', async () => {
+    it('1 - post /login ao não receber uma senha, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(userOutPut);
 
         const httpResponse = await request(app).post('/login').send(noPasswordLoginBody);
@@ -29,7 +31,7 @@ describe('1 - Testando a Rota Login', function () {
         expect(httpResponse.body).to.be.deep.equal({ message: 'Incorrect User or Password' });
     });
 
-    it('1.2 - /login ao não receber um email, retorne um erro', async () => {
+    it('2 - post /login ao não receber um email, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
 
         const httpResponse = await request(app).post('/login').send(noEmailLoginBody);
@@ -37,12 +39,23 @@ describe('1 - Testando a Rota Login', function () {
         expect(httpResponse.status).to.equal(409);
         expect(httpResponse.body).to.be.deep.equal({ message: 'User does not exist' });
     });
+
+    it('3 - post /login ao receber tudo Okay, retorne 200', async () => {
+        sinon.stub(UserModel.prototype, 'findOne').resolves(userOutPut);
+        sinon.stub(jwt, 'sign').returns(tokenUserMock);
+        sinon.stub(bcrypt, 'compare').returns(true);
+
+        const httpResponse = await request(app).post('/login').send(okayUserLogin);
+
+        expect(httpResponse.status).to.equal(200);
+        expect(httpResponse.body).to.be.deep.equal({ token: tokenUserMock });
+    });
 });
 
-describe('2 - Testando cadastrar novo User', function () { 
+describe('User - Testando a rota /user', function () { 
     beforeEach(function () { sinon.restore(); });
 
-    it('2.1 - post /user ao cadastrar novo usuário, retorna status 201', async () => {
+    it('1 - post /user ao cadastrar novo usuário, retorna status 201', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -53,7 +66,7 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.body).to.have.property('token');
     });
 
-    it('2.2 - post /user sem nome, retorne um erro', async () => {
+    it('2 - post /user sem nome, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -66,7 +79,7 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
     });
 
-    it('2.3 - post /user sem email, retorne um erro', async () => {
+    it('3 - post /user sem email, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -79,7 +92,7 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
     });
 
-    it('2.4 - post /user sem password, retorne um erro', async () => {
+    it('4 - post /user sem password, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -92,7 +105,7 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
     });
 
-    it('2.5 - post /user sem birthday, retorne um erro', async () => {
+    it('5 - post /user sem birthday, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -105,7 +118,7 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
     });
 
-    it('2.6 - post /user sem role, retorne um erro', async () => {
+    it('6 - post /user sem role, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -117,12 +130,8 @@ describe('2 - Testando cadastrar novo User', function () {
         expect(httpResponse.status).to.equal(400);
         expect(httpResponse.body).to.be.deep.equal({ error: 'Faltam informações' });
     });
-});
 
-describe('3 - Testando Permissões de Users', function () { 
-    beforeEach(function () { sinon.restore(); });
-
-    it('3.1 - post /user ao tentar cadastrar um Admin, retorne um erro', async () => {
+    it('7 - post /user ao tentar cadastrar um Admin, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -136,7 +145,7 @@ describe('3 - Testando Permissões de Users', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Você não tem permissão para cadastrar admins' });
     });
 
-    it('3.2 - post /user ao tentar cadastrar um Super, retorne um erro', async () => {
+    it('8 - post /user ao tentar cadastrar um Super, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'findAll').resolves([userInput]); //apenas para passar no create super
         sinon.stub(UserModel.prototype, 'findOne').resolves(null);
         sinon.stub(UserModel.prototype, 'create').resolves(userOutPut);
@@ -150,7 +159,7 @@ describe('3 - Testando Permissões de Users', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Só Existe Um Super, e Ele não compartilha O PODER' });
     });
 
-    it('3.3 - put /user ao tentar atualizar um User diferente do seu, retorne um erro', async () => {
+    it('9 - put /user ao tentar atualizar um User diferente do seu, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'update').resolves(null);
         sinon.stub(jwt, 'verify').returns(mockPayload);
 
@@ -160,10 +169,10 @@ describe('3 - Testando Permissões de Users', function () {
         const httpResponse = await request(app).put('/user').send(fakeUpdate);
 
         expect(httpResponse.status).to.equal(401);
-        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Updated' });
+        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Changes' });
     });
 
-    it('3.4 - put /user ao tentar atualizar a role de User sem ser o Super, retorne um erro', async () => {
+    it('10 - put /user ao tentar atualizar a role de User sem ser o Super, retorne um erro', async () => {
         sinon.stub(UserModel.prototype, 'update').resolves(null);
         sinon.stub(jwt, 'verify').returns(mockPayload);
 
@@ -176,7 +185,7 @@ describe('3 - Testando Permissões de Users', function () {
         expect(httpResponse.body).to.be.deep.equal({ error: 'Apenas o Super pode alterar Role de usuários' });
     });
 
-    it('3.5 - put /user ao tentar atualizar a role de User SENDO o Super, retorna status 200', async () => {
+    it('11 - put /user ao tentar atualizar a role de User SENDO o Super, retorna status 200', async () => {
         sinon.stub(jwt, 'verify').returns(mockPayloadSuper);
         
         const { role, ...inputWithoutInfo } = userOutPut;
@@ -191,7 +200,7 @@ describe('3 - Testando Permissões de Users', function () {
         expect(httpResponse.body).to.be.deep.equal({ message: 'Usuário example atualizado' });
     });
 
-    it('3.6 - put /user ao tentar atualizar o próprio User, retorna status 200', async () => {
+    it('12 - put /user ao tentar atualizar o próprio User, retorna status 200', async () => {
         sinon.stub(jwt, 'verify').returns(mockPayloadSuper);
         
         const { name, ...inputWithoutInfo } = userOutPut;
@@ -204,5 +213,29 @@ describe('3 - Testando Permissões de Users', function () {
         
         expect(httpResponse.status).to.equal(200);
         expect(httpResponse.body).to.be.deep.equal({ message: 'Usuário example da silva atualizado' });
+    });
+
+    it('13 - delete /user ao tentar deletar outro User, retorna um erro', async () => {
+        sinon.stub(jwt, 'verify').returns(payLoadTokenUser);
+        
+        const otherId = { id: 'a4a444a4a4a4a4a4a' };
+
+        const httpResponse = await request(app).delete('/user').set('headers', tokenUserMock).send(otherId);
+        
+        expect(httpResponse.status).to.equal(401);
+        expect(httpResponse.body).to.be.deep.equal({ error: 'Permission Danied - No Changes' });
+    });
+
+    it('14 - delete /user ao tentar o próprio User, retorna um erro', async () => {
+        sinon.stub(jwt, 'verify').returns(payLoadTokenUser);
+        sinon.stub(UserModel.prototype, 'findById').returns(userOutPut);
+        sinon.stub(UserModel.prototype, 'delete').returns(userOutPut);
+        
+        const myId = { id: '64962b595f70d057c5800a62' };
+
+        const httpResponse = await request(app).delete('/user').set('headers', tokenUserMock).send(myId);
+        
+        expect(httpResponse.status).to.equal(200);
+        expect(httpResponse.body).to.be.deep.equal({ message: `usuário ${userOutPut.name} excluido com sucesso` });
     });
 });

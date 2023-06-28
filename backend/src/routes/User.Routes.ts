@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import UserController from '../controllers/User.Controller';
-import mdws from '../middlewares/User.Middleware';
+import mdwsUser from '../middlewares/User.Middleware';
+import mdwsToken from '../middlewares/Token.Middleware';
 
 const userRouter = Router();
 const userController = new UserController();
 
 userRouter
-  .get('/', userController.getUsers)
-  .post('/', mdws.validateRegister, userController.create)
-  .put('/', mdws.validateToken, mdws.validateUserUpdate, userController.update)
-  .delete('/', mdws.validateToken, mdws.validateUserUpdate,userController.delete);
+  .get('/', mdwsUser.validAdmin, userController.getUsers)
+  .post('/', mdwsUser.validateRegister, userController.create)
+  .put('/', mdwsToken.validateToken, mdwsUser.validateUser, userController.update)
+  .delete('/', mdwsToken.validateToken, mdwsUser.validateUser,userController.delete);
 
 export default userRouter;
