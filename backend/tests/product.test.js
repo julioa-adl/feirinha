@@ -10,7 +10,12 @@ import ProductModel from '../src/models/Product.Model';
 import {
   prodInput,
   prodOutPut,
+  getAllProducts,
 } from './mocks/product.mocks';
+import {
+  payLoadTokenUser,
+  tokenUserMock,
+} from './mocks/user.mocks';
 
 describe('Product - Testando a Rota /product', function () { 
   beforeEach(function () { sinon.restore(); });
@@ -122,15 +127,36 @@ describe('Product - Testando a Rota /product', function () {
       `Product ${prodOutPut.name}-${prodOutPut.subName}-${prodOutPut.size} successfuly registered` });
   });
 
-  it('9 - post /product receber tudo okay, retorne status 201', async () => {
-    sinon.stub(ProductModel.prototype, 'findOne').resolves(null);
-    sinon.stub(ProductModel.prototype, 'create').resolves(prodOutPut);
+  it('10 - get /product lista todos os produtos, retorne status 200', async () => {
+    sinon.stub(ProductModel.prototype, 'findAll').resolves(getAllProducts);
 
-    const httpResponse = await request(app).post('/product').send(prodInput);
+    const httpResponse = await request(app).get('/product');
 
-    expect(httpResponse.status).to.equal(201);
-    expect(httpResponse.body).to.be.deep.equal({ message: 
-      `Product ${prodOutPut.name}-${prodOutPut.subName}-${prodOutPut.size} successfuly registered` });
+    expect(httpResponse.status).to.equal(200);
+    expect(httpResponse.body).to.be.deep.equal(getAllProducts);
   });
 
+  it('11 - put /product ao tentar atualizar um produto, retorna status 200', async () => {
+    const { name, ...inputWithoutInfo } = prodOutPut;
+    const realUpdate = { name: 'example prod', ...inputWithoutInfo }
+    const sendUpdate = { id: 'a1b2c3d4e5f6g7h8i9', name: 'example prod'}
+
+    sinon.stub(ProductModel.prototype, 'update').resolves(realUpdate);
+
+    const httpResponse = await request(app).put('/product').send(sendUpdate);
+    
+    expect(httpResponse.status).to.equal(200);
+    expect(httpResponse.body).to.be.deep.equal({ message: 'example prod atualizado' });
+  });
+
+  it('12 - delete /product user tenta deletar um produto, retorna um erro', async () => {
+    sinon.stub(jwt, 'verify').returns(payLoadTokenUser);
+    
+    const prodIdtoDelete = { id: 'a1b2c3d4e5f6g7h8i9' };
+
+    const httpResponse = await request(app).delete('/product').set('headers', tokenUserMock).send(prodIdtoDelete);
+    
+    expect(httpResponse.status).to.equal(401);
+    expect(httpResponse.body).to.be.deep.equal({ error: 'YOU HAVE NO POWER HERE' });
+  });
 })
