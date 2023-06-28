@@ -51,6 +51,19 @@ Back-end:
         cd frontend/ && npm start
       ```
   </details>
+  <details><summary>Dotenv</summary>
+
+    * Variáveis de Ambiente ncessárias:
+
+      ```
+      PORT=3001
+      USER_SUPER_NAME=Super
+      USER_SUPER_EMAIL=super_example@example.com
+      USER_SUPER_PASS=
+      USER_SUPER_BTHD=
+      USER_SUPER_ROLE=Super
+      ```
+  </details>
 
 ## Testes
   <details><summary>Executando Testes de Integração</summary>
