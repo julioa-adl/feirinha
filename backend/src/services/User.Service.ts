@@ -40,10 +40,12 @@ export default class UserService {
       birthday: process.env.USER_SUPER_BTHD || '00-00-0000',
       role: process.env.USER_SUPER_ROLE || 'Super',
     }
+    const saltRounds = 10;
+    const validPwd = await bcrypt.hash(superUser.password, saltRounds);
     const allUsers = await this.model.findAll();
     if (allUsers.length === 0) {
       const { name, email, password, birthday, role } = superUser;
-      await this.model.create({ name, email, password, birthday, role });
+      await this.model.create({ name, email, password: validPwd, birthday, role });
     }
   }
 
