@@ -1,5 +1,5 @@
 export default interface IProduct {
-  id?: number,
+  id?: string,
   name: string,
   subName: string,
   manufacturer: string,

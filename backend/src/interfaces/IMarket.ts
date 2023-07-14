@@ -1,5 +1,5 @@
 export default interface IMarket {
-  id?: number,
+  id?: string,
   name: string,
   address: string,
   neighborhood: string,
