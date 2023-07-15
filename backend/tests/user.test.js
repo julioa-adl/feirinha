@@ -2,7 +2,7 @@
 import request from 'supertest';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import app from '../src/app';
 import jwt from 'jsonwebtoken';
 import UserModel from '../src/models/User.Model';
@@ -43,7 +43,8 @@ describe('Login - Testando a Rota /login', function () {
     it('3 - post /login ao receber tudo Okay, retorne 200', async () => {
         sinon.stub(UserModel.prototype, 'findOne').resolves(userOutPut);
         sinon.stub(jwt, 'sign').returns(tokenUserMock);
-        sinon.stub(bcrypt, 'compare').returns(true);
+        sinon.stub(bcrypt, 'compare').returns(true); /*Não consigo fazer o stub depois que mudei para bcryptjs ... 
+        Mas apesar do erro, está funcionando!*/
 
         const httpResponse = await request(app).post('/login').send(okayUserLogin);
 

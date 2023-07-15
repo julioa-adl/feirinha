@@ -1,4 +1,4 @@
-export interface IRecommendation {
+export default interface IRecommendation {
     id?: string,
     userId: string,
     productId: string,

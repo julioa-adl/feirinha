@@ -1,9 +1,9 @@
 import { IFeirinha, IList } from '../interfaces/IFeirinha';
 
 export default class Feirinha {
-  protected id?: number;
-  protected userId: number;
-  protected marketId: number;
+  protected id?: string;
+  protected userId: string;
+  protected marketId: string;
   protected listCart: IList[];
   protected date: Date;
 
@@ -13,9 +13,5 @@ export default class Feirinha {
     this.marketId = feirinha.marketId;
     this.listCart = feirinha.listCart;
     this.date = feirinha.date;
-  }
-
-  public getId(): number | undefined {
-    return this.id;
   }
 }

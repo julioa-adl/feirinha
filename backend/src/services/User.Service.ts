@@ -2,7 +2,7 @@ import User from '../domains/User';
 import UserModel from '../models/User.Model';
 import IUser from '../interfaces/IUser';
 import ILogin from '../interfaces/ILogin';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { createToken } from '../auth/jwtFunctions';
 
 export default class UserService {
@@ -40,8 +40,8 @@ export default class UserService {
       birthday: process.env.USER_SUPER_BTHD || '00-00-0000',
       role: process.env.USER_SUPER_ROLE || 'Super',
     }
-    const saltRounds = 10;
-    const validPwd = await bcrypt.hash(superUser.password, saltRounds);
+    const salt = bcrypt.genSaltSync(10);
+    const validPwd = bcrypt.hashSync(superUser.password, salt);
     const allUsers = await this.model.findAll();
     if (allUsers.length === 0) {
       const { name, email, password, birthday, role } = superUser;
@@ -56,8 +56,8 @@ export default class UserService {
     const existingUser = await this.model.findOne({email: email});
     if (existingUser) return { type: 409, payload: { token: null } };
 
-    const saltRounds = 10;
-    const validPwd = await bcrypt.hash(password, saltRounds);
+    const salt = bcrypt.genSaltSync(10);
+    const validPwd = bcrypt.hashSync(password, salt);
     const newUser = await this.model.create({ name, email, password: validPwd, birthday, role });
 
     newUser.password = '';
@@ -85,8 +85,8 @@ export default class UserService {
   public async update(id: string, obj: IUser) {
     const { password } = obj;
     if (password) {
-      const saltRounds = 10;
-      const validPwd = await bcrypt.hash(password, saltRounds);
+      const salt = bcrypt.genSaltSync(10);
+      const validPwd = bcrypt.hashSync(password, salt);
       obj.password = validPwd;
     }
     return await this.model.update(id, obj)

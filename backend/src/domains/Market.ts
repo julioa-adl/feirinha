@@ -1,7 +1,7 @@
 import IMarket from '../interfaces/IMarket';
 
 export default class Market {
-  protected id?: number | undefined;
+  protected id?: string | undefined;
   protected name: string;
   protected address: string;
   protected neighborhood: string;

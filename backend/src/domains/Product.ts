@@ -1,7 +1,7 @@
 import IProduct from '../interfaces/IProduct';
 
 export default class Product {
-  protected id?: number;
+  protected id?: string;
   protected name: string;
   protected subName: string;
   protected manufacturer: string;
