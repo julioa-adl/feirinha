@@ -78,7 +78,7 @@ Back-end:
 # Banco de Dados
   <details><summary>Estrutura de Dados no Mongo</summary>
 
-    ![Estrutura de Dados](./backend/bd-feirinha.png)
+  ![Estrutura de Dados](./backend/bd-feirinha.png)
   </details>
 
 # Requisitos do Projeto
