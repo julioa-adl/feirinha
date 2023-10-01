@@ -7,7 +7,7 @@ function ToggleTheme() {
 
   useEffect(() => {
     systemPreference && pageClasses.add('dark');
-  });
+  }, []);
   const toggle = () => {
     pageClasses.toggle('dark');
   };
