@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import ToggleTheme from "../components/ToggleTheame";
 import Loading from '../components/Loading';
@@ -14,6 +15,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [error, setError] = useState(false)
+
+  const history = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,11 +51,15 @@ const Login = () => {
   const toggleLookPass = () => {
     typePass ? setTypePass(false) :  setTypePass(true);
   }
+
+  const createAcount = () => {
+    history('/register');
+  }
   
   return (
     <div
-      className= "h-screen w-96 m-auto flex flex-col justify-evenly items-center">
-      <form className="relative flex flex-col gap-8 items-center mt-24">
+      className= "h-screen w-screen bg-market dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
+      <form className="relative flex flex-col gap-8 items-center">
         <img src={logo} className="w-36 mb-8 dark:invert"/>
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
@@ -95,8 +102,8 @@ const Login = () => {
         >
           { loading ? <Loading loading /> : 'Entrar' }
         </button>
-        <div className='-mt-7 text-sm dark:text-gray-100'>
-          <span>Ainda não tem uma conta?</span><span className="font-bold"> Crie aqui.</span>
+        <div className='-mt-5 text-sm dark:text-gray-100'>
+          <span>Ainda não tem uma conta?</span><span className="font-bold cursor-pointer text-blue-700 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-600" onClick={ createAcount }> Crie aqui.</span>
         </div>
       </form>
       <ToggleTheme />
