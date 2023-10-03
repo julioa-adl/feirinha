@@ -67,7 +67,7 @@ const Register = () => {
   return (
     <div className= "h-screen w-screen bg-blue-400 bg-market dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
       <form className="relative flex flex-col gap-6 items-center">
-        <img src={logo} className="w-36 dark:invert"/>
+        <img src={logo} alt='logo' className="w-36 dark:invert"/>
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
           <input

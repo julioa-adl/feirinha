@@ -14,7 +14,7 @@ const Login = () => {
   })
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const history = useNavigate();
 
@@ -23,6 +23,9 @@ const Login = () => {
     setLoading(true);
     const res = await loginUser(values);
     console.log(res);
+    if (res.status === 200) {
+      history('/')
+    }
     setLoading(false);
     if (!res.status) {
       setError(true)
@@ -60,7 +63,7 @@ const Login = () => {
     <div
       className= "h-screen w-screen bg-market dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
       <form className="relative flex flex-col gap-8 items-center">
-        <img src={logo} className="w-36 mb-8 dark:invert"/>
+        <img src={logo} alt='logo' className="w-36 mb-8 dark:invert"/>
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
           <input

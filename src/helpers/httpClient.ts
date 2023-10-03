@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backendUrl = (endpoint: string) => `https://feirinha-beckend-317l2alk2-julioa-adl.vercel.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
 
 type Iuser = {
   name?: string,
@@ -22,11 +22,9 @@ const loginUser = async ({ email, password }: Iuser) => {
       },
     });
     const { token } = res.data;
-    const saveToken = {
-      token,
-    };
+
     axios.defaults.headers.post.authorization = token;
-    localStorage.setItem('user', JSON.stringify(saveToken));
+    localStorage.setItem('userTokenFeirinha', JSON.stringify(token));
     return res;
   } catch (err) {
     return err;
@@ -42,18 +40,41 @@ const registUser = async ({ name, email, password, birthday, role = 'User' }: Iu
       },
     );
     const { token } = res.data;
-    const saveToken = {
-      token,
-    };
+
     axios.defaults.headers.post.authorization = token;
-    localStorage.setItem('user', JSON.stringify(saveToken));
+    localStorage.setItem('userTokenFeirinha', JSON.stringify(token));
     return res;
   } catch (err) {
     return err;
   }
 };
 
+const revalidateToken = async (): Promise<boolean> => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  console.log(token)
+  try {
+    const res = await axios({
+      method: "post",
+      url: backendUrl('revalidate'),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    console.log(res.data.message)
+    if (res.data.message === 'Valid Token!') {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    return false;
+  }
+};
+
 export {
   loginUser,
   registUser,
+  revalidateToken,
 }
