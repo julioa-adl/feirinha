@@ -1,12 +1,23 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import MyContext from './myContext';
+import decode from '../helpers/jwtDecode';
 
 function Provider({ children }) {
-  const teste = false
+  const [tokenDecode, setTokenDecode] = useState()
+
+  useState(() => {
+    let res;
+    const localToken = localStorage.getItem('userTokenFeirinha');
+    if (localToken !== null) {
+      const token = JSON.parse(localToken);
+      res = decode(token);
+    }
+    setTokenDecode(res)
+  }, [])
 
   const contextValue = useMemo(() => ({
-    teste,
-  }), []);
+    tokenDecode,
+  }), [tokenDecode]);
 
   return (
     <MyContext.Provider value={ contextValue }>

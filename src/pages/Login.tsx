@@ -22,7 +22,6 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     const res = await loginUser(values);
-    console.log(res);
     if (res.status === 200) {
       history('/')
     }
