@@ -1,6 +1,6 @@
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
-const Loading = ({ loading }) => {
+const Loading = ({ loading }: { loading: boolean }) => {
 
   return(
     <>
