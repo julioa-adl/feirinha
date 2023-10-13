@@ -6,8 +6,8 @@ import User from './User';
 const Navigator = () => {
   return(
     <div className='flex'>
-      <div className='flex justify-between items-center w-2/3 px-12 py-4'>
-        <Link to='login'>
+      <div className='hidden md:flex justify-between items-center w-2/3 px-12 py-4'>
+        <Link to='/'>
           <img
             className='h-12 dark:invert'
             src={ logo }
@@ -16,19 +16,19 @@ const Navigator = () => {
         </Link>
         <div className='flex justify-between gap-8'>
           <Link
-            to='login'
+            to='/login'
             className='text-gray-900 hover:text-yellow-500 dark:text-gray-100 dark:hover:text-blue-400'
           >Mercados</Link>
           <Link
-            to='login'
+            to='/produtos'
             className='text-gray-900 hover:text-yellow-500 dark:text-gray-100 dark:hover:text-blue-400'
           >Produtos</Link>
           <Link
-            to='login'
+            to='/login'
             className='text-gray-900 hover:text-yellow-500 dark:text-gray-100 dark:hover:text-blue-400'
-          >Categorias</Link>
+          >Relatórios</Link>
         </div>
-        <div className='relative'>
+        <div className='relative hidden xl:block'>
           <MagnifyingGlassIcon
             className='h-4 absolute text-gray-400 top-2.5 left-3'
           />
