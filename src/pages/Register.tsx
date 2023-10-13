@@ -135,7 +135,7 @@ const Register = () => {
           { loading ? <Loading loading /> : 'Criar' }
         </button>
         <div className='-mt-5 text-sm dark:text-gray-100'>
-          <span>Já possui uma conta?</span><span className="font-bold cursor-pointer text-gray-100 hover:text-gray-900 dark:text-blue-400 dark:hover:text-blue-600" onClick={ loginHere }> Entre aqui!</span>
+          <span>Já possui uma conta?</span><span className="font-bold cursor-pointer text-gray-900 hover:text-gray-100 dark:text-blue-400 dark:hover:text-blue-600" onClick={ loginHere }> Entre aqui!</span>
         </div>
       </form>
       <ToggleTheme />

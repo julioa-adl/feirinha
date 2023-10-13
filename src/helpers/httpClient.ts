@@ -53,7 +53,6 @@ const revalidateToken = async (): Promise<boolean> => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken)
-  console.log(token)
   try {
     const res = await axios({
       method: "post",
@@ -73,8 +72,30 @@ const revalidateToken = async (): Promise<boolean> => {
   }
 };
 
+const fetchProducts = async () => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl('product'),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 export {
   loginUser,
   registUser,
   revalidateToken,
+  fetchProducts,
 }

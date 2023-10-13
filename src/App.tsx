@@ -4,6 +4,7 @@ import Provider from './context/myProvider';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Products from './pages/Products';
 
 import PrivateRouter from './PrivateRouter';
 
@@ -33,6 +34,7 @@ const App = () => {
           <Route path={"/register"} element = { <Register /> }/>
           <Route element = { <PrivateRouter /> }>
             <Route path={"/"} element = { <Home /> }/>
+            <Route path={"/produtos"} element = { <Products /> }/>
           </Route>
         </Routes>
       </Provider>
