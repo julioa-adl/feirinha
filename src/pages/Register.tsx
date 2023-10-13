@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../components/Loading';
 import ToggleTheme from "../components/ToggleTheame";
 import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
 import { registUser } from '../helpers/httpClient';
+import { ApiResponse } from '../interfaces/ApiResponse';
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -24,14 +25,14 @@ const Register = () => {
     history('/login');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setLoading(true);
     const res = await registUser(values);
     console.log(res);
     setLoading(false);
-    if (!res.status) {
-      setError(res.response.data.message)
+    if (!(res as ApiResponse).status) {
+      setError((res as ApiResponse).response.data.message)
       setTimeout(() => {
         setError(false);
       }, 5000);
@@ -52,7 +53,7 @@ const Register = () => {
     return setDisable(true);
   }, [values, terms])
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     if (id === 'terms') {
       setChecked(!terms)

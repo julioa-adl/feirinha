@@ -5,8 +5,9 @@ import ToggleTheme from "../components/ToggleTheame";
 import Loading from '../components/Loading';
 import { EyeIcon, UserIcon, EyeSlashIcon, LockClosedIcon } from '@heroicons/react/24/solid';
 import { loginUser } from '../helpers/httpClient';
+import { ApiResponse } from '../interfaces/ApiResponse';
 
-const Login = () => {
+const Login = () => {  
   const [typePass, setTypePass] = useState(false);
   const [values, setValues] = useState({
     email: '',
@@ -18,15 +19,15 @@ const Login = () => {
 
   const history = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setLoading(true);
     const res = await loginUser(values);
-    if (res.status === 200) {
+    if ((res as ApiResponse).status === 200) {
       history('/')
     }
     setLoading(false);
-    if (!res.status) {
+    if (!(res as ApiResponse).status) {
       setError(true)
       setTimeout(() => {
         setError(false);
@@ -34,7 +35,7 @@ const Login = () => {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { id, value } = event.target;
     setValues((prevstate) => ({

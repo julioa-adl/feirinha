@@ -18,6 +18,11 @@ const User = () => {
     setNameSplit(res)
   }, [tokenDecode])
 
+  //I don't so much about context. So I'll let you fix this part :)
+
+  const nameSplit = tokenDecode.data.name.split(' ') || null;
+
+
   return(
     <div className="w-full md:w-1/3 px-4 sm:px-12 py-4 flex gap-2 justify-end items-center">
       <div className="hidden sm:block"><ToggleTheme /></div>

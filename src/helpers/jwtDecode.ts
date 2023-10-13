@@ -1,6 +1,6 @@
 const decode = (token: string) => {
   // Divida o token em partes: cabeçalho, dados e assinatura
-  const [_header, payload, _signature] = token.split('.');
+  const [, payload] = token.split('.');
   
   // Decodifique as partes Base64
   const decodedPayload = atob(payload);
