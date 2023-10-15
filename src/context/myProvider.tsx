@@ -1,11 +1,13 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
 import { fetchProducts } from "../helpers/httpClient";
 
 function Provider({ children }) {
-  const [tokenDecode, setTokenDecode] = useState();
+  const [tokenDecode, setTokenDecode] = useState<object>();
   const [products, setProducts] = useState();
+  const[showAdd, setShowAdd] = useState<boolean>();
+
   
   useEffect(() => {
     let res;
@@ -31,7 +33,9 @@ function Provider({ children }) {
     tokenDecode,
     products,
     setProducts,
-  }), [tokenDecode, products]);
+    showAdd,
+    setShowAdd,
+  }), [tokenDecode, products, showAdd]);
 
   return (
     <MyContext.Provider value={ contextValue }>

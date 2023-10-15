@@ -20,7 +20,7 @@ const User = () => {
 
   //I don't so much about context. So I'll let you fix this part :)
 
-  const nameSplit = tokenDecode.data.name.split(' ') || null;
+  // const nameSplit = tokenDecode.data.name.split(' ') || null;
 
 
   return(
