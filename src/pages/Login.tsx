@@ -61,7 +61,8 @@ const Login = () => {
   
   return (
     <div
-      className= "h-screen w-screen bg-market dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
+      className="h-screen w-screen bg-market dark:bg-gray-900 dark:bg-market-75 
+                m-auto flex flex-col justify-evenly items-center">
       <form className="relative flex flex-col gap-8 items-center">
         <img src={logo} alt='logo' className="w-36 mb-8 dark:invert"/>
         <div className="relative">
@@ -73,7 +74,9 @@ const Login = () => {
             value={ values.email }
             onChange={ handleChange }
             placeholder="Digite seu email"
-            className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`${error && 'border-solid border-2 border-red-500'}
+            rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600
+            dark:text-gray-100`}/>
         </div>
         <div className="relative">
           <LockClosedIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
@@ -84,29 +87,39 @@ const Login = () => {
             value={ values.password }
             onChange={ handleChange }
             placeholder="Digite sua senha"
-            className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`${error && 'border-solid border-2 border-red-500'}
+            rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600
+            dark:text-gray-100`}/>
             <EyeIcon
               onClick={toggleLookPass}
-              className={`h-5 absolute text-gray-800 top-2.5 right-3 cursor-pointer ${typePass || 'hidden'}`}
+              className={`h-5 absolute text-gray-800 top-2.5 right-3 cursor-pointer
+              ${typePass || 'hidden'}`}
             />
             <EyeSlashIcon
               onClick={toggleLookPass}
-              className={`h-5 absolute text-gray-800 top-2.5 right-3 cursor-pointer ${typePass && 'hidden'}`}
+              className={`h-5 absolute text-gray-800 top-2.5 right-3 cursor-pointer
+              ${typePass && 'hidden'}`}
             />
         </div>
         {
-          error && <span className='absolute top-44 h-4 text-gray-900 dark:text-red-500'>Usuário ou Senha incorreto(s)!</span>
+          error && <span className='absolute top-44 h-4 text-gray-900
+          dark:text-red-500'>Usuário ou Senha incorreto(s)!</span>
         }
         <button
           type="submit"
           disabled={ disable }
-          className={`flex justify-center text-center items-center font-medium rounded-full text-sm px-3 py-2 w-80 text-white ${ disable ? 'bg-gray-800 opacity-75' : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
+          className={`flex justify-center text-center items-center font-medium
+          rounded-full text-sm px-3 py-2 w-80 text-white ${ disable ? 
+            'bg-gray-800opacity-75'
+            : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1dark:bg-blue-600 dark:hover:bg-blue-700'}`}
           onClick={ handleSubmit }
         >
           { loading ? <Loading loading /> : 'Entrar' }
         </button>
         <div className='-mt-5 text-sm dark:text-gray-100'>
-          <span>Ainda não tem uma conta?</span><span className="font-bold cursor-pointer text-blue-700 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-600" onClick={ createAcount }> Crie aqui.</span>
+          <span>Ainda não tem uma conta?</span><span className="font-bold
+          cursor-pointer text-blue-700 hover:text-blue-500 dark:text-blue-400
+          dark:hover:text-blue-600" onClick={ createAcount }> Crie aqui.</span>
         </div>
       </form>
       <ToggleTheme />

@@ -4,11 +4,11 @@ const ProductCard = ({ prod }) => {
   return(
     <li
       className='flex justify-between items-center
-      text-left w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl px-8 py-4 bg-gray-100 dark:bg-gray-800'
+      text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
+      rounded-xl p-2 md:px-8 md:py-4 bg-gray-100 dark:bg-gray-800'
     >
       <div>
-        <div className="flex flex-row gap-2 font-bold">
+        <div className="flex flex-row gap-2 font-bold text-sm md:text-base">
           <span>{ prod.name }</span>
           <span>{ prod.subName }</span>
           <span>{ prod.size }</span>
@@ -19,7 +19,9 @@ const ProductCard = ({ prod }) => {
           <h2>{ `Cod: ${prod.code}` }</h2>
         </div>
       </div>
-      <PencilSquareIcon className='h-8 cursor-pointer duration-300 ease-in-out hover:text-red-500' />
+      <div className='w-1/6 flex justify-end'>
+        <PencilSquareIcon className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-red-500' />
+      </div>
     </li>
   )
 };
