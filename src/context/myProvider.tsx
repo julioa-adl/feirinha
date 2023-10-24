@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
+import { fetchProducts } from "../helpers/httpClient";
 
 function Provider({ children }) {
   const [tokenDecode, setTokenDecode] = useState<object>();
@@ -17,6 +18,21 @@ function Provider({ children }) {
     }
     setTokenDecode(res)
   }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetchProducts();
+        setProducts(res);
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error);
+      }
+    };
+
+    if (!products) {
+      fetchData();
+    }
+  }, [products, setProducts]);
 
   const contextValue = useMemo(() => ({
     tokenDecode,

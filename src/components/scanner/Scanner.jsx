@@ -12,17 +12,26 @@ const Scanner = ({ onDetected }) => {
             width: 640,
             height: 320,
             facingMode: "environment"
-          }
+          },
         },
         decoder: {
           readers: ["ean_reader", "ean_8_reader"],
           debug: {
-            drawBoundingBox: true,
-            showFrequency: true,
-            drawScanline: true,
-            showPattern: true
+            showCanvas: false,
+            showPatches: false,
+            showFoundPatches: false,
+            showSkeleton: false,
+            showLabels: false,
+            showPatchLabels: false,
+            showRemainingPatchLabels: false,
+            boxFromPatches: {
+              showTransformed: false,
+              showTransformedBox: false,
+              showBB: false
+            }
           }
-        }
+        },
+        locate: true,
       },
       function(err) {
         if (err) {
