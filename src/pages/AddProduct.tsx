@@ -1,19 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 import context from '../context/myContext';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ViewfinderCircleIcon } from '@heroicons/react/24/outline';
 import Scanner from '../components/scanner/Scanner';
 
 import ProductForm from "../components/ProductForm";
-import ProductAlredyRegistered from "../components/errors/ProductAlredyRegistered";
-
+import ProductAlredyRegistered from "../components/alerts/ProductAlredyRegistered";
 
 const AddProduct = () => {
   const [code, setCode] = useState('');
   const [isProductRegistered, setIsproductRegistered] = useState<boolean | React.ReactNode>(false);
 
   const {
-    setShowAdd,
-    showAdd,
+    setShowProd,
     products
   } = useContext(context);
 
@@ -26,7 +24,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     const error = <ProductAlredyRegistered />
-    const proceed = <ProductForm code={code}/>
+    const proceed = <ProductForm product='' typeUse='Cadastrar' code={code}/>
     if (code && products) {
       const verify = products.some((prod) => prod.code === code)
       if (verify) {
@@ -45,16 +43,18 @@ const AddProduct = () => {
         <XMarkIcon
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
-          onClick={() => setShowAdd(!showAdd)}/>
+          onClick={() => setShowProd(false)}/>
         {
           !code ? (
             <div className="flex flex-col gap-10 ">
-              <h1 className="text-gray-100">Scanner de código de barras</h1>
+              <div className="flex gap-5 items-center justify-center">
+                <ViewfinderCircleIcon className="h-10 text-gray-100"/>
+                <span className="text-gray-100">Scanner de código de barras</span>
+              </div>
               <Scanner onDetected={handleDetected} />
             </div>
           ) : (
               isProductRegistered && isProductRegistered
-
           )
         }
         

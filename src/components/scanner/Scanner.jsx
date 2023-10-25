@@ -15,7 +15,7 @@ const Scanner = ({ onDetected }) => {
           },
         },
         decoder: {
-          readers: ["ean_reader", "ean_8_reader"],
+          readers: ["ean_reader"],
           debug: {
             showCanvas: false,
             showPatches: false,
