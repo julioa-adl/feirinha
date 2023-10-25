@@ -5,7 +5,6 @@ const Home = () => {
     <div className="bg-white h-screen dark:bg-gray-900">
       <Navigator />
       <h1 className="dark:text-gray-100">Home</h1>
-
     </div>
   )
 }

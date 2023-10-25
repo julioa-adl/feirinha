@@ -22,7 +22,7 @@ const User = () => {
 
   const logout = () => {
     localStorage.removeItem('userTokenFeirinha');
-    history('login')
+    history('/login')
   }
 
 

@@ -4,8 +4,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 
 const AddProdButton = () => {
   const {
-    setShowAdd,
-    showAdd
+    setShowProd,
   } = useContext(context);
 
   return(
@@ -13,7 +12,7 @@ const AddProdButton = () => {
     ease-in-out duration-300 hover:bg-yellow-500 dark:hover:bg-yellow-600
     hover:text-gray-900 dark:hover:text-gray-100
     fixed bottom-5 right-5 cursor-pointer text-gray-400'
-    onClick={() => setShowAdd(!showAdd)}
+    onClick={() => setShowProd('register')}
     >
       <PlusIcon className='h-6'
       />
