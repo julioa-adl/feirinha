@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Quagga from 'quagga';
 
 const Scanner = ({ onDetected }) => {
@@ -14,24 +14,13 @@ const Scanner = ({ onDetected }) => {
             facingMode: "environment"
           },
         },
+        photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
+        frequency: 5,
+        showCanvas: false,
+        multiple: false,
         decoder: {
           readers: ["ean_reader"],
-          debug: {
-            showCanvas: false,
-            showPatches: false,
-            showFoundPatches: false,
-            showSkeleton: false,
-            showLabels: false,
-            showPatchLabels: false,
-            showRemainingPatchLabels: false,
-            boxFromPatches: {
-              showTransformed: false,
-              showTransformedBox: false,
-              showBB: false
-            }
-          }
         },
-        locate: true,
       },
       function(err) {
         if (err) {
@@ -46,7 +35,7 @@ const Scanner = ({ onDetected }) => {
       Quagga.offDetected(onDetected);
       Quagga.stop();
     };
-  }, [onDetected]);
+  }, []);
 
   return <div id="interactive" className="viewport" />;
 };

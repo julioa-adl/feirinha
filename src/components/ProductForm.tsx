@@ -202,7 +202,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               <label
                 htmlFor=""
                 className="text-gray-100"
-              >Qtd: </label>
+              >valor: </label>
               <div className="flex">
                 <div
                   onClick={ decrementSize }

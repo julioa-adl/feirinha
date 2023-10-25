@@ -14,14 +14,13 @@ const ProductCard = ({ prod }:productCards) => {
   } = useContext(context);
   return(
     <li
-      className='flex justify-between items-center
+      className='flex justify-between items-center h-96
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:px-8 md:py-4 bg-gray-100 dark:bg-gray-800'
     >
       <div>
-        <div className="flex flex-row gap-2 font-bold text-sm md:text-base lowercase">
-          <span>{ prod.name }</span>
-          <span>{ prod.subName }</span>
+        <div className="flex flex-row gap-2 font-semibold text-sm md:text-base lowercase items-center">
+          <span>{ `${prod.name} ${prod.subName}` }</span>
           <span>-</span>
           <span className="flex gap-1">
             <span>{ prod.size }</span>

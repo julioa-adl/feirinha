@@ -21,10 +21,9 @@ const AddProduct = () => {
     }
   };
 
-
   useEffect(() => {
     const error = <ProductAlredyRegistered />
-    const proceed = <ProductForm product='' typeUse='Cadastrar' code={code}/>
+    const proceed = <ProductForm product={''} typeUse='Cadastrar' code={code}/>
     if (code && products) {
       const verify = products.some((prod) => prod.code === code)
       if (verify) {
@@ -33,7 +32,7 @@ const AddProduct = () => {
         return setIsproductRegistered(proceed);
       }
     }
-  }, [code, products])
+  }, [code])
 
   return(
     <div className="fixed top-0 z-10 h-full w-full bg-opacity-70
@@ -49,7 +48,7 @@ const AddProduct = () => {
             <div className="flex flex-col gap-10 ">
               <div className="flex gap-5 items-center justify-center">
                 <ViewfinderCircleIcon className="h-10 text-gray-100"/>
-                <span className="text-gray-100">Scanner de código de barras</span>
+                <span className="text-gray-100">Scanneie o código de barras!</span>
               </div>
               <Scanner onDetected={handleDetected} />
             </div>
