@@ -9,7 +9,6 @@ const PrivateRouter = () => {
 
   const auth = async () => {
     // const res = await revalidateToken();
-    // console.log(res)
     // if (!res) return history('login')
   }
 

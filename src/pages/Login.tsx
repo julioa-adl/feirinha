@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import ToggleTheme from "../components/ToggleTheame";
@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 import { EyeIcon, UserIcon, EyeSlashIcon, LockClosedIcon } from '@heroicons/react/24/solid';
 import { loginUser } from '../helpers/httpClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
+import context from '../context/myContext';
 
 const Login = () => {  
   const [typePass, setTypePass] = useState(false);
@@ -17,6 +18,10 @@ const Login = () => {
   const [disable, setDisable] = useState(true);
   const [error, setError] = useState(false);
 
+  const {
+    setToken
+  } = useContext(context)
+
   const history = useNavigate();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -25,6 +30,7 @@ const Login = () => {
     const res = await loginUser(values);
     if ((res as ApiResponse).status === 200) {
       history('/')
+      setToken((res as ApiResponse).data.token)
     }
     setLoading(false);
     if (!(res as ApiResponse).status) {
@@ -109,9 +115,7 @@ const Login = () => {
           type="submit"
           disabled={ disable }
           className={`flex justify-center text-center items-center font-medium
-          rounded-full text-sm px-3 py-2 w-80 text-white ${ disable ? 
-            'bg-gray-800opacity-75'
-            : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1dark:bg-blue-600 dark:hover:bg-blue-700'}`}
+          rounded-full text-sm px-3 py-2 w-80 text-white ${ disable ? 'bg-gray-800 opacity-75' : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1dark:bg-blue-600 dark:hover:bg-blue-700'}`}
           onClick={ handleSubmit }
         >
           { loading ? <Loading loading /> : 'Entrar' }

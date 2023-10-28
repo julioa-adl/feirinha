@@ -11,6 +11,7 @@ type Iuser = {
 }
    
 export type Iprod = {
+  id?: string | undefined,
   _id?: string | undefined,
   name: string | undefined,
   subName: string | undefined,

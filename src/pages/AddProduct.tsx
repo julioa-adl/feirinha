@@ -2,9 +2,15 @@ import { useContext, useState, useEffect } from "react";
 import context from '../context/myContext';
 import { XMarkIcon, ViewfinderCircleIcon } from '@heroicons/react/24/outline';
 import Scanner from '../components/scanner/Scanner';
-
+import { Iprod } from "../helpers/httpClient";
 import ProductForm from "../components/ProductForm";
 import ProductAlredyRegistered from "../components/alerts/ProductAlredyRegistered";
+
+interface Result {
+  codeResult: {
+    code: string;
+  };
+}
 
 const AddProduct = () => {
   const [code, setCode] = useState('');
@@ -15,7 +21,7 @@ const AddProduct = () => {
     products
   } = useContext(context);
 
-  const handleDetected = result => {
+  const handleDetected = (result:Result) => {
     if (result) {
       setCode(result.codeResult.code);
     }
@@ -23,9 +29,9 @@ const AddProduct = () => {
 
   useEffect(() => {
     const error = <ProductAlredyRegistered />
-    const proceed = <ProductForm product={''} typeUse='Cadastrar' code={code}/>
+    const proceed = <ProductForm typeUse='Cadastrar' code={code}/>
     if (code && products) {
-      const verify = products.some((prod) => prod.code === code)
+      const verify = products.some((prod:Iprod) => prod.code === code)
       if (verify) {
         return setIsproductRegistered(error);
       } else {

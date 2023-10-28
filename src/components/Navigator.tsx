@@ -6,7 +6,7 @@ import User from './User';
 const Navigator = () => {
   return(
     <div className='flex'>
-      <div className='hidden md:flex justify-between items-center w-2/3 px-12 py-4'>
+      <div className='md:flex justify-between items-center w-2/3 px-12 py-4'>
         <Link to='/'>
           <img
             className='h-12 dark:invert'
