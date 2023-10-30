@@ -15,18 +15,13 @@ const ProductCard = ({ prod }:productCards) => {
   
   return(
     <li
-      className='flex justify-between items-center h-96
+      className='flex justify-between items-center
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:px-8 md:py-4 bg-gray-100 dark:bg-gray-800'
     >
       <div>
         <div className="flex flex-row gap-2 font-semibold text-sm md:text-base lowercase items-center">
-          <span>{ `${prod.name} ${prod.subName}` }</span>
-          <span>-</span>
-          <span className="flex gap-1">
-            <span>{ prod.size }</span>
-            <span>{ prod.unitMeasure }</span>
-          </span>
+          <span>{ `${prod.name} ${prod.subName} - ${prod.size}${prod.unitMeasure}` }</span>
         </div>
         <div className="dark:text-gray-500 font-light text-sm uppercase">
           <h2>{ prod.manufacturer }</h2>
