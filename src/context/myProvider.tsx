@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { ChangeEvent, useMemo, useState, useEffect, useCallback } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
 import { fetchProducts } from "../helpers/httpClient";
@@ -8,12 +8,23 @@ interface AuxProps  {
   children: React.ReactNode
 }
 
+type Isearch = {
+  produto: string,
+  mercado: string,
+  feirinha: string
+}
+
 function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
   const [products, setProducts] = useState();
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [editProd, setEditProd] = useState<Iprod | undefined>();
+  const [search, setSearch] = useState<Isearch>({
+    produto: '',
+    mercado: '',
+    feirinha: ''
+  })
   
   useEffect(() => {
     let res;
@@ -37,6 +48,14 @@ function Provider({ children }:AuxProps) {
     fetchData();
   }, [showProd]);
 
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setSearch((prevstate) => ({
+      ...prevstate,
+      [id]: value,
+    }));
+  }, [])
+
   const contextValue = useMemo(() => ({
     tokenDecode,
     products,
@@ -46,8 +65,10 @@ function Provider({ children }:AuxProps) {
     setEditProd,
     editProd,
     token,
-    setToken
-  }), [tokenDecode, products, showProd, editProd, token]);
+    setToken,
+    handleChange,
+    search
+  }), [tokenDecode, products, showProd, editProd, token, search, handleChange]);
 
   return (
     <MyContext.Provider value={ contextValue }>

@@ -36,7 +36,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     manufacturer: product ? product.manufacturer : '',
     category: product ? product.category : '',
     code: product ? product.code : code,
-    unitMeasure: product && product.unitMeasure,
+    unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   })
 
@@ -249,9 +249,9 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   name='unitMeasure'
                   value={ addProd.unitMeasure }
                   onChange={ handleChange }
-                  className="px-4 py-1 rounded-md"
-                >
-                  <option value={''} disabled></option>
+                  className={`px-4 py-1 w-full rounded-md ${addProd.unitMeasure === '' ? 'text-gray-400' : 'text-gray-900'}`}
+            >
+              <option value={''} disabled>.</option>
                   {
                     unidadeDeMedida.map((category, i) => (
                     <option

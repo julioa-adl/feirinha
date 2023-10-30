@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import Markets from './pages/Markets';
 
 import PrivateRouter from './PrivateRouter';
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route element = { <PrivateRouter /> }>
             <Route path={"/"} element = { <Home /> }/>
             <Route path={"/produtos"} element = { <Products /> }/>
+            <Route path={"/mercados"} element = { <Markets /> }/>
           </Route>
         </Routes>
       </Provider>
