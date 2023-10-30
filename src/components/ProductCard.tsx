@@ -5,13 +5,14 @@ import { Iprod } from "../helpers/httpClient";
 
 interface productCards {
   prod: Iprod
-};
+}
 
 const ProductCard = ({ prod }:productCards) => {
   const {
     setEditProd,
     setShowProd
   } = useContext(context);
+  
   return(
     <li
       className='flex justify-between items-center h-96

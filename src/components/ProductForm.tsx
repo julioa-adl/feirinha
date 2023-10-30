@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react";
-// import context from '../context/myContext';
 import categories from "../helpers/categories";
 import unidadeDeMedida from "../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
@@ -11,29 +10,37 @@ import EditedSuccess from "../components/alerts/EditedSuccess";
 import Error from "../components/alerts/Error";
 import { Iprod } from "../helpers/httpClient";
 
+type usageType = 'Cadastrar' | 'Atualizar';
+
+type FormType = {
+  Cadastrar: JSX.Element;
+  Atualizar: JSX.Element;
+  Erro: JSX.Element;
+};
+
 interface ProductFormProps {
-  code: string,
-  typeUse: string | undefined,
-  product: Iprod
+  code?: string,
+  typeUse: usageType,
+  product?: Iprod
 }
 
 const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | boolean>(false);
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [registered, setregistered] = useState<boolean>(false);
-  const [addProd, setAddProd] = useState({
-    id: product['_id'] || '',
-    name: product.name || '',
-    subName: product.subName || '',
-    manufacturer: product.manufacturer || '',
-    category: product.category || '',
-    code: product.code || code,
-    unitMeasure: product.unitMeasure,
-    size: product.size || 0
+  const [addProd, setAddProd] = useState<Iprod>({
+    id: product ? product['_id'] : '',
+    name: product ? product.name : '',
+    subName: product ? product.subName : '',
+    manufacturer: product ? product.manufacturer : '',
+    category: product ? product.category : '',
+    code: product ? product.code : code,
+    unitMeasure: product && product.unitMeasure,
+    size: product ? product.size : 0
   })
 
-  const returnForm = {
+  const returnForm: FormType = {
     Cadastrar: <RegisteredSuccess />,
     Atualizar: <EditedSuccess />,
     Erro: <Error />
@@ -55,22 +62,22 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
   };
 
   const decrementSize = () => {
-    if (addProd.size >= 1) {
+    if (Number(addProd.size) >= 1) {
       setAddProd((prevState) => ({
         ...prevState,
-        size: prevState.size - 1,
+        size: Number(prevState.size) - 1,
       }));
     }
   };
 
   useEffect(() => {
     const {name, manufacturer, category, code, unitMeasure, size} = addProd;
-    if (size <= 0 && !unitMeasure) { return }
+    if (Number(size) <= 0 && !unitMeasure) { return }
     if (
-      name.length > 0 &&
-      manufacturer.length > 0 &&
-      category.length > 0 &&
-      code.length > 0 ) {
+      name? name.length : 0 > 0 &&
+      manufacturer? manufacturer.length : 0  > 0 &&
+      category? category.length : 0  > 0 &&
+      code? code.length : 0  > 0 ) {
       return setDisable(false);
     }
     return setDisable(true);
@@ -164,9 +171,9 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               name='category'
               value={ addProd.category }
               onChange={ handleChange }
-              className="px-4 py-1 w-full rounded-md"
+              className={`px-4 py-1 w-full rounded-md ${addProd.category === '' ? 'text-gray-400' : 'text-gray-900'}`}
             >
-              <option value="" disabled>Selecione uma Categoria</option>
+              <option value={''} disabled>Selecione uma Categoria</option>
               {
                 categories.map((category, i) => (
                 <option
@@ -235,7 +242,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
             <div className="flex flex-col gap-1">
                 <label
-                  htmlFor=""
                   className="text-gray-100"
                 >métrica: </label>
                 <select
@@ -245,7 +251,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   onChange={ handleChange }
                   className="px-4 py-1 rounded-md"
                 >
-                  <option value="" disabled></option>
+                  <option value={''} disabled></option>
                   {
                     unidadeDeMedida.map((category, i) => (
                     <option

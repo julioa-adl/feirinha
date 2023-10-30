@@ -1,24 +1,29 @@
-import { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
 import { fetchProducts } from "../helpers/httpClient";
 import { Iprod } from '../helpers/httpClient';
 
-function Provider({ children }) {
+interface AuxProps  { 
+  children: React.ReactNode
+}
+
+function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
+  const [token, setToken] = useState();
   const [products, setProducts] = useState();
-  const [showProd, setShowProd] = useState<boolean | string>(false);
-  const [editProd, setEditProd] = useState<Iprod>();
+  const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
+  const [editProd, setEditProd] = useState<Iprod | undefined>();
   
   useEffect(() => {
     let res;
     const localToken = localStorage.getItem('userTokenFeirinha');
-    if (localToken !== null) {
-      const token = JSON.parse(localToken);
-      res = decode(token);
+    if (token || localToken) {
+      const thisToken = token || localToken !== null && JSON.parse(localToken);
+      res = decode(thisToken);
     }
     setTokenDecode(res)
-  }, [])
+  }, [token])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,11 +35,7 @@ function Provider({ children }) {
       }
     };
     fetchData();
-
-    // if (!products) {
-    //   fetchData();
-    // }
-  }, [products, setProducts, showProd]);
+  }, [showProd]);
 
   const contextValue = useMemo(() => ({
     tokenDecode,
@@ -43,8 +44,10 @@ function Provider({ children }) {
     showProd,
     setShowProd,
     setEditProd,
-    editProd
-  }), [tokenDecode, products, showProd, editProd]);
+    editProd,
+    token,
+    setToken
+  }), [tokenDecode, products, showProd, editProd, token]);
 
   return (
     <MyContext.Provider value={ contextValue }>

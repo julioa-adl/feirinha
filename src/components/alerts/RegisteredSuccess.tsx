@@ -1,5 +1,5 @@
 import pera from '../../assets/pera.png';
-import { CakeIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/outline';
 
 const RegisteredSuccess = () => {
   return (

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../components/Loading';
@@ -6,6 +6,7 @@ import ToggleTheme from "../components/ToggleTheame";
 import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
 import { registUser } from '../helpers/httpClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
+import context from '../context/myContext';
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -19,6 +20,10 @@ const Register = () => {
   const [disable, setDisable] = useState(true);
   const [error, setError] = useState(false);
 
+  const {
+    setToken
+  } = useContext(context)
+
   const history = useNavigate();
 
   const loginHere = () => {
@@ -29,13 +34,15 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     const res = await registUser(values);
-    console.log(res);
     setLoading(false);
     if (!(res as ApiResponse).status) {
       setError((res as ApiResponse).response.data.message)
       setTimeout(() => {
         setError(false);
       }, 5000);
+    } else {
+      history('/');
+      setToken((res as ApiResponse).data.token)
     }
   };
 
@@ -124,7 +131,7 @@ const Register = () => {
           <span className='dark:text-gray-100'>Eu aceito os termos de uso</span>
         </div>
         {
-          error && <span className='absolute top-44 h-4 text-gray-900 dark:text-red-500'>{ error }</span>
+          error && <span className='absolute top-36 text-sm text-gray-900 dark:text-red-500'>{ error }</span>
         }
         <button
           type="submit"

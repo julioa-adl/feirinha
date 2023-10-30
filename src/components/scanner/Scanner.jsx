@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// @ts-ignore
+import React, { useEffect } from 'react';
 import Quagga from 'quagga';
 
 const Scanner = ({ onDetected }) => {
