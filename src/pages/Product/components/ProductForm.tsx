@@ -36,6 +36,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     manufacturer: product ? product.manufacturer : '',
     category: product ? product.category : '',
     code: product ? product.code : code,
+    image: product && product.image,
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   })
@@ -48,11 +49,30 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
+    const files = (event.target as HTMLInputElement).files;
+    
+    if (files) {
+      const file = files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataURL = reader.result;
+          setAddProd((prevState) => ({
+            ...prevState,
+            image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
+          }));
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    
     setAddProd((prevstate) => ({
       ...prevstate,
       [id]: value,
     }));
   }
+  
 
   const incrementSize = () => {
     setAddProd((prevState) => ({
@@ -72,7 +92,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
   useEffect(() => {
     const {name, manufacturer, category, code, unitMeasure, size} = addProd;
-    if (Number(size) <= 0 && !unitMeasure) { return }
+    if (Number(size) <= 0 && unitMeasure !== '') { return }
     if (
       name? name.length : 0 > 0 &&
       manufacturer? manufacturer.length : 0  > 0 &&
@@ -89,7 +109,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     const res = await registerProduct(addProd);
     console.log(res);
     setLoading(false);
-    if (!(res as ApiResponse).status) {
+    if (!(res as ApiResponse).status || (res as ApiResponse).status !== 201) {
       setError((res as ApiResponse).response.data.message)
     }
     setregistered(true)
@@ -100,7 +120,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     setLoading(true);
     const res = await updateProduct(addProd);
     setLoading(false);
-    if (!(res as ApiResponse).status) {
+    if (!(res as ApiResponse).status  || (res as ApiResponse).status !== 200) {
       setError((res as ApiResponse).response.data.message)
     }
     setregistered(true)
@@ -112,12 +132,12 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
       registered ? (
         returnForm[error ? 'Erro' : typeUse]
       ) : (
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
             <label
               htmlFor=""
-              className="text-gray-100 flex justify-between"
-            >nome do produto: <span className="text-gray-600 text-sm">obrigatório</span></label>
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >nome do produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
               type="text"
               required
@@ -132,7 +152,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor=""
-              className="text-gray-100"
+              className="text-gray-100 text-sm"
             >outros detalhes: </label>
             <input
               type="text"
@@ -147,8 +167,8 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor=""
-              className="text-gray-100 flex justify-between"
-            >fabricante: <span className="text-gray-600 text-sm">obrigatório</span></label>
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >fabricante: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
               type="text"
               required
@@ -163,8 +183,8 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor=""
-              className="text-gray-100 flex justify-between"
-            >Categoria: <span className="text-gray-600 text-sm">obrigatório</span></label>
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >categoria: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <select
               required
               id='category'
@@ -186,9 +206,8 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
           <div className="flex flex-col gap-1">
             <label
-              htmlFor=""
-              className="text-gray-100 flex justify-between"
-            >Código de Barras: <span className="text-gray-600 text-sm">obrigatório</span></label>
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >código de barras: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
               type="text"
               required
@@ -198,17 +217,34 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               placeholder="000000"
               className="px-4 py-1 w-full rounded-md"
             />
-            <p className="text-gray-600 text-sm">confira com atenção o código capturado, caso necessário corrija o código!</p>
+            <p className="text-gray-600 text-xs">confira com atenção o código capturado, caso necessário corrija o código!</p>
           </div>
 
-          <h2 className="text-gray-100">Dimenssões</h2>
+          <div className="flex flex-col gap-1">
+            <label
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >imagem: </label>
+            <input
+              type="file"
+              id='image'
+              accept="image/*;capture=camera"
+              onChange={ handleChange }
+              className="text-xs text-gray-600 file:ease-in-out file:duration-300
+                        file:py-1 file:px-2 file:border-[1px]
+                        file:text-xs file:font-medium file:rounded-sm
+                        file:bg-gray-100 file:text-stone-700
+                        hover:file:cursor-pointer hover:file:text-blue-700"
+            />
+          </div>
+
+          <h2 className="text-gray-100 text-xs">DIMENSSÕES</h2>
           <hr />
 
           <div className="flex justify-start items-center gap-5">
             <div className="flex flex-col gap-1">
               <label
                 htmlFor=""
-                className="text-gray-100"
+                className="text-gray-100 text-sm"
               >valor: </label>
               <div className="flex">
                 <div
@@ -242,7 +278,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
             <div className="flex flex-col gap-1">
                 <label
-                  className="text-gray-100"
+                  className="text-gray-100 text-sm"
                 >métrica: </label>
                 <select
                   id='unitMeasure'
@@ -251,7 +287,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   onChange={ handleChange }
                   className={`px-4 py-1 w-full rounded-md ${addProd.unitMeasure === '' ? 'text-gray-400' : 'text-gray-900'}`}
             >
-              <option value={''} disabled>.</option>
+              <option value={''} disabled>-</option>
                   {
                     unidadeDeMedida.map((category, i) => (
                     <option
@@ -267,7 +303,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               type="submit"
               disabled={ disable }
               className={`flex justify-center text-center items-center font-medium
-              rounded-full text-sm px-3 py-2 w-full text-white
+              rounded-full text-sm px-3 py-2 w-full text-white mt-3
               ${ disable ? 'bg-blue-400 opacity-50'
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
               onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
