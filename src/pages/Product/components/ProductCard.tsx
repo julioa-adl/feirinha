@@ -15,21 +15,21 @@ const ProductCard = ({ prod }:productCards) => {
   
   return(
     <li
-      className='flex justify-between items-center
+      className='flex justify-between items-center gap-2
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-100 dark:bg-gray-800'
     >
-      <div className="w-1/6 flex justify-center items-center px-4">
+      <div className="w-1/6 flex justify-center items-center h-full md:px-4 bg-white rounded-md">
         { prod.image ? (
-            <img src={`${prod.image}`} alt={prod.name} className="rounded-md"/>
+            <img src={`${prod.image}`} alt={prod.name} className="object-contain"/>
           ) : <ArchiveBoxXMarkIcon className="h-14 text-gray-600 opacity-50"/>
         }
       </div>
       <div className="w-4/6">
-        <div className="flex flex-row gap-2 font-semibold text-sm md:text-base lowercase items-center">
+        <div className="flex flex-row gap-2 font-semibold text-xs md:text-base lowercase items-center">
           <span>{ `${prod.name} ${prod.subName} - ${prod.size}${prod.unitMeasure}` }</span>
         </div>
-        <div className="dark:text-gray-500 font-light text-sm uppercase">
+        <div className="dark:text-gray-500 font-light text-xs uppercase">
           <h2>{ prod.manufacturer }</h2>
           <h2>{ `Cod: ${prod.code}` }</h2>
         </div>
