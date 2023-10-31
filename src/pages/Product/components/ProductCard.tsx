@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, ArchiveBoxXMarkIcon } from '@heroicons/react/24/outline';
 import { Iprod } from "../../../helpers/httpClient";
 
 interface productCards {
@@ -17,9 +17,15 @@ const ProductCard = ({ prod }:productCards) => {
     <li
       className='flex justify-between items-center
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:px-8 md:py-4 bg-gray-100 dark:bg-gray-800'
+      rounded-xl p-2 md:p-4 bg-gray-100 dark:bg-gray-800'
     >
-      <div>
+      <div className="w-1/6 flex justify-center items-center px-4">
+        { prod.image ? (
+            <img src={`${prod.image}`} alt="" />
+          ) : <ArchiveBoxXMarkIcon className="h-14 text-yellow-600 opacity-50"/>
+        }
+      </div>
+      <div className="w-4/6">
         <div className="flex flex-row gap-2 font-semibold text-sm md:text-base lowercase items-center">
           <span>{ `${prod.name} ${prod.subName} - ${prod.size}${prod.unitMeasure}` }</span>
         </div>

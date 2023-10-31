@@ -18,6 +18,7 @@ export type Iprod = {
   manufacturer: string | undefined,
   category: string | undefined,
   code: string | undefined,
+  image: ArrayBuffer | string | undefined,
   unitMeasure?: string | undefined,
   size?: number,
 }
@@ -105,12 +106,13 @@ const fetchProducts = async () => {
   }
 }
 
-const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size }: Iprod) => {
+const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
+  const urlImgBB = await postImgbb(image) || ''
   try {
     const res = await axios.post(
       backendUrl('product'),
       {
-        name, subName, manufacturer, category, code, unitMeasure, size
+        name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB
       },
     );
     return res;
@@ -119,7 +121,8 @@ const registerProduct = async ({ name, subName, manufacturer, category, code, un
   }
 };
 
-const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size }: Iprod) => {
+const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
+  const urlImgBB = await postImgbb(image) || ''
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken)
@@ -127,7 +130,7 @@ const updateProduct = async ({ id, name, subName, manufacturer, category, code, 
     const res = await axios({
       method: "put",
       url: backendUrl('product'),
-      data: { id, name, subName, manufacturer, category, code, unitMeasure, size },
+      data: { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB },
       headers: {
         Authorization: token
       },
@@ -135,6 +138,27 @@ const updateProduct = async ({ id, name, subName, manufacturer, category, code, 
     return res;
   } catch (err) {
     return err;
+  }
+};
+
+const postImgbb = async (file) => {
+  const apiKey = 'a022e0c88f5aa8bad8ab2074ef2fd9c3';
+
+  const formData = new FormData();
+  formData.set('key', apiKey)
+  formData.append('image', file.split(",").pop())
+
+  try {
+    const response = await axios({
+      method: 'post',
+      url: 'https://api.imgbb.com/1/upload',
+      data: formData
+    })
+
+    return response.data.data.url;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };
 
