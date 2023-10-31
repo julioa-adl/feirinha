@@ -4,8 +4,8 @@ import Provider from './context/myProvider';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Products from './pages/Products';
-import Markets from './pages/Markets';
+import Products from './pages/Product/Products';
+import Markets from './pages/Market/Markets';
 
 import PrivateRouter from './PrivateRouter';
 

@@ -1,8 +1,8 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
-import Loading from '../components/Loading';
-import ToggleTheme from "../components/ToggleTheame";
+import Loading from '../general-components/Loading';
+import ToggleTheme from "../general-components/ToggleTheame";
 import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
 import { registUser } from '../helpers/httpClient';
 import { ApiResponse } from '../interfaces/ApiResponse';

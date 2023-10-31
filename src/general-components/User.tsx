@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 import context from "../context/myContext";
 import { UserIcon } from '@heroicons/react/24/solid';
-import ToggleTheme from '../components/ToggleTheame';
+import ToggleTheme from './ToggleTheame';
 import { useNavigate } from 'react-router-dom';
 
 const User = () => {

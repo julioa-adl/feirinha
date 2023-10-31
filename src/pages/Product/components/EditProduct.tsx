@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import context from '../context/myContext';
+import context from '../../../context/myContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import ProductForm from "../components/ProductForm";
+import ProductForm from "./ProductForm";
 
 const EditProduct = () => {
   const {

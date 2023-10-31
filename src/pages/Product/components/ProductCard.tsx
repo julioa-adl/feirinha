@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import context from '../context/myContext';
+import context from '../../../context/myContext';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
-import { Iprod } from "../helpers/httpClient";
+import { Iprod } from "../../../helpers/httpClient";
 
 interface productCards {
   prod: Iprod

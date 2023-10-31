@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import context from '../context/myContext';
+import context from '../../../context/myContext';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 const AddProdButton = () => {

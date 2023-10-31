@@ -1,4 +1,4 @@
-import Navigator from "../components/Navigator";
+import Navigator from "../general-components/Navigator";
 
 const Home = () => {
   return(

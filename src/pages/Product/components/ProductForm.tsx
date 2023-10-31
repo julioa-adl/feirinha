@@ -1,14 +1,14 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import categories from "../helpers/categories";
-import unidadeDeMedida from "../helpers/unidadeDeMedida";
+import categories from "../../../helpers/categories";
+import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
-import { registerProduct, updateProduct } from "../helpers/httpClient";
-import { ApiResponse } from '../interfaces/ApiResponse';
-import RegisteredSuccess from "../components/alerts/RegisteredSuccess";
-import Loading from '../components/Loading';
-import EditedSuccess from "../components/alerts/EditedSuccess";
-import Error from "../components/alerts/Error";
-import { Iprod } from "../helpers/httpClient";
+import { registerProduct, updateProduct } from "../../../helpers/httpClient";
+import { ApiResponse } from '../../../interfaces/ApiResponse';
+import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
+import Loading from '../../../general-components/Loading';
+import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
+import Error from "../../../general-components/alerts/Error";
+import { Iprod } from "../../../helpers/httpClient";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 

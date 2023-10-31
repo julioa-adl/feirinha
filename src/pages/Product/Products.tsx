@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import context from '../context/myContext';
-import Navigator from "../components/Navigator";
-import ProductCard from '../components/ProductCard';
-import AddProdButton from '../components/AddProdButton';
-import AddProduct from './AddProduct';
-import EditProduct from './EditProduct';
-import { Iprod } from '../helpers/httpClient';
+import context from '../../context/myContext';
+import Navigator from "../../general-components/Navigator";
+import ProductCard from './components/ProductCard';
+import AddProdButton from './components/CallProdButton';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
+import { Iprod } from '../../helpers/httpClient';
 
 const Products = () => {
   const {
