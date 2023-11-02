@@ -120,7 +120,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     setLoading(true);
     const res = await updateProduct(addProd);
     setLoading(false);
-    if (!(res as ApiResponse).status  || (res as ApiResponse).status !== 200) {
+    if (!(res as ApiResponse).status || (res as ApiResponse).status !== 200) {
       setError((res as ApiResponse).response.data.message)
     }
     setregistered(true)
@@ -135,7 +135,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
         <form className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
             <label
-              htmlFor=""
               className="text-gray-100 flex justify-between items-end text-sm"
             >nome do produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
@@ -151,7 +150,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
           <div className="flex flex-col gap-1">
             <label
-              htmlFor=""
               className="text-gray-100 text-sm"
             >outros detalhes: </label>
             <input
@@ -166,7 +164,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
           <div className="flex flex-col gap-1">
             <label
-              htmlFor=""
               className="text-gray-100 flex justify-between items-end text-sm"
             >fabricante: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
@@ -182,7 +179,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
 
           <div className="flex flex-col gap-1">
             <label
-              htmlFor=""
               className="text-gray-100 flex justify-between items-end text-sm"
             >categoria: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <select
@@ -243,7 +239,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           <div className="flex justify-start items-center gap-5">
             <div className="flex flex-col gap-1">
               <label
-                htmlFor=""
                 className="text-gray-100 text-sm"
               >valor: </label>
               <div className="flex">

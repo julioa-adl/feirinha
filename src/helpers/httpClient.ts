@@ -23,6 +23,16 @@ export type Iprod = {
   size?: number,
 }
 
+export type Imarket = {
+  id?: string | undefined,
+  _id?: string | undefined,
+  name: string | undefined,
+  address: string | undefined,
+  neighborhood: string | undefined,
+  city: string | undefined,
+  state: string | undefined,
+}
+
 const loginUser = async ({ email, password }: Iuser) => {
 
   try {
@@ -106,15 +116,60 @@ const fetchProducts = async () => {
   }
 }
 
-const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
-  const urlImgBB = await postImgbb(image) || ''
+const fetchMarkets = async () => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
   try {
-    const res = await axios.post(
-      backendUrl('product'),
-      {
-        name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB
+    const res = await axios({
+      method: "get",
+      url: backendUrl('market'),
+      data: {},
+      headers: {
+        Authorization: token
       },
-    );
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
+const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
+  const urlImgBB = await postImgbb(image) || '';
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  try {
+    const res = await axios({
+      method: "post",
+      url: backendUrl('product'),
+      data: {name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB},
+      headers: {
+        Authorization: token || ''
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+const registerMarket = async ({ name, address, neighborhood, city, state }: Imarket) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  try {
+    const res = await axios({
+      method: "post",
+      url: backendUrl('market'),
+      data: {name, address, neighborhood, city, state},
+      headers: {
+        Authorization: token || ''
+      },
+    });
     return res;
   } catch (err) {
     return err;
@@ -122,7 +177,10 @@ const registerProduct = async ({ name, subName, manufacturer, category, code, un
 };
 
 const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
-  const urlImgBB = await postImgbb(image) || ''
+  let urlImgBB;
+  if (image) {
+    urlImgBB = await postImgbb(image);
+  }
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken)
@@ -130,9 +188,28 @@ const updateProduct = async ({ id, name, subName, manufacturer, category, code, 
     const res = await axios({
       method: "put",
       url: backendUrl('product'),
-      data: { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB },
+      data: { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB || null },
       headers: {
-        Authorization: token
+        Authorization: token || ''
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+const updateMarket = async ({ id, name, address, neighborhood, city, state }: Imarket) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  try {
+    const res = await axios({
+      method: "put",
+      url: backendUrl('market'),
+      data: { id, name, address, neighborhood, city, state },
+      headers: {
+        Authorization: token || ''
       },
     });
     return res;
@@ -169,4 +246,7 @@ export {
   fetchProducts,
   registerProduct,
   updateProduct,
+  fetchMarkets,
+  registerMarket,
+  updateMarket,
 }

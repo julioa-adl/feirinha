@@ -19,10 +19,10 @@ const ProductCard = ({ prod }:productCards) => {
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-100 dark:bg-gray-800'
     >
-      <div className="w-1/6 flex justify-center items-center h-full md:px-4 bg-white rounded-md">
+      <div className={`w-1/6 flex justify-center items-center ${prod.image ? 'h-full' : 'h-14 md:h-20'} md:px-4 bg-white rounded-md`}>
         { prod.image ? (
-            <img src={`${prod.image}`} alt={prod.name} className="object-contain"/>
-          ) : <ArchiveBoxXMarkIcon className="h-14 text-gray-600 opacity-50"/>
+            <img src={`${prod.image}`} alt={prod.name} className="object-contain p-1 md:p-2"/>
+          ) : <ArchiveBoxXMarkIcon className="h-8 md:h-12 text-gray-600 opacity-20"/>
         }
       </div>
       <div className="w-4/6">

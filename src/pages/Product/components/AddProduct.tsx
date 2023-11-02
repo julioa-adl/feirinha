@@ -4,7 +4,7 @@ import { XMarkIcon, ViewfinderCircleIcon } from '@heroicons/react/24/outline';
 import Scanner from '../../../general-components/scanner/Scanner';
 import { Iprod } from "../../../helpers/httpClient";
 import ProductForm from "./ProductForm";
-import ProductAlredyRegistered from "../../../general-components/alerts/ProductAlredyRegistered";
+import AlredyRegistered from "../../../general-components/alerts/AlredyRegistered";
 
 interface Result {
   codeResult: {
@@ -28,7 +28,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    const error = <ProductAlredyRegistered />
+    const error = <AlredyRegistered />
     const proceed = <ProductForm typeUse='Cadastrar' code={code}/>
     if (code && products) {
       const verify = products.some((prod:Iprod) => prod.code === code)

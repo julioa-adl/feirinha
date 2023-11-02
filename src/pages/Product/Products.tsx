@@ -3,7 +3,7 @@ import context from '../../context/myContext';
 import Navigator from "../../general-components/Navigator";
 import NotFind from '../../general-components/alerts/NotFind';
 import ProductCard from './components/ProductCard';
-import AddProdButton from './components/CallProdButton';
+import CallProdButton from './components/CallProdButton';
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
 import { Iprod } from '../../helpers/httpClient';
@@ -37,7 +37,7 @@ const Products = () => {
           )
         )
       }
-      <AddProdButton />
+      <CallProdButton />
     </div>
   )
 }
