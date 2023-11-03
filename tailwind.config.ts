@@ -8,8 +8,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'market': "url('./src/assets/bg-market.svg')",
-        'market-75': "url('./src/assets/bg-market-75.svg')",
+        'market': "url('./src/assets/bg-market.png')",
+        'market-75': "url('./src/assets/bg-market-75.png')",
       },
     },
   },

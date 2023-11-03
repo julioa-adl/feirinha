@@ -5,7 +5,7 @@ import Search from './Search';
 
 const Navigator = ({searching}) => {
   return(
-    <div className='flex'>
+    <div className='flex relative'>
       <div className='flex justify-start md:justify-between items-center w-full md:w-2/3 p-4 md:px-12 md:py-4'>
         <Link to='/'>
           <img
@@ -15,7 +15,7 @@ const Navigator = ({searching}) => {
           />
         </Link>
 
-        <div className='hidden justify-between md:flex gap-8'>
+        <div className='justify-between absolute -bottom-4 left-0 right-0 mx-8 md:block flex gap-8'>
           <Link
             to='/mercados'
             className='text-gray-900 hover:text-yellow-500 dark:text-gray-100 dark:hover:text-blue-400'

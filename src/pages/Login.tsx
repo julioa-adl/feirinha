@@ -67,7 +67,7 @@ const Login = () => {
   
   return (
     <div
-      className="h-screen w-screen bg-market dark:bg-gray-900 dark:bg-market-75 
+      className="h-screen w-screen bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 
                 m-auto flex flex-col justify-evenly items-center">
       <form className="relative flex flex-col gap-8 items-center">
         <img src={logo} alt='logo' className="w-36 mb-8 dark:invert"/>
