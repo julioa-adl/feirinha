@@ -8,7 +8,8 @@ export interface ApiResponse {
     response: {
         message: boolean,
         data: {
-            message: boolean
+            message: boolean,
+            error: string
         }
     }
 }
