@@ -15,7 +15,12 @@ const Products = () => {
     search
   } = useContext(context);
 
-  const filterProd = products && products.filter(prodF => ((`${prodF.name} ${prodF.subName} ${prodF.size}${prodF.unitMeasure}`).toLowerCase().includes(search.produto.toLowerCase() || '')))
+  const productsSort = products && products.sort((a,b) => {
+    if(a.name < b.name) return -1;
+    if(a.name > b.name) return 1;
+    return 0;
+});
+  const filterProd = products && productsSort.filter(prodF => ((`${prodF.name} ${prodF.subName} ${prodF.size}${prodF.unitMeasure}`).toLowerCase().includes(search.produto.toLowerCase() || '')))
 
   return(
     <div className='bg-white h-screen dark:bg-gray-900 overflow-hidden'>

@@ -48,7 +48,7 @@ const AddProduct = () => {
         <XMarkIcon
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
-          onClick={() => setShowProd(false)}/>
+          onClick={() => { setShowProd(false); setCode('') }}/>
         {
           !code ? (
             <div className="flex flex-col gap-10 ">

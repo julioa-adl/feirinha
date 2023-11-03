@@ -15,7 +15,7 @@ const Markets = () => {
     search
   } = useContext(context);
 
-  const filterMarket = markets && markets.filter(marketF => ((`${marketF.name} ${marketF.subName} ${marketF.size}${marketF.unitMeasure}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
+  const filterMarket = markets && markets.filter(marketF => ((`${marketF.name} ${marketF.neighborhood} ${marketF.address} ${marketF.city} ${marketF.state}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900 overflow-hidden">
