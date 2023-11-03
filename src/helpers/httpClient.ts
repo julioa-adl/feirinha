@@ -85,7 +85,6 @@ const revalidateToken = async (): Promise<boolean> => {
         Authorization: token
       },
     });
-    console.log(res.data.message)
     if (res.data.message === 'Valid Token!') {
       return true;
     }
