@@ -52,7 +52,7 @@ const Register = () => {
       values.email.length > 0 &&
       emailIsValid &&
       values.password.length > 5 &&
-      values.name.length > 0 &&
+      values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 3 &&
       values.birthday.length > 0 &&
       terms === true) {
       return setDisable(false);
@@ -84,7 +84,7 @@ const Register = () => {
             id='name'
             value={ values.name }
             onChange={ handleChange }
-            placeholder="Digite seu nome"
+            placeholder="Ex. Lucas Lima"
             className={`rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className='relative'>
@@ -106,7 +106,7 @@ const Register = () => {
             id='password'
             value={ values.password }
             onChange={ handleChange }
-            placeholder="Digite sua senha"
+            placeholder="mínimo 6 caracteres"
             className={`rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className="relative">
