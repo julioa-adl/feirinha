@@ -56,7 +56,7 @@ const AddProduct = () => {
                 <ViewfinderCircleIcon className="h-10 text-gray-100"/>
                 <span className="text-gray-100">Scanneie o código de barras!</span>
               </div>
-              <div className="h-36 md:h-full relative overflow-hidden">
+              <div className="flex items-center justify-center h-36 md:h-full relative overflow-hidden">
                 <Scanner onDetected={handleDetected} />
               </div>
 
