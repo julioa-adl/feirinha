@@ -7,6 +7,7 @@ import NotFind from "../../general-components/alerts/NotFind";
 import CallMrktButton from "./components/CallMrktButton";
 import MarketCard from "./components/MarketCard";
 import { Imarket } from "../../helpers/httpClient";
+import SkeletonCard from "../../general-components/SkeletonCard";
 
 const Markets = () => {
   const {
@@ -25,7 +26,7 @@ const Markets = () => {
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
             )) : <NotFind />
-          ) : <li className='text-gray-900 dark:text-gray-100'>Carregando mercados ...</li>
+          ) : <SkeletonCard />
         }
       </ul>
       {

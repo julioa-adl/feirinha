@@ -12,6 +12,11 @@ export default {
         'market-75': "url('/src/assets/bg-market-75.svg')",
       },
     },
+    keyframes: {
+      shimmer: {
+        '100%' : {transform: 'translateX(100%)'}
+      }
+    }
   },
   plugins: [],
 }

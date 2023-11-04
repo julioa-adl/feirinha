@@ -6,6 +6,7 @@ import ProductCard from './components/ProductCard';
 import CallProdButton from './components/CallProdButton';
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
+import SkeletonCard from '../../general-components/SkeletonCard';
 import { Iprod } from '../../helpers/httpClient';
 
 const Products = () => {
@@ -30,7 +31,7 @@ const Products = () => {
             filterProd.length > 0 ? filterProd.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
             )) : <NotFind />
-          ) : <li className='text-gray-900 dark:text-gray-100'>Carregando produtos ...</li>
+          ) : <SkeletonCard />
         }
       </ul>
       {
