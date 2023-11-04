@@ -21,7 +21,7 @@ const ProductCard = ({ prod }:productCards) => {
     >
       <div className={`w-1/6 flex justify-center items-center ${prod.image ? 'h-full' : 'h-14 md:h-20'} md:px-4 bg-white rounded-md`}>
         { prod.image ? (
-            <img src={`${prod.image}`} alt={prod.name} className="object-contain p-1 md:p-2"/>
+              <img src={`${prod.image}`} alt={prod.name} className="p-1 h-fit max-h-20 md:p-2"/>
           ) : <ArchiveBoxXMarkIcon className="h-8 md:h-12 text-gray-600 opacity-20"/>
         }
       </div>
