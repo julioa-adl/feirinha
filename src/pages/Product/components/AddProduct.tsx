@@ -59,6 +59,7 @@ const AddProduct = () => {
               <div className="h-36 md:h-full relative">
                 <Scanner onDetected={handleDetected} />
               </div>
+              
             </div>
           ) : (
               isProductRegistered && isProductRegistered
