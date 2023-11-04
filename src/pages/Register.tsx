@@ -73,7 +73,7 @@ const Register = () => {
   }
 
   return (
-    <div className= "h-screen w-screen bg-blue-400 bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
+    <div className= "h-screen w-screen bg-blue-400 bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center py-20">
       <form className="relative flex flex-col gap-6 items-center">
         <img src={logo} alt='logo' className="w-36 dark:invert"/>
         <div className="relative">

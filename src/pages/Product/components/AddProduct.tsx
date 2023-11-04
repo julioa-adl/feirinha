@@ -51,12 +51,14 @@ const AddProduct = () => {
           onClick={() => { setShowProd(false); setCode('') }}/>
         {
           !code ? (
-            <div className="flex flex-col gap-10 ">
+            <div className="flex flex-col gap-5 relative">
               <div className="flex gap-5 items-center justify-center">
                 <ViewfinderCircleIcon className="h-10 text-gray-100"/>
                 <span className="text-gray-100">Scanneie o código de barras!</span>
               </div>
-              <Scanner onDetected={handleDetected} />
+              <div className="h-36 md:h-full">
+                <Scanner onDetected={handleDetected} />
+              </div>
             </div>
           ) : (
               isProductRegistered && isProductRegistered
