@@ -56,10 +56,10 @@ const AddProduct = () => {
                 <ViewfinderCircleIcon className="h-10 text-gray-100"/>
                 <span className="text-gray-100">Scanneie o código de barras!</span>
               </div>
-              <div className="h-36 md:h-full relative">
+              <div className="h-36 md:h-full relative overflow-hidden">
                 <Scanner onDetected={handleDetected} />
               </div>
-              
+
             </div>
           ) : (
               isProductRegistered && isProductRegistered
