@@ -28,7 +28,7 @@ const Markets = () => {
         <Search searching={'mercado'}/>
         <User />
       </div>
-      <ul className='w-screem h-5/6 lg:h-4/5 px-5 overflow-auto flex flex-col my-5 pb-14 items-center gap-5 drop-shadow-lg'>
+      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col my-5 pb-14 items-center gap-5 drop-shadow-lg'>
         { markets ? (
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
