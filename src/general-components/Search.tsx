@@ -13,7 +13,7 @@ const Search = ({ searching }:seachComponent) => {
   } = useContext(context)
   
   return(
-    <div className='relative xl:block'>
+    <div className='relative'>
       <MagnifyingGlassIcon
         className='h-4 absolute text-gray-400 top-2.5 left-3'
       />

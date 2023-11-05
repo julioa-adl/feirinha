@@ -13,7 +13,7 @@ const Navigator = () => {
           />
         </Link>
 
-        <div className='justify-between absolute -bottom-4 left-0 right-0 mx-8 md:relative md:bottom-0 flex gap-8'>
+        <div className='justify-between hidden mx-8 lg:flex gap-8'>
           <Link
             to='/mercados'
             className='text-gray-900 hover:text-yellow-500 dark:text-gray-100 dark:hover:text-blue-400'
