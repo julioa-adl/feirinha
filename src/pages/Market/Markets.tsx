@@ -10,6 +10,7 @@ import { Imarket } from "../../helpers/httpClient";
 import SkeletonCard from "../../general-components/SkeletonCard";
 import Search from "../../general-components/Search";
 import User from "../../general-components/User";
+import MobileMenu from "../../general-components/MobileMenu";
 
 const Markets = () => {
   const {
@@ -22,12 +23,12 @@ const Markets = () => {
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900 overflow-hidden">
-      <div className='flex items-center w-full justify-center'>
+      <div className='pt-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search searching={'mercado'}/>
         <User />
       </div>
-      <ul className='w-screem h-4/5 px-5 overflow-auto flex flex-col my-8 pb-10 items-center gap-5 drop-shadow-lg'>
+      <ul className='w-screem h-5/6 lg:h-4/5 px-5 overflow-auto flex flex-col my-5 pb-14 items-center gap-5 drop-shadow-lg'>
         { markets ? (
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
@@ -45,6 +46,7 @@ const Markets = () => {
         )
       }
       <CallMrktButton />
+      <MobileMenu />
     </div>
   )
 }
