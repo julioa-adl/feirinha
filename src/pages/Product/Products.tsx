@@ -28,12 +28,12 @@ const Products = () => {
 
   return(
     <div className='bg-white h-screen dark:bg-gray-900 overflow-y-hidden'>
-      <div className='pt-5 flex items-center w-full justify-center'>
+      <div className='py-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search searching={'produto'}/>
         <User />
       </div>
-      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col my-5 pb-14 items-center gap-5 drop-shadow-lg'>
+      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
         { products ? (
             filterProd.length > 0 ? filterProd.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
