@@ -117,7 +117,7 @@ const Register = () => {
             id='birthday'
             value={ values.birthday }
             onChange={ handleChange }
-            className={`appearance-none rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`appearance-none rounded-full px-8 py-2 w-80 text-center h-10 bg-white dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className='flex flex-row gap-3 items-center w-80 ml-6'>
           <input
