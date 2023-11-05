@@ -1,12 +1,10 @@
 import logo from '../assets/feirinha-icon.png';
 import { Link } from 'react-router-dom';
-import User from './User';
-import Search from './Search';
 
-const Navigator = ({searching}) => {
+const Navigator = () => {
   return(
     <div className='flex relative'>
-      <div className='flex justify-start md:justify-between items-center w-full md:w-2/3 p-4 md:px-12 md:py-4'>
+      <div className='flex justify-start md:justify-between items-center p-2 md:px-12 md:py-4'>
         <Link to='/'>
           <img
             className='h-12 dark:invert'
@@ -32,11 +30,7 @@ const Navigator = ({searching}) => {
           >Relatórios</Link>
 
         </div>
-
-        <Search searching={searching}/>
-
       </div>
-      <User />
     </div>
   )
 }
