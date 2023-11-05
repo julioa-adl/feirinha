@@ -19,19 +19,19 @@ function ToggleTheme() {
   return (
     <>
       <div
-        className='group flex w-36 gap-2 items-center justify-center bg-gray-100 rounded-full py-2 px-4 cursor-pointer dark:hidden'
+        className='group flex w-10 h-10 md:w-36 md:gap-2 items-center justify-center bg-gray-100 rounded-full md:py-2 md:px-4 cursor-pointer dark:hidden'
         onClick={ toggle }
       >
-        <h1 className='text-gray-900 text-xs'>Modo Escuro</h1>
+        <h1 className='hidden md:block text-gray-900 text-xs'>Modo Escuro</h1>
         <MoonIcon
           className="h-5 text-gray-900 ease-in-out duration-300 group-hover:text-yellow-400"
         />
       </div>
       <div
-        className='group hidden w-36 gap-2 items-center justify-center bg-gray-700 rounded-full py-2 px-4 cursor-pointer dark:flex'
+        className='group hidden w-10 h-10 md:w-36 md:gap-2 items-center justify-center bg-gray-700 rounded-full md:py-2 md:px-4 cursor-pointer dark:flex'
         onClick={ toggle }
       >
-        <h1 className='text-gray-100 text-xs'>Modo Claro</h1>
+        <h1 className='hidden md:block text-gray-100 text-xs'>Modo Claro</h1>
         <SunIcon
           className="h-5 text-gray-100 ease-in-out duration-300 group-hover:text-yellow-400"
         />
