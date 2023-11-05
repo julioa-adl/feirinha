@@ -74,8 +74,8 @@ const Register = () => {
 
   return (
     <div className= "h-screen w-screen bg-blue-400 bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center py-20">
-      <form className="relative flex flex-col gap-6 items-center">
-        <img src={logo} alt='logo' className="w-36 dark:invert"/>
+      <form className="relative flex flex-col gap-4 items-center">
+        <img src={logo} alt='logo' className="w-20 md:w-36 dark:invert"/>
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
           <input
@@ -141,7 +141,7 @@ const Register = () => {
         >
           { loading ? <Loading loading /> : 'Criar' }
         </button>
-        <div className='-mt-5 text-sm dark:text-gray-100'>
+        <div className='-mt-4 text-xs dark:text-gray-100'>
           <span>Já possui uma conta?</span><span className="font-bold cursor-pointer text-gray-900 hover:text-gray-100 dark:text-blue-400 dark:hover:text-blue-600" onClick={ loginHere }> Entre aqui!</span>
         </div>
       </form>
