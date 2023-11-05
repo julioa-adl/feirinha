@@ -26,7 +26,7 @@ const Markets = () => {
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
             )) : <NotFind />
-          ) : <SkeletonCard />
+          ) : <SkeletonCard type={'mercado'}/>
         }
       </ul>
       {

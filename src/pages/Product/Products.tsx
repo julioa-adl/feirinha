@@ -31,7 +31,7 @@ const Products = () => {
             filterProd.length > 0 ? filterProd.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
             )) : <NotFind />
-          ) : <SkeletonCard />
+          ) : <SkeletonCard type={'produto'}/>
         }
       </ul>
       {
