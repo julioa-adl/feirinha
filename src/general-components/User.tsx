@@ -16,7 +16,7 @@ const User = () => {
   const nameSplit = tokenDecode ? tokenDecode.data.name.split(' ') : null;
 
   return (
-    <div className="w-1/3 pr-4 sm:px-12 flex gap-2 justify-end items-center">
+    <div className="w-1/3 sm:px-12 flex gap-2 justify-end items-center">
       <div className=""><ToggleTheme /></div>
       <div
         className="flex cursor-pointer w-10 h-10 md:w-12 md:h-12 border-2 border-gray-900 dark:border-gray-100 justify-center items-center m-0 rounded-full"
