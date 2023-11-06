@@ -136,6 +136,27 @@ const fetchMarkets = async () => {
   }
 }
 
+const fetchFeirinhas = async (userId: string) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl(`feirinha/${userId}`),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
   const urlImgBB = await postImgbb(image) || '';
   const localToken = localStorage.getItem('userTokenFeirinha');
@@ -248,4 +269,5 @@ export {
   fetchMarkets,
   registerMarket,
   updateMarket,
+  fetchFeirinhas,
 }

@@ -47,24 +47,22 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     Erro: <Error />
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
     const files = (event.target as HTMLInputElement).files;
     
     if (files) {
       const file = files[0];
-      
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const dataURL = reader.result;
-          setAddProd((prevState) => ({
-            ...prevState,
-            image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
-          }));
-        };
-        reader.readAsDataURL(file);
-      }
+
+      const reader = new FileReader();
+          reader.onload = () => {
+            const dataURL = reader.result;
+            setAddProd((prevState) => ({
+              ...prevState,
+              image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
+            }));
+          };
+        reader.readAsDataURL(file); 
     }
     
     setAddProd((prevstate) => ({

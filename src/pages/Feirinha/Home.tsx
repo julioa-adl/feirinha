@@ -1,7 +1,7 @@
-import MobileMenu from "../general-components/MobileMenu";
-import Navigator from "../general-components/Navigator";
-import Search from "../general-components/Search";
-import User from "../general-components/User";
+import MobileMenu from "../../general-components/MobileMenu";
+import Navigator from "../../general-components/Navigator";
+import Search from "../../general-components/Search";
+import User from "../../general-components/User";
 
 const Home = () => {
   return(
@@ -18,3 +18,5 @@ const Home = () => {
 }
 
 export default Home;
+
+// TENTAR FAZER O fetchFeirinhas COM REACT QUERIE SE NAO FAZ NORMAL NO USEREFFECT MESMO
