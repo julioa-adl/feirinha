@@ -3,12 +3,12 @@ import categories from "../../../helpers/categories";
 import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import { registerProduct, updateProduct } from "../../../helpers/httpClient";
-import { ApiResponse } from '../../../interfaces/ApiResponse';
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import Loading from '../../../general-components/Loading';
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import { Iprod } from "../../../helpers/httpClient";
+import { useMutation, useQueryClient } from 'react-query';
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -25,10 +25,7 @@ interface ProductFormProps {
 }
 
 const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
-  const [error, setError] = useState<string | boolean>(false);
-  const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
-  const [registered, setregistered] = useState<boolean>(false);
   const [addProd, setAddProd] = useState<Iprod>({
     id: product ? product['_id'] : '',
     name: product ? product.name : '',
@@ -36,33 +33,34 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     manufacturer: product ? product.manufacturer : '',
     category: product ? product.category : '',
     code: product ? product.code : code,
-    image: product && product.image,
+    image: product ? product.image : undefined,
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   })
 
+  
   const returnForm: FormType = {
     Cadastrar: <RegisteredSuccess />,
     Atualizar: <EditedSuccess />,
     Erro: <Error />
   }
-
+  
   const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
     const files = (event.target as HTMLInputElement).files;
     
     if (files) {
       const file = files[0];
-
+      
       const reader = new FileReader();
-          reader.onload = () => {
-            const dataURL = reader.result;
-            setAddProd((prevState) => ({
-              ...prevState,
-              image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
-            }));
-          };
-        reader.readAsDataURL(file); 
+      reader.onload = () => {
+        const dataURL = reader.result;
+        setAddProd((prevState) => ({
+          ...prevState,
+          image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
+        }));
+      };
+      reader.readAsDataURL(file); 
     }
     
     setAddProd((prevstate) => ({
@@ -71,14 +69,13 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     }));
   }
   
-
   const incrementSize = () => {
     setAddProd((prevState) => ({
       ...prevState,
       size: Number(prevState.size) + 1,
     }));
   };
-
+  
   const decrementSize = () => {
     if (Number(addProd.size) >= 1) {
       setAddProd((prevState) => ({
@@ -87,7 +84,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
       }));
     }
   };
-
+  
   useEffect(() => {
     const {name, manufacturer, category, code, unitMeasure, size} = addProd;
     if (Number(size) <= 0 && unitMeasure !== '') { return }
@@ -96,39 +93,34 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
       manufacturer? manufacturer.length : 0  > 0 &&
       category? category.length : 0  > 0 &&
       code? code.length : 0  > 0 ) {
-      return setDisable(false);
-    }
-    return setDisable(true);
-  }, [addProd])
+        return setDisable(false);
+      }
+      return setDisable(true);
+    }, [addProd])
+    
+  const querieClient = useQueryClient();
 
+  const { mutate: registerProd, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerProduct(addProd).then(
+    () => querieClient.invalidateQueries('products')
+  ))
   const handleRegistered = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await registerProduct(addProd);
-    console.log(res);
-    setLoading(false);
-    if (!(res as ApiResponse).status || (res as ApiResponse).status !== 201) {
-      setError((res as ApiResponse).response.data.message)
-    }
-    setregistered(true)
+    registerProd();
   };
 
+  const { mutate: updateProd, isLoading: updateLoading, isSuccess: updateSucess, isError: updateError } = useMutation(() => updateProduct(addProd).then(
+    () => querieClient.invalidateQueries('products')
+  ))
   const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await updateProduct(addProd);
-    setLoading(false);
-    if (!(res as ApiResponse).status || (res as ApiResponse).status !== 200) {
-      setError((res as ApiResponse).response.data.message)
-    }
-    setregistered(true)
+    updateProd();
   };
 
   return (
     <>
     {
-      registered ? (
-        returnForm[error ? 'Erro' : typeUse]
+      updateSucess || registerSucess ? (
+        returnForm[updateError || registerError ? 'Erro' : typeUse]
       ) : (
         <form className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
@@ -301,7 +293,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
               onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
             >
-              { loading ? <Loading loading /> : typeUse }
+              { updateLoading || registerLoading ? <Loading loading /> : typeUse }
             </button>
         </form>
       )

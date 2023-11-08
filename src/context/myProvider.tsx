@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useMemo, useState, useEffect, useCallback } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
-import { fetchMarkets, fetchProducts } from "../helpers/httpClient";
+import { fetchMarkets, fetchProducts, fetchFeirinhas } from "../helpers/httpClient";
 import { Iprod } from '../helpers/httpClient';
+import { useQuery } from 'react-query';
 
 interface AuxProps  { 
   children: React.ReactNode
@@ -17,12 +18,15 @@ type Isearch = {
 function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
-  const [products, setProducts] = useState();
+  const [code, setCode] = useState();
   const [markets, setMarkets] = useState();
+  const [feirinhas, setFeirinhas] = useState();
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [showMarket, setShowMarket] = useState<boolean | string | undefined>(false);
+  const [showFeirinha, setShowFeirinha] = useState<boolean | string | undefined>(false);
   const [editProd, setEditProd] = useState<Iprod | undefined>();
   const [editMrkt, setEditMrkt] = useState<Iprod | undefined>();
+  const [editFeirinha, setEditFeirinha] = useState<Iprod | undefined>();
   const [search, setSearch] = useState<Isearch>({
     produto: '',
     mercado: '',
@@ -39,17 +43,7 @@ function Provider({ children }:AuxProps) {
     setTokenDecode(res)
   }, [token])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetchProducts();
-        setProducts(res);
-      } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
-      }
-    };
-    fetchData();
-  }, [showProd]);
+  const products = useQuery('products', () => fetchProducts())  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +57,24 @@ function Provider({ children }:AuxProps) {
     fetchData();
   }, [showMarket]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let userId;
+      const localToken = localStorage.getItem('userTokenFeirinha');
+      if (token || localToken) {
+        const thisToken = token || localToken !== null && JSON.parse(localToken);
+        userId = decode(thisToken).data['_id'];
+      }
+      try {
+        const res = await fetchFeirinhas(userId);
+        setFeirinhas(res);
+      } catch (error) {
+        console.error("Erro ao buscar feirinhas:", error);
+      }
+    };
+    fetchData();
+  }, [showFeirinha, token]);
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setSearch((prevstate) => ({
@@ -73,13 +85,20 @@ function Provider({ children }:AuxProps) {
 
   const contextValue = useMemo(() => ({
     tokenDecode,
-    products, setProducts, showProd, setShowProd, setEditProd, editProd, //produts context
+    products, showProd, setShowProd, setEditProd, editProd, //produts context
     token,
     setToken,
     handleChange,
     search,
-    markets, showMarket, setShowMarket, editMrkt, setEditMrkt //market context
-  }), [tokenDecode, products, showProd, editProd, token, search, handleChange, markets, setShowMarket, showMarket, editMrkt, setEditMrkt]);
+    markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
+    feirinhas, setFeirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+    code, setCode
+  }), [tokenDecode,
+      products, showProd, editProd,
+      token, search, handleChange,
+      markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
+      feirinhas, setFeirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+      code, setCode]);
 
   return (
     <MyContext.Provider value={ contextValue }>

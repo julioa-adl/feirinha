@@ -19,10 +19,15 @@ const Login = () => {
   const [error, setError] = useState(false);
 
   const {
-    setToken
+    setToken,
   } = useContext(context)
 
   const history = useNavigate();
+
+  useEffect(() => {
+    const localToken = localStorage.getItem('userTokenFeirinha');
+    localToken && history('/')
+  }, [])
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
