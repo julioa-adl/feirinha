@@ -1,9 +1,9 @@
-import { PencilSquareIcon, ArchiveBoxXMarkIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, ArchiveBoxXMarkIcon, BuildingStorefrontIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 const typeUse = {
   mercado: <BuildingStorefrontIcon className="h-8 md:h-12 text-gray-400 opacity-20"/>,
   produto: <ArchiveBoxXMarkIcon className="h-8 md:h-12 text-gray-400 opacity-20"/>,
-  feirinha: <ArchiveBoxXMarkIcon className="h-8 md:h-12 text-gray-400 opacity-20"/>
+  feirinha: <ShoppingCartIcon className="h-8 md:h-12 text-gray-400 opacity-20"/>
 }
 
 const SkeletonCard = ({ type }) => {

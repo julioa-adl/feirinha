@@ -1,4 +1,5 @@
 import axios from 'axios';
+import decode from './jwtDecode';
 
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
 
@@ -31,6 +32,21 @@ export type Imarket = {
   neighborhood: string | undefined,
   city: string | undefined,
   state: string | undefined,
+}
+
+export type IlistCart = {
+  productId: string,
+  quantity: number,
+  price: number,
+}
+
+export type Ifeirinha = {
+  id?: string | undefined,
+  _id?: string | undefined,
+  userId?: string | undefined,
+  marketId?: string | undefined,
+  listCart?: IlistCart[] | undefined,
+  date?: string | undefined,
 }
 
 const loginUser = async ({ email, password }: Iuser) => {
@@ -162,11 +178,15 @@ const registerProduct = async ({ name, subName, manufacturer, category, code, un
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
+
+  const dataImg = { name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
+  const dataWithoutImg = { name, subName, manufacturer, category, code, unitMeasure, size }
+
   try {
     const res = await axios({
       method: "post",
       url: backendUrl('product'),
-      data: {name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB},
+      data: image && urlImgBB ? dataImg : dataWithoutImg,
       headers: {
         Authorization: token || ''
       },
@@ -196,19 +216,47 @@ const registerMarket = async ({ name, address, neighborhood, city, state }: Imar
   }
 };
 
+const registerFeirinha = async ({ marketId }: Ifeirinha) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  const id = decode(token)['_id']
+
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+
+  try {
+    const res = await axios({
+      method: "post",
+      url: backendUrl(`feirinha/${id}`),
+      data: {userId: id, marketId, date: today.toLocaleDateString()},
+      headers: {
+        Authorization: token || ''
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
 const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
   let urlImgBB;
   if (image) {
     urlImgBB = await postImgbb(image);
+    console.log(urlImgBB)
   }
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
-  const token = JSON.parse(localToken)
+  const token = JSON.parse(localToken);
+
+  const dataImg = { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
+  const dataWithoutImg = { id, name, subName, manufacturer, category, code, unitMeasure, size }
   try {
     const res = await axios({
       method: "put",
       url: backendUrl('product'),
-      data: { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB || null },
+      data: image && urlImgBB ? dataImg : dataWithoutImg,
       headers: {
         Authorization: token || ''
       },
@@ -222,12 +270,34 @@ const updateProduct = async ({ id, name, subName, manufacturer, category, code, 
 const updateMarket = async ({ id, name, address, neighborhood, city, state }: Imarket) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
-  const token = JSON.parse(localToken)
+  const token = JSON.parse(localToken);
+
   try {
     const res = await axios({
       method: "put",
       url: backendUrl('market'),
       data: { id, name, address, neighborhood, city, state },
+      headers: {
+        Authorization: token || ''
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+const updateFeirinha = async ({...obj }: Ifeirinha) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  const id = decode(token)['_id']
+
+  try {
+    const res = await axios({
+      method: "put",
+      url: backendUrl(`feirinha/${id}`),
+      data: { id, obj },
       headers: {
         Authorization: token || ''
       },
@@ -270,4 +340,6 @@ export {
   registerMarket,
   updateMarket,
   fetchFeirinhas,
+  registerFeirinha,
+  updateFeirinha,
 }
