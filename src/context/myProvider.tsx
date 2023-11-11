@@ -19,8 +19,6 @@ function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
   const [code, setCode] = useState();
-  const [markets, setMarkets] = useState();
-  const [feirinhas, setFeirinhas] = useState();
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [showMarket, setShowMarket] = useState<boolean | string | undefined>(false);
   const [showFeirinha, setShowFeirinha] = useState<boolean | string | undefined>(false);
@@ -32,7 +30,7 @@ function Provider({ children }:AuxProps) {
     mercado: '',
     feirinha: ''
   })
-  
+
   useEffect(() => {
     let res;
     const localToken = localStorage.getItem('userTokenFeirinha');
@@ -43,37 +41,9 @@ function Provider({ children }:AuxProps) {
     setTokenDecode(res)
   }, [token])
 
-  const products = useQuery('products', () => fetchProducts())  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetchMarkets();
-        setMarkets(res);
-      } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
-      }
-    };
-    fetchData();
-  }, [showMarket]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let userId;
-      const localToken = localStorage.getItem('userTokenFeirinha');
-      if (token || localToken) {
-        const thisToken = token || localToken !== null && JSON.parse(localToken);
-        userId = decode(thisToken).data['_id'];
-      }
-      try {
-        const res = await fetchFeirinhas(userId);
-        setFeirinhas(res);
-      } catch (error) {
-        console.error("Erro ao buscar feirinhas:", error);
-      }
-    };
-    fetchData();
-  }, [showFeirinha, token]);
+  const products = useQuery('products', () => fetchProducts());
+  const markets = useQuery('markets', () => fetchMarkets());
+  const feirinhas = useQuery('feirinhas', () => fetchFeirinhas());
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -91,13 +61,13 @@ function Provider({ children }:AuxProps) {
     handleChange,
     search,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
-    feirinhas, setFeirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+    feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     code, setCode
   }), [tokenDecode,
       products, showProd, editProd,
       token, search, handleChange,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
-      feirinhas, setFeirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+      feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       code, setCode]);
 
   return (

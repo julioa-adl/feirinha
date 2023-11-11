@@ -19,7 +19,9 @@ const Markets = () => {
     search
   } = useContext(context);
 
-  const filterMarket = markets && markets.filter(marketF => ((`${marketF.name} ${marketF.neighborhood} ${marketF.address} ${marketF.city} ${marketF.state}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
+  const { data, isLoading } = markets;
+
+  const filterMarket = data && data.filter(marketF => ((`${marketF.name} ${marketF.neighborhood} ${marketF.address} ${marketF.city} ${marketF.state}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900 overflow-hidden">
@@ -29,7 +31,7 @@ const Markets = () => {
         <User />
       </div>
       <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
-        { markets ? (
+        { !isLoading ? (
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
             )) : <NotFind />

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { PencilSquareIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, PauseIcon, PlayIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { Ifeirinha } from "../../../helpers/httpClient";
+import { format, parseISO, set } from 'date-fns';
 
 interface feirinhaCards {
   feirinha: Ifeirinha
@@ -10,30 +11,41 @@ interface feirinhaCards {
 const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
   const {
     setEditFeirinha,
-    setShowFeirinha
+    setShowFeirinha,
+    markets
   } = useContext(context);
+
+  const formatarData = (dataISO) => {
+    const dataUTC = set(parseISO(dataISO), { hours: 24, minutes: 0, seconds: 0 });
+    const dataFormatada = format(dataUTC, "dd 'de' MMMM 'de' yyyy");
+    return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+  };
+  
+
+  const mercado = markets && markets.data.find((mrkt) => mrkt['_id'] === feirinha.marketId)
   
   return(
     <li
       className='flex justify-between items-center gap-2
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:p-4 bg-gray-100 dark:bg-gray-800'
+      rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
-      <div className={`w-1/6 flex justify-center items-center h-14 md:h-20 md:px-4 bg-white dark:bg-gray-600 rounded-md`}>
-        <EyeIcon className="h-8 md:h-12 text-red-600 dark:text-red-400 opacity-60"/>
-      </div>
+      <ShoppingCartIcon className="h-6 text-yellow-500"/>
       <div className="w-4/6">
-        <div className="flex flex-row gap-2 font-semibold text-xs md:text-base lowercase items-center">
-          <span>{ `${feirinha.date}` }</span>
+        <div className="flex flex-row gap-2 font-regular text-xs md:text-base lowercase items-center">
+          <span className="w-full text-center">{ `${formatarData(feirinha.date)}` }</span>
+        </div>
+        <div className="dark:text-gray-500 font-light text-xs md:text-sm">
+          <h2 className="w-full text-center">{ mercado.name }</h2>
         </div>
       </div>
       <div className='w-1/6 flex justify-end'>
-        <PencilSquareIcon
+        <PauseIcon
           onClick={() => {
             setEditFeirinha(feirinha)
             setShowFeirinha('update')
           }}
-          className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-red-500' />
+          className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-yellow-500' />
       </div>
     </li>
   )

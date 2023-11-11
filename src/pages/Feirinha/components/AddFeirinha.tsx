@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-// import MarketForm from "./MarketForm";
+import FeirinhaForm from "./FeirinhaForm";
 
 const AddFeirinha = () => {
 
   const {
-    setShowMarket,
+    setShowFeirinha,
   } = useContext(context);
 
   return(
@@ -17,11 +17,8 @@ const AddFeirinha = () => {
         <XMarkIcon
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
-          onClick={() => setShowMarket(false)}/>
-        {/* {
-          isMarketRegistered && isMarketRegistered
-        } */}
-        {/* <MarketForm typeUse='Cadastrar'/> */}
+          onClick={() => setShowFeirinha(false)}/>
+        <FeirinhaForm typeUse='Cadastrar'/>
       </div>
     </div>
   )

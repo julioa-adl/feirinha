@@ -1,4 +1,4 @@
-import logo from '../assets/feirinha-icon.png';
+import logo from '../assets/feirinha-icon.svg';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigator = () => {
@@ -26,10 +26,10 @@ const Navigator = () => {
             className={`hover:text-yellow-500 dark:hover:text-blue-400 ${pathname === '/produtos' ? 'text-bold text-yellow-500 dark:text-blue-400' : 'text-gray-900 dark:text-gray-100'}`}
           >Produtos</Link>
 
-          <Link
+          {/* <Link
             to='/login'
             className={`hover:text-yellow-500 dark:hover:text-blue-400 ${pathname === '/estatisticas' ? 'text-bold text-yellow-500 dark:text-blue-400' : 'text-gray-900 dark:text-gray-100'}`}
-          >Relatórios</Link>
+          >Relatórios</Link> */}
 
         </div>
       </div>
