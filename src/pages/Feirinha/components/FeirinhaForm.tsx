@@ -90,14 +90,14 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
             id='marketId'
             value={ addFeirinha.marketId }
             onChange={ handleChange }
-            className={`px-4 py-1 w-full rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
+            className={`appearance-none px-4 py-1 w-full rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
       >
         <option value={''} disabled>-</option>
             {
               markets && markets.data.map((mercado, i) => (
               <option
                 key={`feirinha-form-${mercado.name}-${i}`}
-                value={ mercado._id }>{ mercado.name }</option>
+                value={ mercado._id }>{mercado.name} - {mercado.neighborhood} - {mercado.state}</option>
               ))
             }
           </select>
