@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { ShoppingCartIcon, PauseIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
+import { ShoppingCartIcon, PencilSquareIcon, PauseIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
 import { Ifeirinha } from "../../../helpers/httpClient";
 import { format, parseISO, set } from 'date-fns';
 
@@ -40,7 +40,8 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
         </div>
       </div>
       <div className='w-1/6 flex justify-end'>
-        <PauseIcon
+        <PauseIcon className="w-8 h-8 text-yellow-500"/>
+        <PencilSquareIcon
           onClick={() => {
             setEditFeirinha(feirinha)
             setShowFeirinha('update')
