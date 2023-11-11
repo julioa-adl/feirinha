@@ -1,12 +1,13 @@
 import { ChangeEvent, useState, useEffect, useContext } from "react";
 import { Ifeirinha } from "../../../helpers/httpClient";
 import Loading from "../../../general-components/Loading";
-import { registerFeirinha, /*updateFeirinha*/ } from "../../../helpers/httpClient";
-import { ApiResponse } from "../../../interfaces/ApiResponse";
+import { registerFeirinha, updateFeirinha } from "../../../helpers/httpClient";
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import context from "../../../context/myContext";
+import { useMutation, useQueryClient } from 'react-query';
+import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -22,9 +23,6 @@ type FormType = {
 };
 
 const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
-  const [error, setError] = useState<string | boolean>(false);
-  const [registered, setregistered] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [addFeirinha, setFeirinha] = useState<Ifeirinha>({
     id: feirinha ? feirinha['_id'] : '',
@@ -54,27 +52,20 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
     return setDisable(true);
   }, [addFeirinha])
 
+  const querieClient = useQueryClient();
+  const { mutate: registerFeira, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerFeirinha(addFeirinha).then(
+    () => querieClient.invalidateQueries('feirinhas')
+  ))
   const handleRegistered = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await registerFeirinha(addFeirinha);
-    setLoading(false);
-    if (!((res as ApiResponse).status) || (res as ApiResponse).status !== 201) {
-      setError((res as ApiResponse).response.data.message)
-    }
-    setregistered(true)
+    registerFeira();
   };
-
+  const { mutate: updateFeira, isLoading: updateLoading, isSuccess: updateSucess, isError: updateError } = useMutation(() => updateFeirinha(addFeirinha).then(
+    () => querieClient.invalidateQueries('feirinhas')
+  ))
   const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    // setLoading(true);
-    // const res = await updateFeirinha(addMarket);
-    // console.log(res)
-    // setLoading(false);
-    // if (!((res as ApiResponse).status) || (res as ApiResponse).status !== 200) {
-    //   setError((res as ApiResponse).response.data.error)
-    // }
-    // setregistered(true)
+    updateFeira();
   };
 
   const returnForm: FormType = {
@@ -83,37 +74,48 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
     Erro: <Error />
   }
 
-  const mercados = markets ? markets.map((mercado) => mercado.name) : [];
-  
   return(
     <div>
       {
-      registered ? (
-        returnForm[error ? 'Erro' : typeUse]
+      (updateSucess || updateError) || (registerSucess || registerError) ? (
+        returnForm[(registerError || updateError) ? 'Erro' : typeUse]
       ) : (
       <form>
 
         <div className="flex flex-col gap-1">
           <label
             className="text-gray-100 flex justify-between items-end text-sm"
-          >estado: <span className="text-gray-600 text-xs">obrigatório</span></label>
+          >mercado: <span className="text-gray-600 text-xs">obrigatório</span></label>
           <select
-            id='state'
+            id='marketId'
             value={ addFeirinha.marketId }
             onChange={ handleChange }
             className={`px-4 py-1 w-full rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
       >
         <option value={''} disabled>-</option>
             {
-              mercados.map((mercado, i) => (
+              markets && markets.data.map((mercado, i) => (
               <option
                 key={`feirinha-form-${mercado.name}-${i}`}
-                value={ mercado.name }>{ mercado.name }</option>
+                value={ mercado._id }>{ mercado.name }</option>
               ))
             }
           </select>
         </div>
-
+        
+        <div className="relative flex flex-col gap-1">
+        <label
+            className="text-gray-100 flex justify-between items-end text-sm"
+          >data: <span className="text-gray-600 text-xs">obrigatório</span></label>
+          <CalendarDaysIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
+          <input
+            type="date"
+            required
+            id='date'
+            onChange={ handleChange }
+            placeholder='dd/mm/aaaa'
+            className={`appearance-none rounded-md px-8 py-2 w-full text-center h-8`}/>
+        </div>
         
         <button
               type="submit"
@@ -124,7 +126,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
               onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
             >
-              { loading ? <Loading loading /> : typeUse }
+              { registerLoading || updateLoading ? <Loading loading /> : typeUse }
             </button>
       </form>
       )

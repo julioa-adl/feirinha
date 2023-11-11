@@ -9,6 +9,7 @@ import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import { Iprod } from "../../../helpers/httpClient";
 import { useMutation, useQueryClient } from 'react-query';
+import imageCompression from 'browser-image-compression';
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -37,13 +38,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   })
-
-  
-  const returnForm: FormType = {
-    Cadastrar: <RegisteredSuccess />,
-    Atualizar: <EditedSuccess />,
-    Erro: <Error />
-  }
   
   const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
@@ -51,6 +45,14 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     
     if (files) {
       const file = files[0];
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 300,
+        useWebWorker: true
+      }
+
+      const compressedFile = await imageCompression(file, options);
       
       const reader = new FileReader();
       reader.onload = () => {
@@ -60,7 +62,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           image: dataURL || undefined, // Converta para string ou defina como undefined se dataURL for null
         }));
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(compressedFile); 
     }
     
     setAddProd((prevstate) => ({
@@ -116,10 +118,16 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     updateProd();
   };
 
+  const returnForm: FormType = {
+    Cadastrar: <RegisteredSuccess />,
+    Atualizar: <EditedSuccess />,
+    Erro: <Error />
+  }
+
   return (
     <>
     {
-      updateSucess || registerSucess ? (
+      (updateSucess || updateError) || (registerSucess || registerError) ? (
         returnForm[updateError || registerError ? 'Erro' : typeUse]
       ) : (
         <form className="flex flex-col gap-2">

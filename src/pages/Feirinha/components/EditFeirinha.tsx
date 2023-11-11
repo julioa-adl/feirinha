@@ -1,13 +1,12 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-// import MarketForm from "./MarketForm";
-
+import FeirinhaForm from "./FeirinhaForm";
 
 const EditFeirinha = () => {
   const {
-    setShowMarket,
-    // editMrkt
+    setShowFeirinha,
+    editFeirinha
   } = useContext(context);
 
   return(
@@ -18,8 +17,8 @@ const EditFeirinha = () => {
         <XMarkIcon
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
-          onClick={() => setShowMarket(false)}/>
-        {/* <MarketForm typeUse='Atualizar' market={editMrkt}/> */}
+          onClick={() => setShowFeirinha(false)}/>
+        <FeirinhaForm typeUse='Atualizar' feirinha={editFeirinha}/>
         
       </div>
     </div>

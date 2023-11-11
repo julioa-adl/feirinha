@@ -18,9 +18,6 @@ const AddMarket = () => {
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
           onClick={() => setShowMarket(false)}/>
-        {/* {
-          isMarketRegistered && isMarketRegistered
-        } */}
         <MarketForm typeUse='Cadastrar'/>
       </div>
     </div>

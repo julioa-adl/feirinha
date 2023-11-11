@@ -3,10 +3,10 @@ import { Imarket } from "../../../helpers/httpClient";
 import estadosBrasil from "../../../helpers/states";
 import Loading from "../../../general-components/Loading";
 import { registerMarket, updateMarket } from "../../../helpers/httpClient";
-import { ApiResponse } from "../../../interfaces/ApiResponse";
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error"
+import { useMutation, useQueryClient } from 'react-query';
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -22,9 +22,6 @@ type FormType = {
 };
 
 const MarketForm = ({ market, typeUse }: MarketFormProps) => {
-  const [error, setError] = useState<string | boolean>(false);
-  const [registered, setregistered] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [addMarket, setMarket] = useState<Imarket>({
     id: market ? market['_id'] : '',
@@ -51,27 +48,22 @@ const MarketForm = ({ market, typeUse }: MarketFormProps) => {
     return setDisable(true);
   }, [addMarket])
 
+  const querieClient = useQueryClient();
+
+  const { mutate: registerMrkt, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerMarket(addMarket).then(
+    () => querieClient.invalidateQueries('markets')
+  ))
   const handleRegistered = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await registerMarket(addMarket);
-    setLoading(false);
-    if (!((res as ApiResponse).status) || (res as ApiResponse).status !== 201) {
-      setError((res as ApiResponse).response.data.message)
-    }
-    setregistered(true)
+    registerMrkt();
   };
 
+  const { mutate: updateMrkt, isLoading: updateLoading, isSuccess: updateSucess, isError: updateError } = useMutation(() => updateMarket(addMarket).then(
+    () => querieClient.invalidateQueries('markets')
+  ))
   const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await updateMarket(addMarket);
-    console.log(res)
-    setLoading(false);
-    if (!((res as ApiResponse).status) || (res as ApiResponse).status !== 200) {
-      setError((res as ApiResponse).response.data.error)
-    }
-    setregistered(true)
+    updateMrkt();
   };
 
   const returnForm: FormType = {
@@ -85,8 +77,8 @@ const MarketForm = ({ market, typeUse }: MarketFormProps) => {
   return(
     <div>
       {
-      registered ? (
-        returnForm[error ? 'Erro' : typeUse]
+      (updateSucess || updateError) || (registerSucess || registerError) ? (
+        returnForm[registerError || updateError ? 'Erro' : typeUse]
       ) : (
       <form>
         <div className="flex flex-col gap-1">
@@ -185,7 +177,7 @@ const MarketForm = ({ market, typeUse }: MarketFormProps) => {
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
               onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
             >
-              { loading ? <Loading loading /> : typeUse }
+              { registerLoading || updateLoading ? <Loading loading /> : typeUse }
             </button>
       </form>
       )
