@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { ShoppingCartIcon, PauseIcon, PlayIcon, CheckIcon } from '@heroicons/react/24/solid';
+import { ShoppingCartIcon, PauseIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
 import { Ifeirinha } from "../../../helpers/httpClient";
 import { format, parseISO, set } from 'date-fns';
 
