@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
 import { PencilSquareIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
-import { Imarket } from "../../../helpers/httpClient";
+import { Imarket } from "../../../interfaces/IMarket";
 
 interface marketCards {
   mrkt: Imarket

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useEffect, useContext } from "react";
-import { Ifeirinha } from "../../../helpers/httpClient";
+import { Ifeirinha } from "../../../interfaces/IFeirinha";
 import Loading from "../../../general-components/Loading";
 import { registerFeirinha, updateFeirinha } from "../../../helpers/httpClient";
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
@@ -7,7 +7,8 @@ import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import context from "../../../context/myContext";
 import { useMutation, useQueryClient } from 'react-query';
-import { CalendarDaysIcon } from "@heroicons/react/24/solid";
+import { CalendarDaysIcon, PlusSmallIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -33,7 +34,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   });
 
   const {
-    markets
+    markets,
   } = useContext(context);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -80,30 +81,37 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
       (updateSucess || updateError) || (registerSucess || registerError) ? (
         returnForm[(registerError || updateError) ? 'Erro' : typeUse]
       ) : (
-      <form>
+      <form className="flex flex-col gap-1">
+        <div className="flex justify-between items-end gap-2">
+          <div className="flex flex-col w-full">
+            <label
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >mercado: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            <select
+              id='marketId'
+              value={ addFeirinha.marketId }
+              onChange={ handleChange }
+              className={`px-4 py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
+        >
+          <option value={''} disabled>-</option>
+              {
+                markets && markets.data.map((mercado, i) => (
+                <option
+                  key={`feirinha-form-${mercado.name}-${i}`}
+                  value={ mercado._id }>{mercado.name} - {mercado.neighborhood} - {mercado.state}</option>
+                ))
+              }
+            </select>
+          </div>
 
-        <div className="flex flex-col gap-1">
-          <label
-            className="text-gray-100 flex justify-between items-end text-sm"
-          >mercado: <span className="text-gray-600 text-xs">obrigatório</span></label>
-          <select
-            id='marketId'
-            value={ addFeirinha.marketId }
-            onChange={ handleChange }
-            className={`appearance-none px-4 py-1 w-full rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
-      >
-        <option value={''} disabled>-</option>
-            {
-              markets && markets.data.map((mercado, i) => (
-              <option
-                key={`feirinha-form-${mercado.name}-${i}`}
-                value={ mercado._id }>{mercado.name} - {mercado.neighborhood} - {mercado.state}</option>
-              ))
-            }
-          </select>
+          <Link to={'mercados'}>
+            <PlusSmallIcon
+              className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
+            />
+          </Link>
         </div>
         
-        <div className="relative flex flex-col gap-1">
+        <div className="relative flex flex-col">
         <label
             className="text-gray-100 flex justify-between items-end text-sm"
           >data: <span className="text-gray-600 text-xs">obrigatório</span></label>
@@ -114,7 +122,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
             id='date'
             onChange={ handleChange }
             placeholder='dd/mm/aaaa'
-            className={`appearance-none rounded-md px-8 py-2 w-full text-center h-8`}/>
+            className={`appearance-none text-sm rounded-md px-4 py-1 w-full text-center h-8`}/>
         </div>
         
         <button

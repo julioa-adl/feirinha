@@ -5,7 +5,7 @@ import Navigator from "../../general-components/Navigator";
 import Search from "../../general-components/Search";
 import User from "../../general-components/User";
 import SkeletonCard from "../../general-components/SkeletonCard";
-import { Ifeirinha } from "../../helpers/httpClient";
+import { Ifeirinha } from "../../interfaces/IFeirinha";
 import FeirinhaCard from "./components/FeirinhaCard";
 import CallFeirinhaButton from "./components/CallFeirinhaButton";
 import NotFind from "../../general-components/alerts/NotFind";

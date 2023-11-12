@@ -76,6 +76,9 @@ const Register = () => {
     <div className= "h-screen w-screen bg-blue-400 bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center py-20">
       <form className="relative flex flex-col gap-4 items-center">
         <img src={logo} alt='logo' className="w-20 md:w-36 dark:invert"/>
+        {
+          error && <span className='text-xs text-gray-900 dark:text-red-500'>{ error }</span>
+        }
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
           <input
@@ -131,9 +134,7 @@ const Register = () => {
           />
           <span className='dark:text-gray-100'>Eu aceito os termos de uso</span>
         </div>
-        {
-          error && <span className='absolute top-36 text-sm text-gray-900 dark:text-red-500'>{ error }</span>
-        }
+        
         <button
           type="submit"
           disabled={ disable }

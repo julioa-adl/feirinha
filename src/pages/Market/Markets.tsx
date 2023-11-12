@@ -6,7 +6,7 @@ import EditMarket from "./components/EditMarket";
 import NotFind from "../../general-components/alerts/NotFind";
 import CallMrktButton from "./components/CallMrktButton";
 import MarketCard from "./components/MarketCard";
-import { Imarket } from "../../helpers/httpClient";
+import { Imarket } from "../../interfaces/IMarket";
 import SkeletonCard from "../../general-components/SkeletonCard";
 import Search from "../../general-components/Search";
 import User from "../../general-components/User";
@@ -43,7 +43,7 @@ const Markets = () => {
           showMarket === 'register' ? (
             <AddMarket />
           ) : (
-            <EditMarket />
+            showMarket === 'update' && <EditMarket />
           )
         )
       }

@@ -7,7 +7,7 @@ import RegisteredSuccess from "../../../general-components/alerts/RegisteredSucc
 import Loading from '../../../general-components/Loading';
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
-import { Iprod } from "../../../helpers/httpClient";
+import { Iprod } from "../../../interfaces/IProduct";
 import { useMutation, useQueryClient } from 'react-query';
 import imageCompression from 'browser-image-compression';
 

@@ -2,7 +2,7 @@ import React, { ChangeEvent, useMemo, useState, useEffect, useCallback } from 'r
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
 import { fetchMarkets, fetchProducts, fetchFeirinhas } from "../helpers/httpClient";
-import { Iprod } from '../helpers/httpClient';
+import { Iprod } from '../interfaces/IProduct';
 import { useQuery } from 'react-query';
 
 interface AuxProps  { 

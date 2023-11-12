@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import context from '../../../context/myContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Iprod } from "../../../helpers/httpClient";
+import { Iprod } from "../../../interfaces/IProduct";
 import ProductForm from "./ProductForm";
 import AlredyRegistered from "../../../general-components/alerts/AlredyRegistered";
 import BarCodeScanner from "../../../general-components/scanner/BarCodeScanner";

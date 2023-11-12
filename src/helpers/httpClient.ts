@@ -1,53 +1,12 @@
 import axios from 'axios';
 import decode from './jwtDecode';
 
+import { Ifeirinha } from '../interfaces/IFeirinha';
+import { Iprod } from '../interfaces/IProduct';
+import { Imarket } from '../interfaces/IMarket';
+import { Iuser } from '../interfaces/IUser';
+
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
-
-type Iuser = {
-  name?: string,
-  email?: string,
-  password?: string,
-  birthday?: string,
-  role?: string
-}
-   
-export type Iprod = {
-  id?: string | undefined,
-  _id?: string | undefined,
-  name: string | undefined,
-  subName: string | undefined,
-  manufacturer: string | undefined,
-  category: string | undefined,
-  code: string | undefined,
-  image: ArrayBuffer | string | undefined,
-  unitMeasure?: string | undefined,
-  size?: number,
-}
-
-export type Imarket = {
-  id?: string | undefined,
-  _id?: string | undefined,
-  name: string | undefined,
-  address: string | undefined,
-  neighborhood: string | undefined,
-  city: string | undefined,
-  state: string | undefined,
-}
-
-export type IlistCart = {
-  productId: string,
-  quantity: number,
-  price: number,
-}
-
-export type Ifeirinha = {
-  id?: string | undefined,
-  _id?: string | undefined,
-  userId: string | undefined,
-  marketId: string | undefined,
-  listCart?: IlistCart[] | undefined,
-  date: string | undefined,
-}
 
 const loginUser = async ({ email, password }: Iuser) => {
 

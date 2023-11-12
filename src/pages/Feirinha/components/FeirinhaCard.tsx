@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
 import { ShoppingCartIcon, PencilSquareIcon, PauseIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
-import { Ifeirinha } from "../../../helpers/httpClient";
+import { Ifeirinha } from "../../../interfaces/IFeirinha";
 import { format, parseISO, set } from 'date-fns';
 
 interface feirinhaCards {
@@ -22,7 +22,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
   };
   
 
-  const mercado = markets && markets.data.find((mrkt) => mrkt['_id'] === feirinha.marketId)
+  const mercado = markets && markets.data.find((mrkt) => mrkt['_id'] === feirinha.marketId);
   
   return(
     <li
@@ -36,7 +36,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
           <span className="w-full text-center">{ `${formatarData(feirinha.date)}` }</span>
         </div>
         <div className="dark:text-gray-500 font-light text-xs md:text-sm">
-          <h2 className="w-full text-center">{ mercado.name }</h2>
+          <h2 className="w-full text-center">{ mercado.name } - { mercado.neighborhood } - { mercado.state }</h2>
         </div>
       </div>
       <div className='w-1/6 flex justify-end'>

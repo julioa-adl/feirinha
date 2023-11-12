@@ -76,6 +76,10 @@ const Login = () => {
                 m-auto flex flex-col justify-evenly items-center py-20">
       <form className="relative flex flex-col gap-4 items-center">
         <img src={logo} alt='logo' className="w-20 md:w-36 mb-8 dark:invert"/>
+        {
+          error && <span className='h-4 text-gray-900 text-xs
+          dark:text-red-500'>Usuário ou Senha incorreto(s)!</span>
+        }
         <div className="relative">
           <UserIcon className="h-5 absolute text-gray-800 top-2.5 left-3"/>
           <input
@@ -112,10 +116,7 @@ const Login = () => {
               ${typePass && 'hidden'}`}
             />
         </div>
-        {
-          error && <span className='absolute top-44 h-4 text-gray-900
-          dark:text-red-500'>Usuário ou Senha incorreto(s)!</span>
-        }
+        
         <button
           type="submit"
           disabled={ disable }

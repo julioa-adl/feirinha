@@ -7,7 +7,7 @@ import CallProdButton from './components/CallProdButton';
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
 import SkeletonCard from '../../general-components/SkeletonCard';
-import { Iprod } from '../../helpers/httpClient';
+import { Iprod } from '../../interfaces/IProduct';
 import Search from '../../general-components/Search';
 import User from '../../general-components/User';
 import MobileMenu from '../../general-components/MobileMenu';

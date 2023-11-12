@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useEffect } from "react";
-import { Imarket } from "../../../helpers/httpClient";
+import { Imarket } from "../../../interfaces/IMarket";
 import estadosBrasil from "../../../helpers/states";
 import Loading from "../../../general-components/Loading";
 import { registerMarket, updateMarket } from "../../../helpers/httpClient";
