@@ -1,4 +1,4 @@
-import { ShoppingCartIcon, PencilSquareIcon, TrashIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, TrashIcon, /*PlayIcon, CheckIcon, PencilSquareIcon*/ } from '@heroicons/react/24/outline';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 
 interface itemCard {
