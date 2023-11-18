@@ -8,7 +8,7 @@ interface seachComponent {
 
 const Search = ({ searching }:seachComponent) => {
   const {
-    handleChange,
+    handleSearch,
     search
   } = useContext(context)
   
@@ -18,10 +18,10 @@ const Search = ({ searching }:seachComponent) => {
         className='h-4 absolute text-gray-400 top-2.5 left-3'
       />
       <input
-        type="text"
+        type="search"
         id={searching}
         placeholder={`Buscar ${searching}`}
-        onChange={handleChange}
+        onChange={handleSearch}
         value={search[searching]}
         className='rounded-full text-sm px-4 pl-8 py-2 w-full bg-gray-100 focus:outline-none'
       />

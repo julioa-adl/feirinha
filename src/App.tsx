@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Feirinha/Home';
 import Products from './pages/Product/Products';
 import Markets from './pages/Market/Markets';
+import FeirinhaDetails from './pages/Feirinha/components/Feirinha-Details/FeirinhaDetails';
 
 import PrivateRouter from './PrivateRouter';
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path={"/register"} element = { <Register /> }/>
           <Route element = { <PrivateRouter /> }>
             <Route path={"/"} element = { <Home /> }/>
+            <Route path={"/feirinha/:id"} element = { <FeirinhaDetails /> }/>
             <Route path={"/produtos"} element = { <Products /> }/>
             <Route path={"/mercados"} element = { <Markets /> }/>
           </Route>

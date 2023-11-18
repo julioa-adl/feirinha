@@ -12,7 +12,8 @@ interface AuxProps  {
 type Isearch = {
   produto: string,
   mercado: string,
-  feirinha: string
+  feirinha: string,
+  item: string
 }
 
 function Provider({ children }:AuxProps) {
@@ -28,7 +29,8 @@ function Provider({ children }:AuxProps) {
   const [search, setSearch] = useState<Isearch>({
     produto: '',
     mercado: '',
-    feirinha: ''
+    feirinha: '',
+    item: ''
   })
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function Provider({ children }:AuxProps) {
   const markets = useQuery('markets', () => fetchMarkets());
   const feirinhas = useQuery('feirinhas', () => fetchFeirinhas());
 
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setSearch((prevstate) => ({
       ...prevstate,
@@ -58,14 +60,14 @@ function Provider({ children }:AuxProps) {
     products, showProd, setShowProd, setEditProd, editProd, //produts context
     token,
     setToken,
-    handleChange,
+    handleSearch,
     search,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     code, setCode
   }), [tokenDecode,
       products, showProd, editProd,
-      token, search, handleChange,
+      token, search, handleSearch,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
       feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       code, setCode]);
