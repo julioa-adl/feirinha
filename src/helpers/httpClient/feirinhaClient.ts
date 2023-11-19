@@ -42,7 +42,6 @@ const registerFeirinha = async ({ marketId, availableToSpend }: Ifeirinha) => {
   const year = today.getFullYear().toString().slice(-2);
 
   const formattedDate = `${month}-${day}-${year}`;
-  console.log(formattedDate)
 
   const res = await axios({
     method: "post",
@@ -71,8 +70,26 @@ const updateFeirinha = async ({ id, userId, marketId, listCart, date }: Ifeirinh
   return res;
 };
 
+const deleteFeirinha = async (feirinhaId) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  const userId = decode(token).data['_id'];
+
+  const res = await axios({
+    method: "delete",
+    url: backendUrl(`feirinha/${userId}`),
+    data: { id: feirinhaId },
+    headers: {
+      Authorization: token || ''
+    },
+  });
+  return res;
+}
+
 export {
   fetchFeirinhas,
   registerFeirinha,
   updateFeirinha,
+  deleteFeirinha
 }

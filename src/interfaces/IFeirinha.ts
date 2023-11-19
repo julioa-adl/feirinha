@@ -1,4 +1,6 @@
 export type IlistCart = {
+  id?: string | undefined,
+  _id?: string | undefined,
   productId: string,
   productName: string,
   quantity: number,
