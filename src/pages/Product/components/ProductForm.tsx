@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import categories from "../../../helpers/categories";
 import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
-import { registerProduct, updateProduct } from "../../../helpers/httpClient";
+import { registerProduct, updateProduct } from '../../../helpers/httpClient/productClient';
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import Loading from '../../../general-components/Loading';
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";

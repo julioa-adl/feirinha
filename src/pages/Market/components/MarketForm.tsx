@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useEffect } from "react";
 import { Imarket } from "../../../interfaces/IMarket";
 import estadosBrasil from "../../../helpers/states";
 import Loading from "../../../general-components/Loading";
-import { registerMarket, updateMarket } from "../../../helpers/httpClient";
+import { registerMarket, updateMarket } from "../../../helpers/httpClient/marketsClient";
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error"

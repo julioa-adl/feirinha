@@ -50,7 +50,7 @@ const FeirinhaDetails = () => {
         
         <User />
       </div>
-      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
+      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-1 drop-shadow-lg'>
         { !(feirinhaLoading && marketLoading) ? (
             feirinha.listCart ? feirinha.listCart.map((items:IlistCart, i) => (
               <ItemCard key={ `item-cart-list-${i}`} listCart={items}/>

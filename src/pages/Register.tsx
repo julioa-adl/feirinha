@@ -4,7 +4,7 @@ import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
 import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
-import { registUser } from '../helpers/httpClient';
+import { registUser } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
 

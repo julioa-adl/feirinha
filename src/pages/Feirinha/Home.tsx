@@ -13,14 +13,16 @@ import NotFind from "../../general-components/alerts/NotFind";
 import AddFeirinha from "./components/AddFeirinha";
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import EditFeirinha from "./components/EditFeirinha";
+import { useQuery } from "react-query";
+import { fetchFeirinhas } from "../../helpers/httpClient/feirinhaClient";
 
 const Home = () => {
   const {
-    feirinhas,
     showFeirinha
   } = useContext(context);
 
-  const { data, isLoading } = feirinhas;
+  const { data, isLoading } = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
+
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900">
@@ -35,7 +37,7 @@ const Home = () => {
       </div>
       <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
         { !isLoading ? (
-            data.length > 0 ? data.map((feira:Ifeirinha) => (
+            data ? data.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
             )) : <NotFind />
           ) : <SkeletonCard type={'feirinha'}/>

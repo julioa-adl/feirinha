@@ -4,6 +4,8 @@ import { ShoppingCartIcon, PencilSquareIcon, PauseIcon, /*PlayIcon, CheckIcon*/ 
 import { Ifeirinha } from "../../../interfaces/IFeirinha";
 import { Link } from "react-router-dom";
 import { format, parseISO, set } from 'date-fns';
+import { useQuery } from "react-query";
+import { fetchMarkets } from "../../../helpers/httpClient/marketsClient";
 
 interface feirinhaCards {
   feirinha: Ifeirinha
@@ -13,7 +15,6 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
   const {
     setEditFeirinha,
     setShowFeirinha,
-    markets
   } = useContext(context);
 
   const formatarData = (dataISO) => {
@@ -22,8 +23,9 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
     return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
   };
   
+  const { data: mrkData } = useQuery('markets', () => fetchMarkets(), {retry: 10});
 
-  const mercado = markets.data ? markets.data.find((mrkt) => mrkt['_id'] === feirinha.marketId) : [];
+  const mercado = mrkData ? mrkData.find((mrkt) => mrkt['_id'] === feirinha.marketId) : [];
   
   return(
     <li

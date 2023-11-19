@@ -11,15 +11,17 @@ import SkeletonCard from "../../general-components/SkeletonCard";
 import Search from "../../general-components/Search";
 import User from "../../general-components/User";
 import MobileMenu from "../../general-components/MobileMenu";
+import { useQuery } from "react-query";
+import { fetchMarkets } from "../../helpers/httpClient/marketsClient";
 
 const Markets = () => {
   const {
-    markets,
     showMarket,
     search
   } = useContext(context);
 
-  const { data, isLoading } = markets;
+  const { data, isLoading } = useQuery('markets', () => fetchMarkets(), {retry: 10});
+
 
   const filterMarket = data && data.filter(marketF => ((`${marketF.name} ${marketF.neighborhood} ${marketF.address} ${marketF.city} ${marketF.state}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
 

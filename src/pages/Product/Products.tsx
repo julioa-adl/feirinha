@@ -11,15 +11,17 @@ import { Iprod } from '../../interfaces/IProduct';
 import Search from '../../general-components/Search';
 import User from '../../general-components/User';
 import MobileMenu from '../../general-components/MobileMenu';
+import { useQuery } from 'react-query';
+import { fetchProducts } from '../../helpers/httpClient/productClient';
 
 const Products = () => {
   const {
-    products,
     showProd,
     search
   } = useContext(context);
 
-  const { data, isLoading } = products;
+  const { data, isLoading } = useQuery('products', () => fetchProducts(), {retry: 10});
+
 
   const productsSort = data && data.sort((a,b) => {
     if(a.name < b.name) return -1;

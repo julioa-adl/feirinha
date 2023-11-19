@@ -1,13 +1,13 @@
 import { ChangeEvent, useState, useEffect, useContext } from "react";
 import { Ifeirinha } from "../../../interfaces/IFeirinha";
 import Loading from "../../../general-components/Loading";
-import { registerFeirinha, updateFeirinha } from "../../../helpers/httpClient";
+import { registerFeirinha, updateFeirinha } from "../../../helpers/httpClient/feirinhaClient";
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import context from "../../../context/myContext";
 import { useMutation, useQueryClient } from 'react-query';
-import { CalendarDaysIcon, PlusSmallIcon } from "@heroicons/react/24/solid";
+import { PlusSmallIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
 type usageType = 'Cadastrar' | 'Atualizar';
@@ -28,6 +28,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   const [addFeirinha, setFeirinha] = useState<Ifeirinha>({
     id: feirinha ? feirinha['_id'] : '',
     userId: feirinha ? feirinha.userId : '',
+    availableToSpend: feirinha ? feirinha.availableToSpend : 0,
     marketId: feirinha ? feirinha.marketId : '',
     listCart: feirinha ? feirinha.listCart : [],
     date: feirinha ? feirinha.date : '',
@@ -91,7 +92,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
               id='marketId'
               value={ addFeirinha.marketId }
               onChange={ handleChange }
-              className={`px-4 py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
+              className={`px-4 form-select py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
         >
           <option value={''} disabled>-</option>
               {
@@ -110,20 +111,38 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
             />
           </Link>
         </div>
-        
-        <div className="relative flex flex-col">
-        <label
-            className="text-gray-100 flex justify-between items-end text-sm"
-          >data: <span className="text-gray-600 text-xs">obrigatório</span></label>
-          <CalendarDaysIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
-          <input
-            type="date"
-            required
-            id='date'
-            onChange={ handleChange }
-            placeholder='dd/mm/aaaa'
-            className={`appearance-none text-sm rounded-md px-4 py-1 w-full text-center h-8`}/>
+
+        <div className="flex gap-2 w-48 justify-between items-end">
+          <div className="relative flex w-full flex-col">
+          <label
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >total a gastar: </label>
+              <input
+                type="number"
+                required
+                id='availableToSpend'
+                value={ addFeirinha.availableToSpend }
+                onChange={ handleChange }
+                className={`appearance-none text-sm rounded-md px-4 py-1 w-full text-center h-8`}/>
+            </div>
+            <h1 className="text-gray-900 font-bold text-lg dark:text-gray-100">R$</h1>
         </div>
+        
+        { typeUse === 'Atualizar' && (
+          <div className="relative flex flex-col">
+            <label
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >data: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            <input
+              type="date"
+              required
+              id='date'
+              onChange={ handleChange }
+              className={`form-input text-sm rounded-md px-4 py-1 w-full h-8`}/>
+          </div>
+          )
+        }
+        
         
         <button
               type="submit"

@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { revalidateToken } from './helpers/httpClient';
+import { revalidateToken } from './helpers/httpClient/userClient';
 
 const PrivateRouter = () => {
   const history = useNavigate();

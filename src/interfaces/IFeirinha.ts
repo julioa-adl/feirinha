@@ -10,6 +10,7 @@ export type Ifeirinha = {
   id?: string | undefined,
   _id?: string | undefined,
   userId: string | undefined,
+  availableToSpend: number | undefined,
   marketId: string | undefined,
   listCart?: IlistCart[] | undefined,
   date: string | undefined,

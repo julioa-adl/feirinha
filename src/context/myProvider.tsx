@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useMemo, useState, useEffect, useCallback } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
-import { fetchMarkets, fetchProducts, fetchFeirinhas } from "../helpers/httpClient";
+import { fetchFeirinhas } from "../helpers/httpClient/feirinhaClient";
+import { fetchProducts } from '../helpers/httpClient/productClient';
+import { fetchMarkets } from '../helpers/httpClient/marketsClient';
 import { Iprod } from '../interfaces/IProduct';
 import { useQuery } from 'react-query';
 
@@ -43,9 +45,10 @@ function Provider({ children }:AuxProps) {
     setTokenDecode(res)
   }, [token])
 
-  const products = useQuery('products', () => fetchProducts());
-  const markets = useQuery('markets', () => fetchMarkets());
-  const feirinhas = useQuery('feirinhas', () => fetchFeirinhas());
+  const products = useQuery('products', () => fetchProducts(), {retry: 10});
+  const markets = useQuery('markets', () => fetchMarkets(), {retry: 10});
+  const feirinhas = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
+
 
   const handleSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
