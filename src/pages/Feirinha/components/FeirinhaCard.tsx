@@ -51,6 +51,9 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
         <div className="dark:text-gray-500 font-light text-xs md:text-sm">
           <h2 className="w-full text-center">{ mercado.name } - { mercado.neighborhood } - { mercado.state }</h2>
         </div>
+        <div className="dark:text-gray-500 font-light text-xs md:text-sm">
+          <h2 className="w-full text-center">disponível para gastar: R${ feirinha.availableToSpend }</h2>
+        </div>
       </Link>
       <div className='w-1/6 flex justify-end gap-1'>
         <PauseIcon className="w-6 h-6 text-yellow-500"/>
