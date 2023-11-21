@@ -3,25 +3,28 @@ import Navigator from '../../../../general-components/Navigator';
 import User from '../../../../general-components/User';
 import MobileMenu from '../../../../general-components/MobileMenu';
 import { ShoppingCartIcon } from '@heroicons/react/24/solid';
-import { useContext } from 'react';
-import context from '../../../../context/myContext';
 import { format, parseISO, set } from 'date-fns';
 import { IlistCart } from '../../../../interfaces/IFeirinha';
 import SkeletonCard from '../../../../general-components/SkeletonCard';
 import NotFindListCart from './components/NotFindListCart';
 import ItemCard from './components/ItemCard';
 import CallItemCart from './components/CallItemCart';
+import { useQuery } from 'react-query';
+import { fetchFeirinhas } from '../../../../helpers/httpClient/feirinhaClient';
+import { fetchMarkets } from '../../../../helpers/httpClient/marketsClient';
+import { useContext } from 'react';
+import context from '../../../../context/myContext';
+import AddItem from './components/AddItem';
 
 const FeirinhaDetails = () => {
   const { id } = useParams();
 
   const {
-    feirinhas,
-    markets
-  } = useContext(context);
+    showItem,
+  } = useContext(context)
 
-  const { data: feirinhaData, isLoading: feirinhaLoading} = feirinhas;
-  const { data: marketaData, isLoading: marketLoading} = markets;
+  const { data: feirinhaData, isLoading: feirinhaLoading} = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
+  const { data: marketaData, isLoading: marketLoading} = useQuery('markets', () => fetchMarkets(), {retry: 10});
 
   const feirinha = feirinhaData ? feirinhaData.find((f) => f._id === id) : false;
   const mercado = marketaData ? marketaData.find((mrkt) => mrkt['_id'] === (feirinha ? feirinha.marketId : '')) : false;
@@ -52,12 +55,19 @@ const FeirinhaDetails = () => {
       </div>
       <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-1 drop-shadow-lg'>
         { !(feirinhaLoading && marketLoading) ? (
-            feirinha.listCart ? feirinha.listCart.map((items:IlistCart, i) => (
+            feirinha.listCart && feirinha.listCart.length > 0 ? feirinha.listCart.map((items:IlistCart, i) => (
               <ItemCard key={ `item-cart-list-${i}`} listCart={items}/>
             )) : <NotFindListCart />
           ) : <SkeletonCard type={'feirinha'}/>
         }
       </ul>
+      {
+        showItem  && (
+          showItem === 'register' && (
+            <AddItem feirinhaId={id}/>
+          )
+        )
+      }
       <CallItemCart />
       <MobileMenu />
     </div>

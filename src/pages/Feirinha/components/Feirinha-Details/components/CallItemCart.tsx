@@ -4,7 +4,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 
 const CallItemCart = () => {
   const {
-    setShowFeirinha,
+    setShowItem,
   } = useContext(context);
 
   return(
@@ -12,7 +12,7 @@ const CallItemCart = () => {
     ease-in-out duration-300 hover:bg-yellow-500 dark:hover:bg-yellow-600
     hover:text-gray-900 dark:hover:text-gray-100
     fixed bottom-20 z-10 right-5 cursor-pointer text-gray-500 dark:text-gray-100'
-    onClick={() => setShowFeirinha('register')}
+    onClick={() => setShowItem('register')}
     >
       <PlusIcon className='h-6'
       />

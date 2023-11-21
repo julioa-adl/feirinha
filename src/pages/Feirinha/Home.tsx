@@ -9,12 +9,13 @@ import SkeletonCard from "../../general-components/SkeletonCard";
 import { Ifeirinha } from "../../interfaces/IFeirinha";
 import FeirinhaCard from "./components/FeirinhaCard";
 import CallFeirinhaButton from "./components/CallFeirinhaButton";
-import NotFind from "../../general-components/alerts/NotFind";
+// import NotFind from "../../general-components/alerts/NotFind";
 import AddFeirinha from "./components/AddFeirinha";
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import EditFeirinha from "./components/EditFeirinha";
 import { useQuery } from "react-query";
 import { fetchFeirinhas } from "../../helpers/httpClient/feirinhaClient";
+import NotFindFeirinhas from "./NotFindFeirinhas";
 
 const Home = () => {
   const {
@@ -39,7 +40,7 @@ const Home = () => {
         { !isLoading ? (
             data ? data.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
-            )) : <NotFind />
+            )) : <NotFindFeirinhas />
           ) : <SkeletonCard type={'feirinha'}/>
         }
       </ul>

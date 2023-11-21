@@ -22,16 +22,16 @@ const registerItem = async (feirinhaId: string, newItem: IlistCart) => {
   return res;
 };
 
-const updateItem = async (feirinhaId: string, itemId: string, updatedItem: IlistCart) => {
+const updateItem = async (feirinhaId: string, updatedItem: IlistCart) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
   const userId = decode(token).data['_id'];
-
+  const { _id: itemId, ...rest } = updatedItem;
   const res = await axios({
     method: "put",
     url: backendUrl(`cart/${userId}`),
-    data: { feirinhaId, itemId, updatedItem },
+    data: { feirinhaId, itemId, rest },
     headers: {
       Authorization: token || ''
     },
@@ -39,7 +39,7 @@ const updateItem = async (feirinhaId: string, itemId: string, updatedItem: Ilist
   return res;
 };
 
-const deleteItem = async (feirinhaId: string, itemId: string) => {
+const deleteItem = async (feirinhaId, itemId) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);

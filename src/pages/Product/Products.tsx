@@ -27,7 +27,7 @@ const Products = () => {
     if(a.name < b.name) return -1;
     if(a.name > b.name) return 1;
     return 0;
-});
+  });
   const filterProd = data && productsSort.filter(prodF => ((`${prodF.name} ${prodF.subName} ${prodF.size}${prodF.unitMeasure}`).toLowerCase().includes(search.produto.toLowerCase() || '')))
 
   return(

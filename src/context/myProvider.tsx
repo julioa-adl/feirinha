@@ -22,12 +22,17 @@ function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
   const [code, setCode] = useState();
+
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [showMarket, setShowMarket] = useState<boolean | string | undefined>(false);
   const [showFeirinha, setShowFeirinha] = useState<boolean | string | undefined>(false);
+  const [showItem, setShowItem] = useState<boolean | string | undefined>(false);
+
   const [editProd, setEditProd] = useState<Iprod | undefined>();
   const [editMrkt, setEditMrkt] = useState<Iprod | undefined>();
   const [editFeirinha, setEditFeirinha] = useState<Iprod | undefined>();
+  const [editItem, setEditItem] = useState<Iprod | undefined>();
+
   const [search, setSearch] = useState<Isearch>({
     produto: '',
     mercado: '',
@@ -67,12 +72,14 @@ function Provider({ children }:AuxProps) {
     search,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+    showItem, setShowItem, editItem, setEditItem,
     code, setCode
   }), [tokenDecode,
       products, showProd, editProd,
       token, search, handleSearch,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
       feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+      showItem, setShowItem, editItem, setEditItem,
       code, setCode]);
 
   return (
