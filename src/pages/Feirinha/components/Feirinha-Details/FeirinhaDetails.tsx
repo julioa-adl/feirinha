@@ -23,8 +23,8 @@ const FeirinhaDetails = () => {
     showItem,
   } = useContext(context)
 
-  const { data: feirinhaData, isLoading: feirinhaLoading} = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
-  const { data: marketaData, isLoading: marketLoading} = useQuery('markets', () => fetchMarkets(), {retry: 10});
+  const { data: feirinhaData, isLoading: feirinhaLoading} = useQuery('feirinhas', () => fetchFeirinhas());
+  const { data: marketaData, isLoading: marketLoading} = useQuery('markets', () => fetchMarkets());
 
   const feirinha = feirinhaData ? feirinhaData.find((f) => f._id === id) : false;
   const mercado = marketaData ? marketaData.find((mrkt) => mrkt['_id'] === (feirinha ? feirinha.marketId : '')) : false;

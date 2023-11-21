@@ -22,16 +22,22 @@ const registerItem = async (feirinhaId: string, newItem: IlistCart) => {
   return res;
 };
 
-const updateItem = async (feirinhaId: string, updatedItem: IlistCart) => {
+const updateItem = async (feirinhaId, editItem: IlistCart) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
   const userId = decode(token).data['_id'];
-  const { _id: itemId, ...rest } = updatedItem;
+  const { id: itemId, price, ...rest } = editItem;
+
+  const updatedItem = {
+    ...rest,
+    price: Number(price),
+  }
+
   const res = await axios({
     method: "put",
     url: backendUrl(`cart/${userId}`),
-    data: { feirinhaId, itemId, rest },
+    data: { feirinhaId, itemId, updatedItem },
     headers: {
       Authorization: token || ''
     },

@@ -39,7 +39,7 @@ const SelectGeneral = ({setMyState}) => {
       <div className='fixed -z-10 top-0 left-0 w-screen h-screen' onClick={() => setView(false)}/>
       { view &&
         <ul className='absolute z-10 -top-48 -left-5 w-80 h-96 overflow-x-hidden overflow-y-scroll p-2 flex flex-col gap-1 bg-gray-200 dark:bg-gray-700
-        text-gray-900 dark:text-gray-100 rounded-md'>
+        text-gray-900 dark:text-gray-100 rounded-md shadow-inner'>
           {
             productsSort && productsSort.map((prod) => (
               <li
@@ -54,8 +54,8 @@ const SelectGeneral = ({setMyState}) => {
                 setView(false);
                 }}
               >
-                <div className='flex justify-center items-center w-8 h-8 bg-white rounded-sm p-1'>
-                  {prod.image ? (<img src={prod.image} alt={prod.name} className='h-7'/>) : <ArchiveBoxXMarkIcon className="h-5 text-gray-600 opacity-20"/>}
+                <div className='flex justify-center items-center w-8 h-8 bg-white rounded-sm overflow-hidden shadow-md'>
+                  {prod.image ? (<img src={prod.image} alt={prod.name} className='max-h-20'/>) : <ArchiveBoxXMarkIcon className="h-5 text-gray-600 opacity-20"/>}
                 </div>
                 <div className='flex flex-col w-full lowercase'>
                   <h1 className='text-xs font-medium'>{`${prod.name} - ${prod.subName}`}</h1>
