@@ -1,5 +1,5 @@
 import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
-  PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
+  PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon } from '@heroicons/react/24/outline';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -47,11 +47,22 @@ const ItemCard = ({ listCart }:itemCard) => {
     upItem();
   };
 
+  const { mutate: upBuyed, isLoading: buyedLoading } = useMutation(() => updateItem(feirinhaId, editItem).then(
+    () => querieClient.invalidateQueries('feirinhas')
+  ))
+  const handleUpdateBuyed = async () => {
+    upBuyed();
+  };
+
   useEffect(() => {
     if (isSuccess) {
       setShowEdit(false)
     }
   }, [isSuccess])
+
+  useEffect(() => {
+    handleUpdateBuyed()
+  }, [editItem.buyed])
 
   const { mutate: delItem, isLoading: deleteLoading } = useMutation(() => deleteItem(feirinhaId, listCart['_id']).then(
     () => querieClient.invalidateQueries('feirinhas')
@@ -62,6 +73,13 @@ const ItemCard = ({ listCart }:itemCard) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
+    if (id === 'buyed') {
+      setEditItem((prevstate) => ({
+        ...prevstate,
+        buyed: !editItem.buyed,
+      }));
+      return;
+    }
     setEditItem((prevstate) => ({
       ...prevstate,
       [id]: value,
@@ -94,7 +112,7 @@ const ItemCard = ({ listCart }:itemCard) => {
       <div className='w-1/5 flex justify-center items-center h-full md:h-20 overflow-hidden bg-white rounded-sm shadow-md'>
         {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='w-full'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
       </div>
-      <div className="w-full h-full">
+      <div className="w-3/5 h-full">
         <div className="flex flex-row items-start justify-between h-full font-regular text-xs md:text-base lowercase">
 
           <div className='flex flex-col items-start justify-between h-full w-full'>
@@ -111,10 +129,8 @@ const ItemCard = ({ listCart }:itemCard) => {
                 <ArrowPathIcon className="h-4 animate-spin text:red-500 dark:text:gray-100"/>
               )
               }
-              <div className='flex items-center justify-between w-24'>
-                <h2 className='text-gray-500 dark:text-gray-400 font-normal'>total: </h2>
-                <p className="text-center text-xs font-medium">{ (Number(listCart.price) * Number(listCart.quantity)).toFixed(2) }</p>
-              </div>
+              <span className="text-xs font-thin">{ prod && `${prod.size}${prod.unitMeasure}` }</span>
+              
             </div>
 
             <span className="w-full text-start font-thin">{ prod && `${prod.name} ${prod.subName} ${prod.manufacturer}` }</span>
@@ -205,13 +221,24 @@ const ItemCard = ({ listCart }:itemCard) => {
         </div>
       </div>
       
-      <div className='flex flex-col h-full justify-between items-end px-1'>
-        <input
-          type="checkbox"
-          className='form-checkbox h-8 w-8 cursor-pointer rounded-full border-green-300 bg-gray-50 text-green-600 focus:ring-green-200'
-        />
-
-        <span className="text-xs font-thin">{ prod && `${prod.size}${prod.unitMeasure}` }</span>
+      <div className='flex flex-col h-full justify-between items-end px-1 gap-2'>
+        <div className='relative flex justify-center items-center'>
+          <input
+            type="checkbox"
+            className='form-checkbox h-8 w-8 cursor-pointer rounded-full border-blue-500 dark:border-blue-400 border-2 bg-gray-50 dark:bg-gray-800 text-green-600 focus:ring-green-200'
+            id='buyed'
+            checked={editItem.buyed}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          />
+          { buyedLoading &&
+            <div className='absolute m-auto rounded-full p-1 border-blue-500 dark:border-blue-400 border-2 bg-gray-50 dark:bg-gray-800'>
+              <ArrowPathIcon className='h-6 text-blue-500 animate-spin'/>
+            </div>
+          }
+        </div>
+        <p className="text-center text-xs font-normal"><BanknotesIcon className='h-3 text-green-500'/> { (Number(listCart.price) * Number(listCart.quantity)).toFixed(2) }</p>
       </div>
     </li>
   )
