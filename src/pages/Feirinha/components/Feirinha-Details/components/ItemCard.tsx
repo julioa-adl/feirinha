@@ -9,7 +9,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
 
 interface itemCard {
-  listCart: IlistCart
+  listCart: IlistCart,
 }
 
 const ItemCard = ({ listCart }:itemCard) => {
@@ -23,6 +23,10 @@ const ItemCard = ({ listCart }:itemCard) => {
     price: listCart ? listCart.price : 0,
     buyed: listCart ? listCart.buyed : false
   })
+
+  useEffect(() => {
+    setShowEdit(false); // Resetar showEdit quando a prop listCart mudar
+  }, [listCart]);
 
   const { id: feirinhaId } = useParams();
 
@@ -104,7 +108,7 @@ const ItemCard = ({ listCart }:itemCard) => {
 
   return(
     <li
-      className='flex justify-between items-center gap-1
+      className='flex justify-between items-center gap-1 ease-in-out delay-300
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
@@ -153,8 +157,8 @@ const ItemCard = ({ listCart }:itemCard) => {
               />
             </span>
             
-            { showEdit && (
-              <div className='flex items-end gap-1 justify-between static pl-2 dark:bg-gray-600 w-full'>
+              <form
+                className={`${!showEdit ? 'hidden' : 'block'} flex items-end gap-1 justify-between static pl-2 dark:bg-gray-600 w-full`}>
 
                 <div className='flex flex-col w-2/6'>
                   <label className='text-xs text-gray-100 font-thin mb-1'>quantidade</label>
@@ -208,14 +212,15 @@ const ItemCard = ({ listCart }:itemCard) => {
                   text-sm px-2 py-1 w-1/6 h-full text-white
                   ${ disable ? 'bg-blue-400 opacity-50'
                   : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
-                  onClick={ () => handleUpdate() }
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    handleUpdate()
+                  } }
                 >
                   { updateLoading ? <Loading loading /> : <ArrowUpTrayIcon  className='h-3'/> }
                 </button>
 
-              </div>
-              )
-            }
+              </form>
             
           </div>
         </div>
