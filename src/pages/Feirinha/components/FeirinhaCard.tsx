@@ -39,11 +39,14 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
   
   return(
     <li
-      className='flex justify-between items-center gap-2
+      className='flex justify-between items-center
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
-      <PauseIcon className="h-6 text-yellow-500"/>
+      <Link to={`feirinha/${feirinha._id}`} className="w-1/6">
+        <PauseIcon className="h-6 text-yellow-500"/>
+      </Link>
+
       <Link to={`feirinha/${feirinha._id}`} className="w-4/6">
         <div className="flex flex-row gap-2 font-regular text-xs md:text-base lowercase items-center">
           <span className="w-full text-center">{ `${formatarData(feirinha.date)}` }</span>
