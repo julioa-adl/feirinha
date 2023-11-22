@@ -79,7 +79,7 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
               <SelectGeneral setMyState={setItem}/>
             </div>
 
-            <Link to={'produtos'}>
+            <Link to={'/produtos'}>
               <PlusSmallIcon
                 className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
               />

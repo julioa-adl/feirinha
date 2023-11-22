@@ -54,7 +54,7 @@ const registerFeirinha = async ({ marketId, availableToSpend }: Ifeirinha) => {
   return res;
 };
 
-const updateFeirinha = async ({ id, userId, marketId, listCart, date }: Ifeirinha) => {
+const updateFeirinha = async ({ id, userId, marketId, listCart, date, availableToSpend }: Ifeirinha) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
@@ -62,7 +62,7 @@ const updateFeirinha = async ({ id, userId, marketId, listCart, date }: Ifeirinh
   const res = await axios({
     method: "put",
     url: backendUrl(`feirinha/${userId}`),
-    data: { id, userId, marketId, listCart, date },
+    data: { id, userId, marketId, listCart, date, availableToSpend },
     headers: {
       Authorization: token || ''
     },

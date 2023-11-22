@@ -125,7 +125,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
                 onChange={ handleChange }
                 className={`appearance-none text-sm rounded-md px-4 py-1 w-full text-center h-8`}/>
             </div>
-            <h1 className="text-gray-900 font-bold text-lg dark:text-gray-100">R$</h1>
+            <h1 className="text-gray-100 font-bold text-lg">R$</h1>
         </div>
         
         { typeUse === 'Atualizar' && (
