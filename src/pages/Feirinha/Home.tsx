@@ -24,7 +24,6 @@ const Home = () => {
 
   const { data, isLoading } = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
 
-
   return(
     <div className="bg-white h-screen dark:bg-gray-900">
       <div className='p-5 flex items-center gap-1 w-full justify-center'>
@@ -38,7 +37,7 @@ const Home = () => {
       </div>
       <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
         { !isLoading ? (
-            data ? data.map((feira:Ifeirinha) => (
+            data.length >= 1 ? data.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
             )) : <NotFindFeirinhas />
           ) : <SkeletonCard type={'feirinha'}/>
