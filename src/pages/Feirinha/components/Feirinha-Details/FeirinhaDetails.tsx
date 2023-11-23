@@ -49,7 +49,7 @@ const FeirinhaDetails = () => {
   };
 
   return (
-    <div className="bg-white h-screen dark:bg-gray-900">
+    <div className="bg-white h-full dark:bg-gray-900">
       <div className='p-5 flex items-center w-full justify-between'>
         <Navigator />
         {
