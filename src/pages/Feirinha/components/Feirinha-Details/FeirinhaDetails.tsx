@@ -50,7 +50,6 @@ const FeirinhaDetails = () => {
 
   return (
     <div className="bg-white h-screen dark:bg-gray-900 overflow-hidden">
-    <div className='fixed top-0 z-30'>
       <div className='p-5 flex items-center w-full justify-between'>
         <Navigator />
         {
@@ -84,8 +83,7 @@ const FeirinhaDetails = () => {
           <p className='font-ligth'>R$ {feirinha && restante.toFixed(2)}</p>
         </div>
       </div>
-    </div>
-      <ul className='w-screem h-full mt-36 pb-56 lg:h-4/5 px-5 overflow-y-auto flex flex-col items-center gap-1 drop-shadow-lg'>
+      <ul className='w-screem h-3/6 lg:h-4/5 px-5 overflow-y-auto flex flex-col items-center gap-1 drop-shadow-lg'>
         { !(feirinhaLoading && marketLoading) ? (
             feirinha.listCart && feirinha.listCart.length > 0 ? feirinha.listCart.map((items:IlistCart, i) => (
               <ItemCard key={ `item-cart-list-${items._id}-${i}`} listCart={items}/>
