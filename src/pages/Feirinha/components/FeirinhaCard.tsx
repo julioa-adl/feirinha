@@ -39,12 +39,12 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
   
   return(
     <li
-      className='flex justify-between items-center
+      className='flex justify-between items-center border-2 border-transparent hover:border-lime-600 ease-in-out duration-100
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
       <Link to={`feirinha/${feirinha._id}`} className="w-1/6">
-        <PauseIcon className="h-6 text-yellow-500"/>
+        <PauseIcon className="h-6 md:h-8 text-yellow-500"/>
       </Link>
 
       <Link to={`feirinha/${feirinha._id}`} className="w-4/6">
@@ -58,7 +58,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
           <h2 className="w-full text-center">disponível para gastar: R${ feirinha.availableToSpend }</h2>
         </div>
       </Link>
-      <div className='w-1/6 flex justify-end gap-1'>
+      <div className='w-1/6 flex justify-end items-center rounded-r-md gap-1 h-full'>
         <PencilSquareIcon
           onClick={() => {
             setEditFeirinha(feirinha)

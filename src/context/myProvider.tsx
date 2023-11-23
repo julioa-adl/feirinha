@@ -21,7 +21,6 @@ type Isearch = {
 function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
-  const [code, setCode] = useState();
 
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [showMarket, setShowMarket] = useState<boolean | string | undefined>(false);
@@ -73,14 +72,13 @@ function Provider({ children }:AuxProps) {
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
-    code, setCode
   }), [tokenDecode,
       products, showProd, editProd,
       token, search, handleSearch,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
       feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       showItem, setShowItem, editItem, setEditItem,
-      code, setCode]);
+      ]);
 
   return (
     <MyContext.Provider value={ contextValue }>

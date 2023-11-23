@@ -28,6 +28,7 @@ const SelectGeneral = ({setMyState}) => {
 
   return (
     <div className='relative w-full'>
+      
       <div
         className="flex justify-between items-center p-2 w-full h-8 rounded-md bg-gray-200 dark:bg-gray-700 cursor-pointer
         hover:bg-gray-50 dark:hover:bg-gray-600 ease-in-out duration-300"

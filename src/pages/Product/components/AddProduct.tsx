@@ -8,12 +8,11 @@ import BarCodeScanner from "../../../general-components/scanner/BarCodeScanner";
 
 const AddProduct = () => {
   const [isProductRegistered, setIsproductRegistered] = useState<boolean | React.ReactNode>(false);
+  const [code, setCode] = useState('')
 
   const {
     setShowProd,
     products,
-    code,
-    setCode
   } = useContext(context);
 
   const { data } = products;
@@ -42,7 +41,7 @@ const AddProduct = () => {
           onClick={() => { setShowProd(false); setCode('') }}/>
         {
           !code ? (
-            <BarCodeScanner />
+            <BarCodeScanner title={true} mySetCode={setCode} />
           ) : (
               isProductRegistered && isProductRegistered
           )

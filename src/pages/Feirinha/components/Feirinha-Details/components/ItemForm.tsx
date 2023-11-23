@@ -8,6 +8,7 @@ import { PlusSmallIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import SelectGeneral from "../../../../../general-components/SelectGeneral";
 import context from "../../../../../context/myContext";
+import BarCodeScanner from "../../../../../general-components/scanner/BarCodeScanner";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -21,6 +22,7 @@ type FormType = {
 };
 
 const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
+  const [code, setCode] = useState('');
   const [disable, setDisable] = useState(true);
   const [addItem, setItem] = useState<IlistCart>({
     productId: '',
@@ -36,6 +38,7 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
 
   useEffect(() => {
     // disable button logic
+    console.log(code)
     const {productId, productName} = addItem
     if (productId.length > 0 && productName.length > 0) {
       return setDisable(false);
@@ -87,7 +90,8 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
           </div>
           )
         }
-        
+        <BarCodeScanner mySetCode={setCode} title={false}/>
+
         <button
           type="submit"
           disabled={ disable }

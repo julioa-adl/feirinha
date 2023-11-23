@@ -23,6 +23,7 @@ const AddItem = ({feirinhaId}) => {
             onClick={() => setShowItem(false)}/>
         </div>
         <ItemForm typeUse='Cadastrar' feirinhaId={feirinhaId}/>
+        
       </div>
     </div>
   )
