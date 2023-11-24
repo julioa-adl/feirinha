@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import context from '../../../context/myContext';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
 import { Iprod } from "../../../interfaces/IProduct";
 import ProductForm from "./ProductForm";
 import AlredyRegistered from "../../../general-components/alerts/AlredyRegistered";
@@ -39,6 +39,7 @@ const AddProduct = () => {
           className="h-6 cursor-pointer text-gray-100 hover:text-red-500
           duration-300 ease-in-out hover:scale-125 self-end"
           onClick={() => { setShowProd(false); setCode('') }}/>
+          
         {
           !code ? (
             <BarCodeScanner title={true} mySetCode={setCode} />
@@ -47,6 +48,9 @@ const AddProduct = () => {
           )
         }
         
+        <p className="flex gap-1 justify-center items-center text-gray-500 w-full text-xs px-4 py-2 bg-gray-700 cursor-pointer rounded-sm hover:bg-blue-600 hover:text-white ease-in-out duration-300"
+          onClick={() => setCode('0')}
+        >quero digitar o código<CodeBracketIcon className="h-4"/></p>
       </div>
     </div>
   )

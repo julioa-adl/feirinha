@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
-import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon } from '@heroicons/react/24/solid';
+import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon, /*CheckCircleIcon, XCircleIcon*/ } from '@heroicons/react/24/solid';
 import { registUser } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
@@ -87,7 +87,7 @@ const Register = () => {
             id='name'
             value={ values.name }
             onChange={ handleChange }
-            placeholder="Ex. Lucas Lima"
+            placeholder="Ex. João Silva"
             className={`rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className='relative'>

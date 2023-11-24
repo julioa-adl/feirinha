@@ -36,6 +36,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
 
   const {
     markets,
+    setShowFeirinha
   } = useContext(context);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -105,7 +106,9 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
             </select>
           </div>
 
-          <Link to={'mercados'}>
+          <Link to={'/mercados'}
+            onClick={() => setShowFeirinha(false)}
+          >
             <PlusSmallIcon
               className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
             />

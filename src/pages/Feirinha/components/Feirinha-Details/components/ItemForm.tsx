@@ -22,6 +22,7 @@ type FormType = {
 };
 
 const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
+  const [notFind, setNotFind] = useState(false);
   const [code, setCode] = useState('');
   const [disable, setDisable] = useState(true);
   const [addItem, setItem] = useState<IlistCart>({
@@ -78,10 +79,12 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
               <label
                 className="text-gray-100 flex justify-between items-end text-sm"
               >produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
-              <SelectGeneral scanner={code} setMyState={setItem}/>
+              <SelectGeneral setNotFind={setNotFind} scanner={code} setMyState={setItem}/>
             </div>
 
-            <Link to={'/produtos'}>
+            <Link to={'/produtos'}
+              onClick={() => setShowItem(false)}
+            >
               <PlusSmallIcon
                 className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
               />
@@ -89,8 +92,8 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
           </div>
           )
         }
+        <p className="text-red-400 h-4 w-full text-center text-xs animate-pulse">{`${notFind ? 'produto não encontrado' : ''}`}</p>
         <BarCodeScanner mySetCode={setCode} title={false}/>
-
         <button
           type="submit"
           disabled={ disable }

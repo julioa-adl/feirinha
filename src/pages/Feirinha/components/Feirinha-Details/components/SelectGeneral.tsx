@@ -3,7 +3,7 @@ import { ArchiveBoxXMarkIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from "@he
 import { useQuery } from 'react-query';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 
-const SelectGeneral = ({setMyState, scanner}) => {
+const SelectGeneral = ({setMyState, scanner, setNotFind}) => {
   const [view, setView] = useState(false);
   const [infos, setInfos] = useState({
     id: '',
@@ -36,14 +36,21 @@ const SelectGeneral = ({setMyState, scanner}) => {
     if (scanner.length > 0) {
       const scannerProd = data && data.find((prodData) => prodData.code === scanner);
       console.log(scannerProd)
-      setInfos((prevstate) => ({
-        ...prevstate,
-        id: scannerProd['_id'],
-        name: scannerProd.name,
-        image: scannerProd.image,
-        unitMeasure: scannerProd.unitMeasure,
-        size: scannerProd.size
-      }));
+      if (scannerProd) {
+        setInfos((prevstate) => ({
+          ...prevstate,
+          id: scannerProd['_id'],
+          name: scannerProd.name,
+          image: scannerProd.image,
+          unitMeasure: scannerProd.unitMeasure,
+          size: scannerProd.size
+        }));
+      } else {
+        setNotFind(true)
+        setTimeout(() => {
+          setNotFind(false)
+        }, 5000)
+      }
     }
   }, [scanner])
 

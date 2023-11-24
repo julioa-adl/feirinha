@@ -70,7 +70,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
             onClick={() => {
               handleDelete()
             }}
-            className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-yellow-500'
+            className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-red-400'
           />
         ) : ( 
           <ArrowPathIcon className="w-6 h-6 animate-spin text:red-500 dark:text:gray-100"/>

@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import categories from "../../../helpers/categories";
 import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
-import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, MinusIcon, BellAlertIcon } from '@heroicons/react/24/outline';
 import { registerProduct, updateProduct } from '../../../helpers/httpClient/productClient';
 import RegisteredSuccess from "../../../general-components/alerts/RegisteredSuccess";
 import Loading from '../../../general-components/Loading';
@@ -33,7 +33,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     subName: product ? product.subName : '',
     manufacturer: product ? product.manufacturer : '',
     category: product ? product.category : '',
-    code: product ? product.code : code,
+    code: product ? product.code : code ? code : '',
     image: product ? product.image : undefined,
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
@@ -198,7 +198,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
             </select>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="relative flex flex-col gap-1">
             <label
               className="text-gray-100 flex justify-between items-end text-sm"
             >código de barras: <span className="text-gray-600 text-xs">obrigatório</span></label>
@@ -206,12 +206,32 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               type="text"
               required
               id='code'
-              value={ addProd.code || code }
+              value={ addProd.code }
               onChange={ handleChange }
-              placeholder="000000"
+              onFocus={() => {
+                console.log(typeof(addProd.code))
+                if (addProd.code == '0') {
+                  setAddProd((prevstate) => ({
+                    ...prevstate,
+                    code: '',
+                  }))
+                }
+              }}
+              onBlur={() => {
+                if (addProd.code == '') {
+                  setAddProd((prevstate) => ({
+                    ...prevstate,
+                    code: '0',
+                  }))
+                }
+              }}
               className="px-4 py-1 w-full rounded-md"
             />
-            <p className="text-gray-600 text-xs">confira com atenção o código capturado, caso necessário corrija o código!</p>
+            <span className="text-gray-300 text-xs">confira com atenção o código capturado, caso necessário corrija o código!</span>
+            <div className="absolute top-8 right-2 flex justify-center items-center">
+              <BellAlertIcon className="absolute opacity-50 m-auto animate-ping text-gray-500 h-4"/>
+              <BellAlertIcon className="text-gray-500 h-4"/>
+            </div>
           </div>
 
           <div className="flex flex-col gap-1">

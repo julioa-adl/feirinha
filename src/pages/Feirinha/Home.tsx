@@ -26,7 +26,7 @@ const Home = () => {
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900">
-      <div className='fixed top-0 z-30 md:relative bg-gray-100 dark:bg-gray-900 p-5 flex items-center gap-1 w-full justify-center'>
+      <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900 p-5 flex items-center gap-1 w-full justify-center'>
         <Navigator />
         {/* <Search searching={'feirinha'}/> */}
         <h1 className="rounded-full flex items-start md:justify-center gap-1 max-w-xs text-sm px-4 py-2 w-full bg-gray-100 dark:bg-gray-800 font-bold text-gray-900 dark:text-white">

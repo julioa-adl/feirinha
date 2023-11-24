@@ -16,7 +16,7 @@ const Scanner = ({ onDetected }) => {
           },
         },
         photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
-        frequency: 5,
+        frequency: 1,
         showCanvas: false,
         multiple: false,
         decoder: {
