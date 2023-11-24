@@ -130,7 +130,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
       (updateSucess || updateError) || (registerSucess || registerError) ? (
         returnForm[updateError || registerError ? 'Erro' : typeUse]
       ) : (
-        <form className="flex flex-col gap-2">
+        <form className="flex flex-col gap-1">
           <div className="flex flex-col gap-1">
             <label
               className="text-gray-100 flex justify-between items-end text-sm"

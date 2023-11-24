@@ -48,9 +48,11 @@ const AddProduct = () => {
           )
         }
         
-        <p className="flex gap-1 justify-center items-center text-gray-500 w-full text-xs px-4 py-2 bg-gray-700 cursor-pointer rounded-sm hover:bg-blue-600 hover:text-white ease-in-out duration-300"
-          onClick={() => setCode('0')}
-        >quero digitar o código<CodeBracketIcon className="h-4"/></p>
+        {!code &&
+          <p className="flex gap-1 my-5 justify-center items-center text-gray-500 w-full text-xs px-4 py-2 bg-gray-700 cursor-pointer rounded-md hover:bg-blue-600 hover:text-white ease-in-out duration-300"
+            onClick={() => setCode('0')}
+          >quero digitar o código<CodeBracketIcon className="h-4"/></p>
+        }
       </div>
     </div>
   )
