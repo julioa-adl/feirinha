@@ -27,12 +27,12 @@ const Markets = () => {
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900">
-      <div className='py-5 flex items-center w-full justify-center'>
+      <div className='fixed top-0 z-30 md:relative bg-gray-100 dark:bg-gray-900 py-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search searching={'mercado'}/>
         <User />
       </div>
-      <ul className='w-screem h-4/6 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
+      <ul className='w-screem full py-20 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
         { !isLoading ? (
             filterMarket.length > 0 ? filterMarket.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
