@@ -122,6 +122,22 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
                 required
                 id='availableToSpend'
                 value={ addFeirinha.availableToSpend }
+                onFocus={() => {
+                  if (addFeirinha.availableToSpend === 0) {
+                    setFeirinha((prevstate) => ({
+                      ...prevstate,
+                      availableToSpend: '',
+                    }))
+                  }
+                }}
+                onBlur={() => {
+                  if (addFeirinha.availableToSpend === '') {
+                    setFeirinha((prevstate) => ({
+                      ...prevstate,
+                      availableToSpend: 0,
+                    }))
+                  }
+                }}
                 onChange={ handleChange }
                 className={`appearance-none text-sm rounded-md px-4 py-1 w-full text-center h-8`}/>
             </div>

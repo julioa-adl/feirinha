@@ -33,8 +33,8 @@ const ItemCard = ({ listCart }:itemCard) => {
   useEffect(() => {
     const {quantity, price} = editItem;
     if (
-      quantity > 0 &&
-      price > 0 ) {
+      Number(quantity) > 0 &&
+      Number(price) > 0 ) {
         return setDisable(false);
       }
     return setDisable(true);
@@ -158,11 +158,11 @@ const ItemCard = ({ listCart }:itemCard) => {
             </span>
             
               <form
-                className={`${!showEdit ? 'hidden' : 'block'} flex items-end gap-1 justify-between static pl-2 dark:bg-gray-600 w-full`}>
+                className={`${!showEdit ? 'hidden' : 'block'} flex items-end gap-1 justify-between static dark:bg-gray-600 w-full`}>
 
                 <div className='flex flex-col w-2/6'>
-                  <label className='text-xs text-gray-100 font-thin mb-1'>quantidade</label>
-                  <div className="flex h-4 text-xs">
+                  {/* <label className='text-xs text-gray-100 font-thin mb-1'>quantidade</label> */}
+                  <div className="flex h-6 text-xs">
                     <div
                       onClick={ decrementSize }
                       className="group bg-gray-500 cursor-pointer hover:bg-red-300
@@ -177,7 +177,23 @@ const ItemCard = ({ listCart }:itemCard) => {
                       id='quantity'
                       value={ editItem.quantity }
                       onChange={ handleChange }
-                      className=" text-center w-8 h-4 outline-none text-xs p-0 text-gray-900
+                      onFocus={() => {
+                        if (editItem.quantity === 0) {
+                          setEditItem((prevstate) => ({
+                            ...prevstate,
+                            quantity: '',
+                          }))
+                        }
+                      }}
+                      onBlur={() => {
+                        if (editItem.quantity === '') {
+                          setEditItem((prevstate) => ({
+                            ...prevstate,
+                            quantity: 0,
+                          }))
+                        }
+                      }}
+                      className=" text-center w-8 h-6 outline-none text-xs p-0 text-gray-900
                       [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none
                       [&::-webkit-inner-spin-button]:appearance-none"
                     />
@@ -192,14 +208,30 @@ const ItemCard = ({ listCart }:itemCard) => {
                   </div>
                 </div>
 
-                <div className='flex flex-col w-2/6'>
-                  <label className='text-xs text-gray-100 font-thin mb-1'>preço</label>
+                <div className='flex flex-col justify-center items-center w-2/6'>
+                  {/* <label className='text-xs text-gray-100 font-thin mb-1'>preço</label> */}
                   <input
                     type="number"
                     id='price'
                     value={ editItem.price }
                     onChange={ handleChange }
-                    className=" text-center w-3/4 h-4 rounded-sm outline-none text-xs p-0 text-gray-900
+                    onFocus={() => {
+                      if (editItem.price === 0) {
+                        setEditItem((prevstate) => ({
+                          ...prevstate,
+                          price: '',
+                        }))
+                      }
+                    }}
+                    onBlur={() => {
+                      if (editItem.price === '') {
+                        setEditItem((prevstate) => ({
+                          ...prevstate,
+                          price: 0,
+                        }))
+                      }
+                    }}
+                    className=" text-center w-3/4 h-6 rounded-sm outline-none text-xs p-0 text-gray-900
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none
                     [&::-webkit-inner-spin-button]:appearance-none"
                   />

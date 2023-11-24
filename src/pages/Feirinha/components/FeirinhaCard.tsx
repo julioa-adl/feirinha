@@ -43,11 +43,11 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
-      <Link to={`feirinha/${feirinha._id}`} className="w-1/6">
+      <Link to={`feirinha/${feirinha._id}`} className="">
         <PauseIcon className="h-6 md:h-8 text-yellow-500"/>
       </Link>
 
-      <Link to={`feirinha/${feirinha._id}`} className="w-4/6">
+      <Link to={`feirinha/${feirinha._id}`} className="w-5/6">
         <div className="flex flex-row gap-2 font-regular text-xs md:text-base lowercase items-center">
           <span className="w-full text-center">{ `${formatarData(feirinha.date)}` }</span>
         </div>
