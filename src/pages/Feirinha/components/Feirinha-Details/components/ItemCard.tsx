@@ -108,7 +108,7 @@ const ItemCard = ({ listCart }:itemCard) => {
 
   return(
     <li
-      className={`flex justify-between items-center gap-1 ease-in-out duration-300
+      className={`flex justify-between items-center gap-1 ease-linear duration-300
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800 ${showEdit ? 'h-28 md:h-32' : 'h-24'}`}
     >
@@ -158,7 +158,11 @@ const ItemCard = ({ listCart }:itemCard) => {
             </span>
             
               <form
-                className={`${!showEdit ? 'hidden' : 'block'} flex items-end gap-1 justify-between static dark:bg-gray-600 w-full`}>
+                className={`ease-linear duration-300 ${!showEdit ? 'hidden h-0' : 'block h-auto'} flex items-end gap-1 justify-between static dark:bg-gray-600 w-full`}
+                // onBlur={() => {
+                //   setShowEdit(false)
+                // }}
+              >
 
                 <div className='flex flex-col w-2/6'>
                   {/* <label className='text-xs text-gray-100 font-thin mb-1'>quantidade</label> */}

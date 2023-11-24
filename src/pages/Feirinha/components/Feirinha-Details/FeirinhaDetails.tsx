@@ -76,17 +76,17 @@ const FeirinhaDetails = () => {
         <div className='flex justify-between items-start w-screen md:w-1/2 m-auto px-5 py-2 text-gray-900 dark:text-gray-100 text-xs'>
           <div className='flex flex-col items-center w-1/3 gap-1 bg-blue-400 dark:bg-blue-600 p-1 rounded-ss-md'>
             <h2>planejado</h2>
-            <p className='font-ligth'>R$ {feirinha && feirinha.availableToSpend.toFixed(2)}</p>
+            <p className='font-ligth text-base'>R$ {feirinha && feirinha.availableToSpend.toFixed(2)}</p>
           </div>
 
           <div className='flex flex-col items-center w-1/3 gap-1 bg-green-400 dark:bg-green-600 p-1'>
             <h2>gasto</h2>
-            <p className='font-ligth'>R$ {feirinha && gasto.toFixed(2)}</p>
+            <p className='font-ligth text-base'>R$ {feirinha && gasto.toFixed(2)}</p>
           </div>
 
           <div className='flex flex-col items-center w-1/3 gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-se-md'>
             <h2>restante</h2>
-            <p className='font-ligth'>R$ {feirinha && restante.toFixed(2)}</p>
+            <p className='font-ligth text-base'>R$ {feirinha && restante.toFixed(2)}</p>
           </div>
         </div>
       </div>
