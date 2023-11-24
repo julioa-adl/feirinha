@@ -31,7 +31,7 @@ const AddProduct = () => {
   }, [code])
 
   return(
-    <div className="fixed top-0 z-20 h-full w-full bg-opacity-70
+    <div className="fixed top-0 z-40 h-full w-full bg-opacity-70
     bg-gray-900 flex flex-col items-center justify-center">
       <div className="flex flex-col w-80 md:w-1/3 p-5 bg-gray-800 rounded-xl
       ease-in-out origin-bottom transition-transform">

@@ -8,5 +8,5 @@ export type Iprod = {
   code: string | undefined,
   image: ArrayBuffer | string | undefined,
   unitMeasure?: string | undefined,
-  size?: number,
+  size?: number | string,
 }

@@ -254,6 +254,22 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   id='size'
                   value={ addProd.size }
                   onChange={ handleChange }
+                  onFocus={() => {
+                    if (addProd.size === 0) {
+                      setAddProd((prevstate) => ({
+                        ...prevstate,
+                        size: '',
+                      }))
+                    }
+                  }}
+                  onBlur={() => {
+                    if (addProd.size === '') {
+                      setAddProd((prevstate) => ({
+                        ...prevstate,
+                        size: 0,
+                      }))
+                    }
+                  }}
                   className=" text-center w-14 outline-none text-sm py-1
                   [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none
                   [&::-webkit-inner-spin-button]:appearance-none"

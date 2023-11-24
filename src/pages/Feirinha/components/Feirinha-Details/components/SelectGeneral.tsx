@@ -1,9 +1,9 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { ArchiveBoxXMarkIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useQuery } from 'react-query';
-import { fetchProducts } from '../helpers/httpClient/productClient';
+import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 
-const SelectGeneral = ({setMyState}) => {
+const SelectGeneral = ({setMyState, scanner}) => {
   const [view, setView] = useState(false);
   const [infos, setInfos] = useState({
     id: '',
@@ -30,6 +30,22 @@ const SelectGeneral = ({setMyState}) => {
   });
 
   const filterProd = data && productsSort.filter(prodF => ((`${prodF.name} ${prodF.subName} ${prodF.size}${prodF.unitMeasure}`).toLowerCase().includes(infos.searching.toLowerCase() || '')))
+
+  useEffect(() => {
+    console.log(scanner)
+    if (scanner.length > 0) {
+      const scannerProd = data && data.find((prodData) => prodData.code === scanner);
+      console.log(scannerProd)
+      setInfos((prevstate) => ({
+        ...prevstate,
+        id: scannerProd['_id'],
+        name: scannerProd.name,
+        image: scannerProd.image,
+        unitMeasure: scannerProd.unitMeasure,
+        size: scannerProd.size
+      }));
+    }
+  }, [scanner])
 
   useEffect(() => {
     const { id, name } = infos;

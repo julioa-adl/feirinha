@@ -6,7 +6,7 @@ import Error from "../../../../../general-components/alerts/Error";
 import { useMutation, useQueryClient } from 'react-query';
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import SelectGeneral from "../../../../../general-components/SelectGeneral";
+import SelectGeneral from "./SelectGeneral";
 import context from "../../../../../context/myContext";
 import BarCodeScanner from "../../../../../general-components/scanner/BarCodeScanner";
 
@@ -38,7 +38,6 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
 
   useEffect(() => {
     // disable button logic
-    console.log(code)
     const {productId, productName} = addItem
     if (productId.length > 0 && productName.length > 0) {
       return setDisable(false);
@@ -79,7 +78,7 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
               <label
                 className="text-gray-100 flex justify-between items-end text-sm"
               >produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
-              <SelectGeneral setMyState={setItem}/>
+              <SelectGeneral scanner={code} setMyState={setItem}/>
             </div>
 
             <Link to={'/produtos'}>
