@@ -26,7 +26,7 @@ const Markets = () => {
   const filterMarket = data && data.filter(marketF => ((`${marketF.name} ${marketF.neighborhood} ${marketF.address} ${marketF.city} ${marketF.state}`).toLowerCase().includes(search.mercado.toLowerCase() || '')))
 
   return(
-    <div className="bg-white h-screen dark:bg-gray-900 overflow-hidden">
+    <div className="bg-white h-screen dark:bg-gray-900">
       <div className='py-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search searching={'mercado'}/>
