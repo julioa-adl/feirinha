@@ -108,9 +108,9 @@ const ItemCard = ({ listCart }:itemCard) => {
 
   return(
     <li
-      className='flex justify-between items-center gap-1 ease-in-out delay-300
+      className={`flex justify-between items-center gap-1 ease-in-out duration-300
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
+      rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800 ${showEdit ? 'h-28 md:h-32' : 'h-24'}`}
     >
 
       <div className='w-1/5 flex justify-center items-center h-full md:h-20 overflow-hidden bg-white rounded-sm shadow-md'>
