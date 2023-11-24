@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navigator from '../../../../general-components/Navigator';
 import User from '../../../../general-components/User';
 import MobileMenu from '../../../../general-components/MobileMenu';
@@ -12,7 +12,7 @@ import CallItemCart from './components/CallItemCart';
 import { useQuery } from 'react-query';
 import { fetchFeirinhas } from '../../../../helpers/httpClient/feirinhaClient';
 import { fetchMarkets } from '../../../../helpers/httpClient/marketsClient';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import context from '../../../../context/myContext';
 import AddItem from './components/AddItem';
 
@@ -28,6 +28,11 @@ const FeirinhaDetails = () => {
 
   const feirinha = feirinhaData ? feirinhaData.find((f) => f._id === id) : false;
   const mercado = marketaData ? marketaData.find((mrkt) => mrkt['_id'] === (feirinha ? feirinha.marketId : '')) : false;
+
+  const history = useNavigate();
+  useEffect(() => {
+    if (!feirinha) return history('/')
+  })
 
   const gasto = feirinha && feirinha.listCart.reduce((acc, cur) => {
     if (cur.buyed) {

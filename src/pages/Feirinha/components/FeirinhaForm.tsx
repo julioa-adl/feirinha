@@ -92,7 +92,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
               id='marketId'
               value={ addFeirinha.marketId }
               onChange={ handleChange }
-              className={`px-4 form-select py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
+              className={`px-4 form-select lowercase py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
         >
           <option value={''} disabled>-</option>
               {
