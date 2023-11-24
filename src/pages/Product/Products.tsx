@@ -31,7 +31,7 @@ const Products = () => {
   const filterProd = data && productsSort.filter(prodF => ((`${prodF.name} ${prodF.subName} ${prodF.size}${prodF.unitMeasure}`).toLowerCase().includes(search.produto.toLowerCase() || '')))
 
   return(
-    <div className='bg-white h-screen dark:bg-gray-900 overflow-y-hidden'>
+    <div className='bg-white h-screen dark:bg-gray-900'>
       <div className='py-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search searching={'produto'}/>
