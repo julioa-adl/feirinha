@@ -65,7 +65,9 @@ const SelectGeneral = ({setMyState, scanner}) => {
         onClick={() => setView(!view)}
       >
         <h1 className={`text-center text-xs ${infos.name ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500'}`}>{infos.name ? (
-          <span className='flex items-center gap-2 lowercase'><img src={infos.image} alt={infos.name} className='h-6'/> { `${infos.name} - ${infos.size}${infos.unitMeasure}` }</span>
+          <span className='flex items-center gap-2 lowercase'>
+            {infos.image ? <img src={infos.image} alt={infos.name} className='h-6'/> : <ArchiveBoxXMarkIcon className="h-4 text-gray-600 dark:text-gray-100 opacity-20"/>}
+            { `${infos.name} - ${infos.size}${infos.unitMeasure}` }</span>
           ) : 'Selecione um Produto'}</h1>
         <ChevronUpDownIcon className="h-6 text-gray-900 dark:text-gray-100"/>
       </div>
@@ -106,7 +108,7 @@ const SelectGeneral = ({setMyState, scanner}) => {
                 }}
               >
                 <div className='flex justify-center items-center w-8 h-8 bg-white rounded-sm overflow-hidden shadow-md'>
-                  {prod.image ? (<img src={prod.image} alt={prod.name} className='max-h-20'/>) : <ArchiveBoxXMarkIcon className="h-5 text-gray-600 opacity-20"/>}
+                  {prod.image ? (<img src={prod.image} alt={prod.name} className='scale-100'/>) : <ArchiveBoxXMarkIcon className="h-5 text-gray-600 opacity-20"/>}
                 </div>
                 <div className='flex flex-col w-full lowercase'>
                   <h1 className='text-xs font-medium'>{`${prod.name} - ${prod.subName}`}</h1>
