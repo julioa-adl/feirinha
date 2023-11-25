@@ -53,10 +53,19 @@ const FeirinhaDetails = () => {
     return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
   };
 
+  const totalList = feirinha && feirinha.listCart?.length
+  const totalBuyed = feirinha && feirinha.listCart?.reduce((acc, cur) => {
+    if (cur.buyed) {
+      acc ++;
+    }
+    return acc;
+  }, 0);
+  const totalPercent = totalList && totalBuyed && ((totalBuyed / totalList)*100)
+
   return (
     <div className="bg-white h-screen dark:bg-gray-900">
-      <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900'>
-        <div className='px-5 pt-5 flex items-center w-full justify-between'>
+      <div className='fixed flex flex-col top-0 z-30 md:relative bg-white dark:bg-gray-900'>
+        <div className='px-5 pt-5 mb-2 flex items-center w-full justify-between'>
           <Navigator />
           {
             feirinhaLoading && marketLoading ? (
@@ -73,7 +82,7 @@ const FeirinhaDetails = () => {
           <User />
         </div>
 
-        <div className='flex justify-between items-start w-screen md:w-1/2 m-auto px-5 md:px-2 py-2 text-gray-900 dark:text-gray-100 text-xs'>
+        <div className='flex justify-between items-start w-screen md:w-1/2 m-auto px-5 md:px-2 text-gray-900 dark:text-gray-100 text-xs'>
           <div className='flex flex-col items-center w-1/3 gap-1 bg-blue-400 dark:bg-blue-600 p-1 rounded-ss-md'>
             <h2>planejado</h2>
             <p className='font-ligth text-base'>R$ {feirinha && feirinha.availableToSpend.toFixed(2)}</p>
@@ -89,9 +98,22 @@ const FeirinhaDetails = () => {
             <p className='font-ligth text-base'>R$ {feirinha && restante.toFixed(2)}</p>
           </div>
         </div>
+
+        <div className="flex items-center ease-in-out duration-300 gap-2 px-5 md:px-2 text-gray-900 dark:text-gray-100 font-light text-xs md:text-sm w-screen md:w-1/2 m-auto">
+          <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700">
+            <div style={{
+              height:'100%',
+              width:`${totalPercent}%`
+            }}
+            className="bg-green-500 dark:bg-green-400 rounded-full"
+            />
+          </div>
+          <p>{`${totalBuyed}/${totalList}`}</p>
+        </div>
+
       </div>
       
-      <ul className='w-screem full py-32 md:py-0 lg:h-4/5 px-5 overflow-y-auto flex flex-col items-center gap-1 drop-shadow-lg'>
+      <ul className='w-screem full py-36 md:py-0 lg:h-4/5 px-5 overflow-y-auto flex flex-col items-center gap-1 drop-shadow-lg'>
         { !(feirinhaLoading && marketLoading) ? (
             feirinha.listCart && feirinha.listCart.length > 0 ? feirinha.listCart.map((items:IlistCart, i) => (
               <ItemCard key={ `item-cart-list-${items._id}-${i}`} listCart={items}/>

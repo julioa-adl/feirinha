@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { PencilSquareIcon, PauseIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
+import { PencilSquareIcon, EyeIcon, /*PlayIcon, CheckIcon*/ } from '@heroicons/react/24/solid';
 import { TrashIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Ifeirinha } from "../../../interfaces/IFeirinha";
 import { Link } from "react-router-dom";
@@ -24,6 +24,17 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
     const dataFormatada = format(dataUTC, "dd 'de' MMMM 'de' yyyy");
     return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
   };
+
+  // console.log(feirinha)
+
+  const totalList = feirinha && feirinha.listCart?.length
+  const totalBuyed = feirinha && feirinha.listCart?.reduce((acc, cur) => {
+    if (cur.buyed) {
+      acc ++;
+    }
+    return acc;
+  }, 0);
+  const totalPercent = totalList && totalBuyed && ((totalBuyed / totalList)*100)
   
   const { data: mrkData } = useQuery('markets', () => fetchMarkets(), {retry: 10});
 
@@ -44,7 +55,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
       rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
     >
       <Link to={`feirinha/${feirinha._id}`} className="">
-        <PauseIcon className="h-6 md:h-8 text-yellow-500"/>
+        <EyeIcon className="h-6 md:h-8 text-gray-400"/>
       </Link>
 
       <Link to={`feirinha/${feirinha._id}`} className="w-5/6">
@@ -54,9 +65,29 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
         <div className="dark:text-gray-500 font-light text-xs md:text-sm">
           <h2 className="w-full text-center">{ mercado.name } - { mercado.neighborhood } - { mercado.state }</h2>
         </div>
-        <div className="dark:text-gray-500 font-light text-xs md:text-sm">
-          <h2 className="w-full text-center">disponível para gastar: R${ feirinha.availableToSpend }</h2>
+
+
+        <div className="flex items-center gap-2 px-4 text-gray-900 dark:text-gray-100 font-light text-xs md:text-sm w-full">
+          <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700">
+            { totalList === 0 ? (
+              <div className="relative flex items-center justify-center w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800
+              p-1 shadow before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r
+              before:from-transparent before:via-white/90 dark:before:via-white/10 hover:shadow-lg before:animate-[shimmer_1.5s_infinite]">
+                <p className="absolute text-gray-400 dark:text-gray-600">iniciar lista</p></div>
+            ) : (
+              <div style={{
+                height:'100%',
+                width:`${totalPercent}%`
+              }}
+              className="bg-green-500 dark:bg-green-400 rounded-full"
+              />
+            )
+            }
+            
+          </div>
+          <p>{`${totalBuyed}/${totalList}`}</p>
         </div>
+
       </Link>
       <div className='w-1/6 flex justify-end items-center rounded-r-md gap-1 h-full'>
         <PencilSquareIcon
