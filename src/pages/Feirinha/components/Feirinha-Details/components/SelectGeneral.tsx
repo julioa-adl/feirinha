@@ -80,7 +80,7 @@ const SelectGeneral = ({setMyState, scanner, setNotFind}) => {
       </div>
       <div className='fixed -z-10 top-0 left-0 w-screen h-screen bg-black opacity-60' onClick={() => setView(false)}/>
       { view &&
-        <div className='absolute z-10 -top-32 -left-5 w-80 h-96 p-2 flex flex-col gap-1 bg-gray-200 dark:bg-gray-700
+        <div className='absolute z-10 -top-20 -left-5 w-80 h-96 p-2 flex flex-col gap-1 bg-gray-200 dark:bg-gray-700
         text-gray-900 dark:text-gray-100 rounded-md shadow-inner'>
           <div className='relative mb-2'>
             <MagnifyingGlassIcon
