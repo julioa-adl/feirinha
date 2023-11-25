@@ -27,6 +27,7 @@ interface ProductFormProps {
 
 const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
   const [disable, setDisable] = useState(true);
+  const [noCode, setNoCode] = useState(false);
   const [addProd, setAddProd] = useState<Iprod>({
     id: product ? product['_id'] : '',
     name: product ? product.name : '',
@@ -199,13 +200,29 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
           </div>
 
           <div className="relative flex flex-col gap-1">
-            <label
+            <label htmlFor="code"
               className="text-gray-100 flex justify-between items-end text-sm"
-            >código de barras: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            >código de barras:
+
+              <div className="flex items-center gap-1">
+                <input type="checkbox" className="h-3 w-3" onChange={(e) => {
+                  const check = e.target.checked;
+                  setNoCode(check)
+                  setAddProd((prevState) => ({
+                    ...prevState,
+                    code: 'nocode'
+                  }));
+                }}/>
+                <span className="text-gray-100 text-xs">no code</span>
+              </div>
+              
+            </label>
             <input
               type="text"
               required
+              name="code"
               id='code'
+              disabled={noCode}
               value={ addProd.code }
               onChange={ handleChange }
               onFocus={() => {
@@ -225,7 +242,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   }))
                 }
               }}
-              className="px-4 py-1 w-full rounded-md"
+              className={`px-4 py-1 w-full rounded-md ${noCode ? 'bg-gray-600 text-gray-600' : 'bg-gray-100'}`}
             />
             <span className="text-gray-300 text-xs">confira com atenção o código capturado, caso necessário corrija o código!</span>
             <div className="absolute top-8 right-2 flex justify-center items-center">
