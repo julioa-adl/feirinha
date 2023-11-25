@@ -35,7 +35,7 @@ const Home = () => {
         </h1>
         <User />
       </div>
-      <ul className='w-screem full py-20 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-5 drop-shadow-lg'>
+      <ul className='w-screem full py-20 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
         { !isLoading ? (
             data.length >= 1 ? data.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
