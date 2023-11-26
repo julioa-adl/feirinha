@@ -1,6 +1,6 @@
 import abacata from './abacata.webp';
 import banana from './banana.webp';
-import batata from './abacata.webp';
+import batata from './batata.webp';
 import cerejas from './cerejas.webp';
 import laranja from './laranja.webp';
 import moranguinho from './moranguinho.webp';
