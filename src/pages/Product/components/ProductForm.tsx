@@ -210,7 +210,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   setNoCode(check)
                   setAddProd((prevState) => ({
                     ...prevState,
-                    code: 'nocode'
+                    code: check ? 'nocode' : '0'
                   }));
                 }}/>
                 <span className="text-gray-100 text-xs">no code</span>
@@ -242,7 +242,7 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
                   }))
                 }
               }}
-              className={`px-4 py-1 w-full rounded-md ${noCode ? 'bg-gray-600 text-gray-600' : 'bg-gray-100'}`}
+              className={`px-4 py-1 w-full rounded-md ${noCode ? 'bg-gray-500 text-gray-500' : 'bg-gray-100'}`}
             />
             <span className="text-gray-300 text-xs">confira com atenção o código capturado, caso necessário corrija o código!</span>
             <div className="absolute top-8 right-2 flex justify-center items-center">
