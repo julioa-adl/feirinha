@@ -73,8 +73,8 @@ const Register = () => {
   }
 
   return (
-    <div className= "h-screen w-screen bg-blue-400 bg-market bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center py-20">
-      <form className="relative flex flex-col gap-1 items-center">
+    <div className= "h-screen w-screen bg-blue-400 bg-market-75 bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
+      <form className="relative flex flex-col items-center">
         <img src={logo} alt='logo' className="w-20 md:w-36 dark:invert"/>
         {
           error && <span className='text-xs text-gray-900 dark:text-red-500'>{ error }</span>
@@ -82,7 +82,7 @@ const Register = () => {
         <div className="relative">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
-            >nome: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            >nome: </label>
           <UserIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
           <input
             type="text"
@@ -91,12 +91,12 @@ const Register = () => {
             value={ values.name }
             onChange={ handleChange }
             placeholder="Ex. João Silva"
-            className={`rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className='relative'>
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
-            >email: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            >email: </label>
           <EnvelopeIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
           <input
             type="email"
@@ -105,12 +105,12 @@ const Register = () => {
             value={ values.email }
             onChange={ handleChange }
             placeholder="Digite seu email"
-            className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className="relative">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
-            >senha: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            >senha: </label>
           <LockClosedIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
           <input
             type='password'
@@ -119,12 +119,12 @@ const Register = () => {
             value={ values.password }
             onChange={ handleChange }
             placeholder="mínimo 6 caracteres"
-            className={`rounded-full px-8 py-2 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className="relative">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
-            >nascimento: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            >nascimento: </label>
           <CalendarDaysIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
           <input
             type="date"
@@ -132,10 +132,10 @@ const Register = () => {
             id='birthday'
             value={ values.birthday }
             onChange={ handleChange }
-            placeholder='dd/mm/aaaa'
-            className={`appearance-none rounded-full px-8 py-2 w-80 text-center h-10 bg-white dark:bg-gray-600 dark:text-gray-100`}/>
+            // placeholder='dd/mm/aaaa'
+            className={`appearance-none rounded-full px-8 w-80 text-center h-10 bg-white dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
-        <div className='flex flex-row gap-3 items-center w-80 ml-6'>
+        <div className='flex my-4 flex-row gap-3 items-center w-80 ml-6'>
           
           <input
             className='h-4 w-4'
@@ -145,7 +145,7 @@ const Register = () => {
             type='checkbox'
             required
           />
-          <span className='my-5 dark:text-gray-100'>Eu aceito os termos de uso</span>
+          <span className='dark:text-gray-100 text-sm'>Eu aceito os termos de uso</span>
         </div>
         
         <button

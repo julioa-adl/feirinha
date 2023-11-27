@@ -6,7 +6,7 @@ import Error from "../../../../../general-components/alerts/Error";
 import { useMutation, useQueryClient } from 'react-query';
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import SelectGeneral from "./SelectGeneral";
+import SelectGeneral from "../../../../../general-components/SelectGeneralTrue";
 import context from "../../../../../context/myContext";
 import BarCodeScanner from "../../../../../general-components/scanner/BarCodeScanner";
 

@@ -1,11 +1,9 @@
-import { useContext, useCallback } from "react";
-import context from "../context/myContext";
-import { UserIcon } from '@heroicons/react/24/solid';
+import { useCallback } from "react";
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 import ToggleTheme from './ToggleTheame';
 import { useNavigate } from 'react-router-dom';
 
 const User = () => {
-  const { tokenDecode } = useContext(context);
   const history = useNavigate();
 
   const logout = useCallback(() => {
@@ -13,18 +11,16 @@ const User = () => {
     history('/login');
   }, [history]);
 
-  const nameSplit = tokenDecode ? tokenDecode.data.name.split(' ') : null;
-
   return (
     <div className="w-1/3 sm:px-12 flex gap-2 justify-end items-center">
       <div className=""><ToggleTheme /></div>
       <div
-        className="flex cursor-pointer w-10 h-10 md:w-12 md:h-12 border-2 border-gray-900 dark:border-gray-100 justify-center items-center m-0 rounded-full"
-        onClick={logout}
+        className="group flex cursor-pointer w-10 h-10 md:w-12 md:h-12 bg-gray-100 dark:bg-gray-700 justify-center items-center m-0 rounded-full"
+        
       >
-        <h1 className="text-gray-900 dark:text-gray-100 font-bold">
-          {nameSplit ? nameSplit[0][0] + nameSplit[1][0] : <UserIcon className="h-5 text-gray-900 dark:text-gray-100" />}
-        </h1>
+        <ArrowRightOnRectangleIcon
+          className="h-5 text-gray-900 dark:text-gray-100 group-hover:text-orange-600 group-dark:hover:text-orange-400 cursor-pointer ease-in-out duration-300"
+          onClick={logout}/>
       </div>
     </div>
   );

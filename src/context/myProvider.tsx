@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
 import { fetchFeirinhas } from "../helpers/httpClient/feirinhaClient";
@@ -9,13 +9,6 @@ import { useQuery } from 'react-query';
 
 interface AuxProps  { 
   children: React.ReactNode
-}
-
-type Isearch = {
-  produto: string,
-  mercado: string,
-  feirinha: string,
-  item: string
 }
 
 function Provider({ children }:AuxProps) {
@@ -32,13 +25,6 @@ function Provider({ children }:AuxProps) {
   const [editFeirinha, setEditFeirinha] = useState<Iprod | undefined>();
   const [editItem, setEditItem] = useState<Iprod | undefined>();
 
-  const [search, setSearch] = useState<Isearch>({
-    produto: '',
-    mercado: '',
-    feirinha: '',
-    item: ''
-  })
-
   useEffect(() => {
     let res;
     const localToken = localStorage.getItem('userTokenFeirinha');
@@ -54,27 +40,19 @@ function Provider({ children }:AuxProps) {
   const feirinhas = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
 
 
-  const handleSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setSearch((prevstate) => ({
-      ...prevstate,
-      [id]: value,
-    }));
-  }, [])
+  
 
   const contextValue = useMemo(() => ({
     tokenDecode,
     products, showProd, setShowProd, setEditProd, editProd, //produts context
     token,
     setToken,
-    handleSearch,
-    search,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
   }), [tokenDecode,
       products, showProd, editProd,
-      token, search, handleSearch,
+      token,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
       feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       showItem, setShowItem, editItem, setEditItem,
