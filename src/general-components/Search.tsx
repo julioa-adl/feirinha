@@ -36,6 +36,9 @@ const Search = ({ arrayToSearch, setResultSearchState, typeUse }) => {
       replaceSpecialChars(String(valor).toLowerCase()).includes(termoPesquisa)
     )
   );
+  //  if (resultados.length === 0) {
+  //     return ['no-result']
+  //  }
 
   return resultados;
   }
@@ -44,7 +47,7 @@ const Search = ({ arrayToSearch, setResultSearchState, typeUse }) => {
   useEffect(() => {
     setResultSearchState(resultSearch ? resultSearch : [])
   }, [inputSearch, arrayToSearch])
-  
+
   return(
     <div className='relative'>
       <MagnifyingGlassIcon

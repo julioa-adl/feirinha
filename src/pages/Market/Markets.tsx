@@ -15,13 +15,13 @@ import { useQuery } from "react-query";
 import { fetchMarkets } from "../../helpers/httpClient/marketsClient";
 
 const Markets = () => {
-  const [mySearch, setMySearch] = useState([])
-
+  
   const {
     showMarket,
   } = useContext(context);
-
+  
   const { data, isLoading } = useQuery('markets', () => fetchMarkets(), {retry: 10});
+  const [mySearch, setMySearch] = useState(data)
 
   return(
     <div className="bg-white h-screen dark:bg-gray-900">

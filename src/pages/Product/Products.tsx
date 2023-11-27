@@ -15,18 +15,18 @@ import { useQuery } from 'react-query';
 import { fetchProducts } from '../../helpers/httpClient/productClient';
 
 const Products = () => {
-  const [mySearch, setMySearch] = useState([])
   const {
     showProd,
   } = useContext(context);
-
+  
   const { data, isLoading } = useQuery('products', () => fetchProducts(), {retry: 10});
-
+  
   const productsSort = data && data.sort((a,b) => {
     if(a.name < b.name) return -1;
     if(a.name > b.name) return 1;
     return 0;
   });
+  const [mySearch, setMySearch] = useState(productsSort)
   
   return(
     <div className='bg-white h-screen dark:bg-gray-900'>
