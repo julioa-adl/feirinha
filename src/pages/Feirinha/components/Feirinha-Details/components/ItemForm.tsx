@@ -3,12 +3,12 @@ import { IlistCart } from '../../../../../interfaces/IFeirinha';
 import Loading from "../../../../../general-components/Loading";
 import { registerItem } from '../../../../../helpers/httpClient/cartClient';
 import Error from "../../../../../general-components/alerts/Error";
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
 import SelectGeneral from "../../../../../general-components/SelectGeneralTrue";
 import context from "../../../../../context/myContext";
 import BarCodeScanner from "../../../../../general-components/scanner/BarCodeScanner";
+import { fetchProducts } from "../../../../../helpers/httpClient/productClient";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -25,6 +25,7 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
   const [notFind, setNotFind] = useState(false);
   const [code, setCode] = useState('');
   const [disable, setDisable] = useState(true);
+  const [selectedProd, setSelectedProd] = useState();
   const [addItem, setItem] = useState<IlistCart>({
     productId: '',
     productName: '',
@@ -35,7 +36,19 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
 
   const {
     setShowItem,
+    setRegisterNewProdInAddItemToCart
   } = useContext(context);
+
+  useEffect(() => {
+    if (selectedProd) {
+      const { _id, name } = selectedProd;
+      setItem((prev) => ({
+        ...prev,
+        productId: _id,
+        productName: name
+      }))
+    }
+  }, [selectedProd])
 
   useEffect(() => {
     // disable button logic
@@ -45,6 +58,13 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
     }
     return setDisable(true);
   }, [addItem])
+
+  const { data } = useQuery('products', () => fetchProducts(), {retry: 10});
+  const productsSort = data && data.sort((a,b) => {
+    if(a.name < b.name) return -1;
+    if(a.name > b.name) return 1;
+    return 0;
+  });
 
   const querieClient = useQueryClient();
   const { mutate: registItem, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerItem(feirinhaId, addItem).then(
@@ -79,16 +99,21 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
               <label
                 className="text-gray-100 flex justify-between items-end text-sm"
               >produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
-              <SelectGeneral setNotFind={setNotFind} scanner={code} setMyState={setItem}/>
+              <SelectGeneral
+                img='image'
+                title={['name', 'subName']}
+                subTitle={['manufacturer', 'size', 'unitMeasure']}
+                arrayToSelect={productsSort}
+                setNotFind={setNotFind}
+                selected={code}
+                setMyState={setSelectedProd}
+              />
             </div>
 
-            <Link to={'/produtos'}
-              onClick={() => setShowItem(false)}
-            >
-              <PlusSmallIcon
-                className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
-              />
-            </Link>
+            <PlusSmallIcon
+              className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
+              onClick={() => setRegisterNewProdInAddItemToCart(true)}
+            />
           </div>
           )
         }

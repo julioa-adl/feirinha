@@ -6,9 +6,11 @@ import RegisteredSuccess from "../../../general-components/alerts/RegisteredSucc
 import EditedSuccess from "../../../general-components/alerts/EditedSuccess";
 import Error from "../../../general-components/alerts/Error";
 import context from "../../../context/myContext";
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { PlusSmallIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import SelectGeneral from "../../../general-components/SelectGeneralTrue";
+import { fetchMarkets } from "../../../helpers/httpClient/marketsClient";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -24,6 +26,7 @@ type FormType = {
 };
 
 const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
+  const [selectedMrkt, setSelectedMrkt] = useState();
   const [disable, setDisable] = useState(true);
   const [addFeirinha, setFeirinha] = useState<Ifeirinha>({
     id: feirinha ? feirinha['_id'] : '',
@@ -36,9 +39,25 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   });
 
   const {
-    markets,
     setShowFeirinha
   } = useContext(context);
+
+  useEffect(() => {
+    if (selectedMrkt) {
+      const { _id } = selectedMrkt;
+      setFeirinha((prev) => ({
+        ...prev,
+        marketId: _id,
+      }))
+    }
+  }, [selectedMrkt])
+
+  const { data } = useQuery('markets', () => fetchMarkets(), {retry: 10});
+  const marketsSort = data && data.sort((a,b) => {
+    if(a.name < b.name) return -1;
+    if(a.name > b.name) return 1;
+    return 0;
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
@@ -49,12 +68,12 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   }
 
   useEffect(() => {
-    const { marketId } = addFeirinha;
-    if (marketId) {
+    const { marketId, title } = addFeirinha;
+    if (marketId && title) {
       return setDisable(false);
     }
     return setDisable(true);
-  }, [addFeirinha])
+  }, [addFeirinha, selectedMrkt])
 
   const querieClient = useQueryClient();
   const { mutate: registerFeira, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerFeirinha(addFeirinha).then(
@@ -86,6 +105,29 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
       ) : (
       <form className="flex flex-col gap-1">
 
+        <div className="flex justify-between items-end gap-2">
+          <div className="flex flex-col w-full">
+            <label
+              className="text-gray-100 flex justify-between items-end text-sm"
+            >mercado: <span className="text-gray-600 text-xs">obrigatório</span></label>
+            <SelectGeneral
+              img='none'
+              title={['name', 'neighborhood']}
+              subTitle={['city', 'state']}
+              arrayToSelect={marketsSort}
+              setMyState={setSelectedMrkt}
+            />
+          </div>
+
+          <Link to={'/mercados'}
+            onClick={() => setShowFeirinha(false)}
+          >
+            <PlusSmallIcon
+              className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
+            />
+          </Link>
+        </div>
+
         <div className="flex flex-col gap-1">
           <label
             className="text-gray-100 flex justify-between items-end text-sm"
@@ -99,37 +141,6 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
             placeholder="minha feirinha"
             className="px-4 py-1 w-full rounded-md text-sm"
           />
-        </div>
-
-        <div className="flex justify-between items-end gap-2">
-          <div className="flex flex-col w-full">
-            <label
-              className="text-gray-100 flex justify-between items-end text-sm"
-            >mercado: <span className="text-gray-600 text-xs">obrigatório</span></label>
-            <select
-              id='marketId'
-              value={ addFeirinha.marketId }
-              onChange={ handleChange }
-              className={`px-4 form-select lowercase py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
-            >
-          <option value={''} disabled>-</option>
-              {
-                markets && markets.data.map((mercado, i) => (
-                <option
-                  key={`feirinha-form-${mercado.name}-${i}`}
-                  value={ mercado._id }>{mercado.name} - {mercado.neighborhood} - {mercado.state}</option>
-                ))
-              }
-            </select>
-          </div>
-
-          <Link to={'/mercados'}
-            onClick={() => setShowFeirinha(false)}
-          >
-            <PlusSmallIcon
-              className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
-            />
-          </Link>
         </div>
 
         <div className="flex gap-2 w-48 justify-between items-end">

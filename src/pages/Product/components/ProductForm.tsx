@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import categories from "../../../helpers/categories";
 import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon, BellAlertIcon } from '@heroicons/react/24/outline';
@@ -10,6 +10,7 @@ import Error from "../../../general-components/alerts/Error";
 import { Iprod } from "../../../interfaces/IProduct";
 import { useMutation, useQueryClient } from 'react-query';
 import imageCompression from 'browser-image-compression';
+import context from "../../../context/myContext";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -22,10 +23,11 @@ type FormType = {
 interface ProductFormProps {
   code?: string,
   typeUse: usageType,
-  product?: Iprod
+  product?: Iprod,
+  feirinha?: boolean
 }
 
-const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
+const ProductForm = ({ product, code, typeUse, feirinha }: ProductFormProps) => {
   const [disable, setDisable] = useState(true);
   const [noCode, setNoCode] = useState(false);
   const [addProd, setAddProd] = useState<Iprod>({
@@ -39,6 +41,10 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   })
+
+  const {
+    setRegisterNewProdInAddItemToCart
+  } = useContext(context);
   
   const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
@@ -226,7 +232,6 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               value={ addProd.code }
               onChange={ handleChange }
               onFocus={() => {
-                console.log(typeof(addProd.code))
                 if (addProd.code == '0') {
                   setAddProd((prevstate) => ({
                     ...prevstate,
@@ -352,7 +357,10 @@ const ProductForm = ({ product, code, typeUse }: ProductFormProps) => {
               rounded-full text-sm px-3 py-2 w-full text-white mt-3
               ${ disable ? 'bg-blue-400 opacity-50'
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
-              onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
+              onClick={() => {
+                typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate )
+                feirinha && setRegisterNewProdInAddItemToCart(false)
+              }}
             >
               { updateLoading || registerLoading ? <Loading loading /> : typeUse }
             </button>

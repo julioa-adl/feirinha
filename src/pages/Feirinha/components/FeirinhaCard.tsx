@@ -25,8 +25,6 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
     return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
   };
 
-  // console.log(feirinha)
-
   const totalList = feirinha && feirinha.listCart?.length
   const totalBuyed = feirinha && feirinha.listCart?.reduce((acc, cur) => {
     if (cur.buyed) {
@@ -90,7 +88,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
       </Link>
 
       <div className='w-1/6 h-full flex flex-col justify-between items-start rounded-r-md'>
-        <span className="w-full font-light text-end text-xs">{ `${formatarData(feirinha.date)}` }</span>
+        <span className="w-full font-semibold text-end text-xs">{ `${formatarData(feirinha.date)}` }</span>
         <div className="w-full h-full flex flex-row justify-between items-end gap-1">
           <PencilSquareIcon
             onClick={() => {

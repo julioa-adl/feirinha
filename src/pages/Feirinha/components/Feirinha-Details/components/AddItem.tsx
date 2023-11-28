@@ -3,11 +3,14 @@ import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import context from "../../../../../context/myContext";
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import ItemForm from "./ItemForm";
+import ProductForm from "../../../../Product/components/ProductForm";
 
 const AddItem = ({feirinhaId}) => {
 
   const {
     setShowItem,
+    registerNewProdInAddItemToCart,
+    setRegisterNewProdInAddItemToCart
   } = useContext(context);
 
   return(
@@ -20,9 +23,18 @@ const AddItem = ({feirinhaId}) => {
           <XMarkIcon
             className="h-6 cursor-pointer text-gray-100 hover:text-red-500
             duration-300 ease-in-out hover:scale-125 self-end"
-            onClick={() => setShowItem(false)}/>
+            onClick={() => {
+              setShowItem(false)
+              setRegisterNewProdInAddItemToCart(false)
+            }}/>
         </div>
-        <ItemForm typeUse='Cadastrar' feirinhaId={feirinhaId}/>
+        {!registerNewProdInAddItemToCart ? (
+          <ItemForm typeUse='Cadastrar' feirinhaId={feirinhaId}/>
+          ) : (
+            <ProductForm typeUse='Cadastrar' feirinha={true}/>
+          )
+        }
+        
         
       </div>
     </div>

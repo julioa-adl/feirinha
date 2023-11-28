@@ -25,6 +25,8 @@ function Provider({ children }:AuxProps) {
   const [editFeirinha, setEditFeirinha] = useState<Iprod | undefined>();
   const [editItem, setEditItem] = useState<Iprod | undefined>();
 
+  const [registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart] = useState(false);
+
   useEffect(() => {
     let res;
     const localToken = localStorage.getItem('userTokenFeirinha');
@@ -39,20 +41,19 @@ function Provider({ children }:AuxProps) {
   const markets = useQuery('markets', () => fetchMarkets(), {retry: 10});
   const feirinhas = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
 
-
-  
-
   const contextValue = useMemo(() => ({
     tokenDecode,
     products, showProd, setShowProd, setEditProd, editProd, //produts context
     token,
     setToken,
+    registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
   }), [tokenDecode,
       products, showProd, editProd,
       token,
+      registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
       feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       showItem, setShowItem, editItem, setEditItem,
