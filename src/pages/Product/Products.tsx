@@ -35,7 +35,7 @@ const Products = () => {
         <Search arrayToSearch={productsSort} typeUse='produtos' setResultSearchState={setMySearch}/>
         <User />
       </div>
-      <ul className='w-screem full pt-20 pb-36 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
+      <ul className='w-screem pt-20 pb-36 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
         { !isLoading ? (
             !mySearch ? (productsSort.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />

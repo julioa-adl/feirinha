@@ -50,14 +50,14 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
     <li
       className='flex justify-between items-center border-2 border-transparent hover:border-lime-600 ease-in-out duration-100
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:p-4 bg-white dark:bg-gray-800 h-16'
+      rounded-xl p-2 md:p-4 bg-white dark:bg-gray-800 h-16 md:h-20'
     >
-      <Link to={`feirinha/${feirinha._id}`} className="">
+      <Link to={`feirinha/${feirinha._id}`} className="md:pr-2">
         <EyeIcon className="h-6 md:h-8 text-gray-400"/>
       </Link>
 
-      <Link to={`feirinha/${feirinha._id}`} className="flex flex-col items-start w-4/6">
-        <div className="flex flex-row w-full font-regular text-xs md:text-base lowercase items-center">
+      <Link to={`feirinha/${feirinha._id}`} className="flex flex-col items-start w-4/6 md:w-5/6">
+        <div className="flex flex-row w-full font-regular text-xs lowercase items-center">
           <p className="w-full text-start truncate">{ `${feirinha.title}` }</p>
         </div>
         <div className="text-gray-400 dark:text-gray-500 font-light text-xs md:text-sm">
@@ -89,7 +89,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
 
       <div className='w-1/6 h-full flex flex-col justify-between items-start rounded-r-md'>
         <span className="w-full font-semibold text-end text-xs">{ `${formatarData(feirinha.date)}` }</span>
-        <div className="w-full h-full flex flex-row justify-between items-end gap-1">
+        <div className="w-full h-full flex flex-row justify-between md:justify-end items-end gap-1">
           <PencilSquareIcon
             onClick={() => {
               setEditFeirinha(feirinha)

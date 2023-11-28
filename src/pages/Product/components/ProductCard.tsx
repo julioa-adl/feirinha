@@ -19,9 +19,9 @@ const ProductCard = ({ prod }:productCards) => {
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
       rounded-xl p-2 md:p-4 bg-white dark:bg-gray-800'
     >
-      <div className={`w-1/6 flex justify-center items-center h-14 md:h-20 overflow-hidden md:px-4 bg-white rounded-md`}>
+      <div className={`w-1/6 flex justify-center items-center h-14 md:h-20 overflow-hidden bg-white rounded-md`}>
         { prod.image ? (
-              <img src={`${prod.image}`} alt={prod.name} className="max-h-20"/>
+              <img src={`${prod.image}`} alt={prod.name} className="scale-100"/>
           ) : <ArchiveBoxXMarkIcon className="h-8 md:h-12 text-gray-600 opacity-20"/>
         }
       </div>
