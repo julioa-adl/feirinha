@@ -93,7 +93,7 @@ const FeirinhaDetails = () => {
             <p className='font-ligth text-base'>R$ {feirinha && gasto.toFixed(2)}</p>
           </div>
 
-          <div className='flex flex-col items-center w-1/3 gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-se-md'>
+          <div className={`flex flex-col ease-in-out duration-300 items-center w-1/3 gap-1 ${feirinha && restante && restante < 0 ? 'bg-red-500 dark:bg-red-700' : 'bg-gray-100 dark:bg-gray-800'} p-1 rounded-se-md`}>
             <h2>restante</h2>
             <p className='font-ligth text-base'>R$ {feirinha && restante.toFixed(2)}</p>
           </div>
@@ -105,7 +105,7 @@ const FeirinhaDetails = () => {
               height:'100%',
               width:`${totalPercent}%`
             }}
-            className="bg-green-500 dark:bg-green-400 rounded-full"
+            className={`${totalPercent && totalPercent < 100 ? 'bg-yellow-500 dark:bg-yellow-400' : 'bg-green-500 dark:bg-green-400'} rounded-full`}
             />
           </div>
           <p>{`${totalBuyed}/${totalList}`}</p>

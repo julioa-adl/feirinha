@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 const Search = ({ arrayToSearch, setResultSearchState, typeUse }) => {
@@ -28,25 +28,23 @@ const Search = ({ arrayToSearch, setResultSearchState, typeUse }) => {
     return str.replace(/[^a-z0-9]/gi, '');
 }
 
-  const filtrarProduto = (pesquisa) => {
+  const filtrarProduto = useCallback((pesquisa) => {
     const termoPesquisa = replaceSpecialChars(pesquisa.toLowerCase());
 
     const resultados = arrayToSearch && arrayToSearch.filter(produto =>
       Object.values(produto).some(valor =>
       replaceSpecialChars(String(valor).toLowerCase()).includes(termoPesquisa)
-    )
-  );
-  //  if (resultados.length === 0) {
-  //     return ['no-result']
-  //  }
+      )
+    );
 
-  return resultados;
-  }
-  const resultSearch = filtrarProduto(inputSearch)
+    return resultados;
+  }, [arrayToSearch]);
+
 
   useEffect(() => {
-    setResultSearchState(resultSearch ? resultSearch : [])
-  }, [inputSearch, arrayToSearch])
+    const resultSearch = filtrarProduto(inputSearch)
+    setResultSearchState(resultSearch ? resultSearch : undefined)
+  }, [inputSearch])
 
   return(
     <div className='relative'>

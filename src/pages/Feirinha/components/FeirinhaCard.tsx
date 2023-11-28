@@ -21,7 +21,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
 
   const formatarData = (dataISO) => {
     const dataUTC = set(parseISO(dataISO), { hours: 24, minutes: 0, seconds: 0 });
-    const dataFormatada = format(dataUTC, "dd 'de' MMMM 'de' yyyy");
+    const dataFormatada = format(dataUTC, "dd/MM/yy");
     return dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
   };
 
@@ -52,22 +52,22 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
     <li
       className='flex justify-between items-center border-2 border-transparent hover:border-lime-600 ease-in-out duration-100
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:p-4 bg-gray-50 dark:bg-gray-800'
+      rounded-xl p-2 md:p-4 bg-white dark:bg-gray-800 h-16'
     >
       <Link to={`feirinha/${feirinha._id}`} className="">
         <EyeIcon className="h-6 md:h-8 text-gray-400"/>
       </Link>
 
-      <Link to={`feirinha/${feirinha._id}`} className="w-5/6">
-        <div className="flex flex-row gap-2 font-regular text-xs md:text-base lowercase items-center">
-          <span className="w-full text-center">{ `${formatarData(feirinha.date)}` }</span>
+      <Link to={`feirinha/${feirinha._id}`} className="flex flex-col items-start w-4/6">
+        <div className="flex flex-row w-full font-regular text-xs md:text-base lowercase items-center">
+          <p className="w-full text-start truncate">{ `${feirinha.title}` }</p>
         </div>
-        <div className="dark:text-gray-500 font-light text-xs md:text-sm">
-          <h2 className="w-full text-center">{ mercado.name } - { mercado.neighborhood } - { mercado.state }</h2>
+        <div className="text-gray-400 dark:text-gray-500 font-light text-xs md:text-sm">
+          <h2 className="w-full text-start truncate">{ mercado.name } - { mercado.neighborhood } - { mercado.state }</h2>
         </div>
 
 
-        <div className="flex items-center gap-2 px-4 text-gray-900 dark:text-gray-100 font-light text-xs md:text-sm w-full">
+        <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100 font-light text-xs md:text-sm w-full">
           <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700">
             { totalList === 0 ? (
               <div className="relative flex items-center justify-center w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800
@@ -79,7 +79,7 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
                 height:'100%',
                 width:`${totalPercent}%`
               }}
-              className="bg-green-500 dark:bg-green-400 rounded-full"
+              className={`${totalPercent && totalPercent < 100 ? 'bg-yellow-500 dark:bg-yellow-400' : 'bg-green-500 dark:bg-green-400'} rounded-full`}
               />
             )
             }
@@ -87,26 +87,29 @@ const FeirinhaCard = ({ feirinha }:feirinhaCards) => {
           </div>
           <p>{`${totalBuyed}/${totalList}`}</p>
         </div>
-
       </Link>
-      <div className='w-1/6 flex justify-end items-center rounded-r-md gap-1 h-full'>
-        <PencilSquareIcon
-          onClick={() => {
-            setEditFeirinha(feirinha)
-            setShowFeirinha('update')
-          }}
-          className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-yellow-500' />
-        { !deleteLoading ? (
-          <TrashIcon
+
+      <div className='w-1/6 h-full flex flex-col justify-between items-start rounded-r-md'>
+        <span className="w-full font-light text-end text-xs">{ `${formatarData(feirinha.date)}` }</span>
+        <div className="w-full h-full flex flex-row justify-between items-end gap-1">
+          <PencilSquareIcon
             onClick={() => {
-              handleDelete()
+              setEditFeirinha(feirinha)
+              setShowFeirinha('update')
             }}
-            className='w-8 h-8 cursor-pointer duration-300 ease-in-out hover:text-red-400'
-          />
-        ) : ( 
-          <ArrowPathIcon className="w-6 h-6 animate-spin text:red-500 dark:text:gray-100"/>
-        )
-        }
+            className='w-5 h-5 cursor-pointer duration-300 ease-in-out hover:text-yellow-500' />
+          { !deleteLoading ? (
+            <TrashIcon
+              onClick={() => {
+                handleDelete()
+              }}
+              className='w-5 h-5 cursor-pointer duration-300 ease-in-out hover:text-red-400'
+            />
+          ) : ( 
+            <ArrowPathIcon className="w-5 h-5 animate-spin text:red-500 dark:text:gray-100"/>
+          )
+          }
+        </div>
       </div>
     </li>
   )

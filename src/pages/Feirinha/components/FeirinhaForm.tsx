@@ -27,6 +27,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   const [disable, setDisable] = useState(true);
   const [addFeirinha, setFeirinha] = useState<Ifeirinha>({
     id: feirinha ? feirinha['_id'] : '',
+    title: feirinha ? feirinha.title : '',
     userId: feirinha ? feirinha.userId : '',
     availableToSpend: feirinha ? feirinha.availableToSpend : 0,
     marketId: feirinha ? feirinha.marketId : '',
@@ -84,6 +85,22 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
         returnForm[(registerError || updateError) ? 'Erro' : typeUse]
       ) : (
       <form className="flex flex-col gap-1">
+
+        <div className="flex flex-col gap-1">
+          <label
+            className="text-gray-100 flex justify-between items-end text-sm"
+          >nome da feirinha: <span className="text-gray-600 text-xs">obrigatório</span></label>
+          <input
+            type="text"
+            required
+            id='title'
+            value={ addFeirinha.title }
+            onChange={ handleChange }
+            placeholder="minha feirinha"
+            className="px-4 py-1 w-full rounded-md text-sm"
+          />
+        </div>
+
         <div className="flex justify-between items-end gap-2">
           <div className="flex flex-col w-full">
             <label
@@ -94,7 +111,7 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
               value={ addFeirinha.marketId }
               onChange={ handleChange }
               className={`px-4 form-select lowercase py-1 w-full h-8 text-sm rounded-md ${addFeirinha.marketId === '' ? 'text-gray-400' : 'text-gray-900'}`}
-        >
+            >
           <option value={''} disabled>-</option>
               {
                 markets && markets.data.map((mercado, i) => (

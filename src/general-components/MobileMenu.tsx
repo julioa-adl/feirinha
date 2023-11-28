@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import logo from '../assets/feirinha-icon.png';
+import logo from '../assets/feirinha-icon.svg';
 import { ArchiveBoxIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 
 const MobileMenu = () => {

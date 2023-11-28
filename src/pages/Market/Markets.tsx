@@ -31,10 +31,13 @@ const Markets = () => {
         <User />
       </div>
       <ul className='w-screem full pt-20 pb-36 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
-        { !isLoading ? (
-            mySearch.length > 0 ? mySearch.map((mrkt:Imarket) => (
+        { 
+          !isLoading ? (
+            !mySearch ? (data.map((mrkt:Imarket) => (
               <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
-            )) : <NotFind />
+            ))) : mySearch.length > 0 ? (mySearch.map((mrkt:Imarket) => (
+              <MarketCard key={ `market-item-list-${mrkt._id}` } mrkt={mrkt} />
+            ))) : <NotFind />
           ) : <SkeletonCard type={'mercado'}/>
         }
       </ul>

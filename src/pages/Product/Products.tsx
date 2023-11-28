@@ -27,7 +27,7 @@ const Products = () => {
     return 0;
   });
   const [mySearch, setMySearch] = useState(productsSort)
-  
+
   return(
     <div className='bg-white h-screen dark:bg-gray-900'>
       <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900 py-5 flex items-center w-full justify-center'>
@@ -37,9 +37,11 @@ const Products = () => {
       </div>
       <ul className='w-screem full pt-20 pb-36 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
         { !isLoading ? (
-            mySearch.length > 0 ? mySearch.map((prod:Iprod) => (
+            !mySearch ? (productsSort.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
-            )) : <NotFind />
+            ))) : mySearch.length > 0 ? (mySearch.map((prod:Iprod) => (
+              <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
+            ))) : <NotFind />
           ) : <SkeletonCard type={'produto'}/>
         }
       </ul>

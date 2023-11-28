@@ -17,7 +17,7 @@ const ProductCard = ({ prod }:productCards) => {
     <li
       className='flex justify-between items-center gap-2
       text-left w-full md:w-1/2 text-gray-900 dark:text-gray-100
-      rounded-xl p-2 md:p-4 bg-gray-100 dark:bg-gray-800'
+      rounded-xl p-2 md:p-4 bg-white dark:bg-gray-800'
     >
       <div className={`w-1/6 flex justify-center items-center h-14 md:h-20 overflow-hidden md:px-4 bg-white rounded-md`}>
         { prod.image ? (

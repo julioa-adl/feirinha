@@ -28,7 +28,7 @@ const fetchFeirinhas = async () => {
   }
 }
 
-const registerFeirinha = async ({ marketId, availableToSpend }: Ifeirinha) => {
+const registerFeirinha = async ({ title, marketId, availableToSpend }: Ifeirinha) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
@@ -46,7 +46,7 @@ const registerFeirinha = async ({ marketId, availableToSpend }: Ifeirinha) => {
   const res = await axios({
     method: "post",
     url: backendUrl(`feirinha/${userId}`),
-    data: {userId, marketId, availableToSpend, listCart: [], date: formattedDate},
+    data: {title, userId, marketId, availableToSpend, listCart: [], date: formattedDate},
     headers: {
       Authorization: token || ''
     },
@@ -54,7 +54,7 @@ const registerFeirinha = async ({ marketId, availableToSpend }: Ifeirinha) => {
   return res;
 };
 
-const updateFeirinha = async ({ id, userId, marketId, listCart, date, availableToSpend }: Ifeirinha) => {
+const updateFeirinha = async ({ id, title, userId, marketId, listCart, date, availableToSpend }: Ifeirinha) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
@@ -62,7 +62,7 @@ const updateFeirinha = async ({ id, userId, marketId, listCart, date, availableT
   const res = await axios({
     method: "put",
     url: backendUrl(`feirinha/${userId}`),
-    data: { id, userId, marketId, listCart, date, availableToSpend },
+    data: { id, title, userId, marketId, listCart, date, availableToSpend },
     headers: {
       Authorization: token || ''
     },

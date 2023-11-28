@@ -11,6 +11,7 @@ export type IlistCart = {
 export type Ifeirinha = {
   id?: string | undefined,
   _id?: string | undefined,
+  title: string | undefined,
   userId: string | undefined,
   availableToSpend: number | string | undefined,
   marketId: string | undefined,
