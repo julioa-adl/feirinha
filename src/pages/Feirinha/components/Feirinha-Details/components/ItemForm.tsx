@@ -36,8 +36,16 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
 
   const {
     setShowItem,
-    setRegisterNewProdInAddItemToCart
+    setRegisterNewProdInAddItemToCart,
+    setCodeScanner
   } = useContext(context);
+
+  useEffect(() => {
+    if (notFind) {
+      return setCodeScanner(code);
+    }
+    return setCodeScanner()
+  }, [notFind])
 
   useEffect(() => {
     if (selectedProd) {
@@ -111,7 +119,7 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
             </div>
 
             <PlusSmallIcon
-              className="h-8 ease-in-out rounded-md duration-300 cursor-pointer bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500"
+              className={`h-8 ease-in-out rounded-md duration-300 cursor-pointer ${notFind && 'animate-pulse'} bg-yellow-500 hover:bg-gray-100 text-gray-800 hover:text-yellow-500`}
               onClick={() => setRegisterNewProdInAddItemToCart(true)}
             />
           </div>

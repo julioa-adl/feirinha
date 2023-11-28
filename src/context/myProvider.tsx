@@ -15,6 +15,8 @@ function Provider({ children }:AuxProps) {
   const [tokenDecode, setTokenDecode] = useState<object>();
   const [token, setToken] = useState();
 
+  const [codeScanner, setCodeScanner] = useState<string | undefined>();
+
   const [showProd, setShowProd] = useState<boolean | string | undefined>(false);
   const [showMarket, setShowMarket] = useState<boolean | string | undefined>(false);
   const [showFeirinha, setShowFeirinha] = useState<boolean | string | undefined>(false);
@@ -44,14 +46,14 @@ function Provider({ children }:AuxProps) {
   const contextValue = useMemo(() => ({
     tokenDecode,
     products, showProd, setShowProd, setEditProd, editProd, //produts context
-    token,
+    token, codeScanner, setCodeScanner,
     setToken,
     registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
     feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
   }), [tokenDecode,
-      products, showProd, editProd,
+      products, showProd, editProd, codeScanner, setCodeScanner,
       token,
       registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,

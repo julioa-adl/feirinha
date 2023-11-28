@@ -10,7 +10,8 @@ const AddItem = ({feirinhaId}) => {
   const {
     setShowItem,
     registerNewProdInAddItemToCart,
-    setRegisterNewProdInAddItemToCart
+    setRegisterNewProdInAddItemToCart,
+    codeScanner
   } = useContext(context);
 
   return(
@@ -31,7 +32,7 @@ const AddItem = ({feirinhaId}) => {
         {!registerNewProdInAddItemToCart ? (
           <ItemForm typeUse='Cadastrar' feirinhaId={feirinhaId}/>
           ) : (
-            <ProductForm typeUse='Cadastrar' feirinha={true}/>
+            <ProductForm typeUse='Cadastrar' feirinha={true} code={codeScanner}/>
           )
         }
         

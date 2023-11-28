@@ -15,7 +15,7 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
   const [view, setView] = useState(false);
   const [search, setSearch] = useState('');
   const [itensSearching, setItensSearching] = useState([]);
-  const [infos, setInfos] = useState();
+  const [infos, setInfos] = useState<object | undefined | string>();
 
   function replaceSpecialChars(str) {
     str = str.replace(/[ÀÁÂÃÄÅ]/g, "A");
@@ -51,19 +51,20 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
   }, [search])
 
   useEffect(() => {
+    setInfos(() => undefined)
+
     if (selected) {
       const sectedItem = arrayToSelect && arrayToSelect.find((item) => Object.values(item).some(valor =>
         String(valor).includes(selected)
         )
       );
       if (sectedItem) {
-        setInfos(sectedItem);
-      }
-      if (setNotFind) {
+        return setInfos(sectedItem);
+      } else if (setNotFind) {
         setNotFind(true)
         setTimeout(() => {
           setNotFind(false)
-        }, 5000)
+        }, 10000)
       }
     }
   }, [selected])
