@@ -14,21 +14,22 @@ type usageType = 'Cadastrar' | 'Atualizar';
 
 interface MarketFormProps {
   typeUse: usageType,
-  feirinhaId: string
+  feirinhaId: string,
+  prodAlredyRegister?: any,
 }
 
 type FormType = {
   Erro: JSX.Element;
 };
 
-const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
+const ItemForm = ({ feirinhaId, typeUse, prodAlredyRegister }: MarketFormProps) => {
   const [notFind, setNotFind] = useState(false);
   const [code, setCode] = useState('');
   const [disable, setDisable] = useState(true);
   const [selectedProd, setSelectedProd] = useState();
   const [addItem, setItem] = useState<IlistCart>({
-    productId: '',
-    productName: '',
+    productId: prodAlredyRegister ? prodAlredyRegister.productId : '',
+    productName: prodAlredyRegister ? prodAlredyRegister.productName : '',
     quantity: 0,
     price: 0,
     buyed: false,
@@ -82,6 +83,10 @@ const ItemForm = ({ feirinhaId, typeUse }: MarketFormProps) => {
     e.preventDefault();
     registItem();
   };
+
+  useEffect(() => {
+    prodAlredyRegister && registItem();
+  }, [prodAlredyRegister])
   
   useEffect(() => {
     if (registerSucess) {

@@ -105,6 +105,7 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
             />
             <input
               type="search"
+              autoFocus
               placeholder={`Buscar Item`}
               onChange={(e) => setSearch(e.target.value)}
               value={search}

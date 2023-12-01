@@ -25,27 +25,34 @@ const fetchProducts = async () => {
 }
 
 const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
-  let urlImgBB;
-  if (image) {
-    urlImgBB = await postImgbb(image) || '';
+  try {
+    let urlImgBB;
+    if (image) {
+      urlImgBB = await postImgbb(image) || '';
+    }
+    const localToken = localStorage.getItem('userTokenFeirinha');
+    if (localToken === null) return false;
+    const token = JSON.parse(localToken);
+
+    const dataImg = { name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
+    const dataWithoutImg = { name, subName, manufacturer, category, code, unitMeasure, size }
+
+    const res = await axios({
+      method: "post",
+      url: backendUrl('product'),
+      data: image && urlImgBB ? dataImg : dataWithoutImg,
+      headers: {
+        Authorization: token || ''
+      },
+    });
+    const data = res.data.message
+    return data;
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    throw error; // rejeitar a promise para que o estado de erro seja acionado na mutação
   }
-  const localToken = localStorage.getItem('userTokenFeirinha');
-  if (localToken === null) return false;
-  const token = JSON.parse(localToken);
-
-  const dataImg = { name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
-  const dataWithoutImg = { name, subName, manufacturer, category, code, unitMeasure, size }
-
-  const res = await axios({
-    method: "post",
-    url: backendUrl('product'),
-    data: image && urlImgBB ? dataImg : dataWithoutImg,
-    headers: {
-      Authorization: token || ''
-    },
-  });
-  return res;
 };
+
 
 const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
   let urlImgBB;

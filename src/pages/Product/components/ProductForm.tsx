@@ -1,4 +1,4 @@
-import { ChangeEvent, /*useContext*/ useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import categories from "../../../helpers/categories";
 import unidadeDeMedida from "../../../helpers/unidadeDeMedida";
 import { PlusIcon, MinusIcon, BellAlertIcon } from '@heroicons/react/24/outline';
@@ -10,7 +10,7 @@ import Error from "../../../general-components/alerts/Error";
 import { Iprod } from "../../../interfaces/IProduct";
 import { useMutation, useQueryClient } from 'react-query';
 import imageCompression from 'browser-image-compression';
-// import context from "../../../context/myContext";
+import context from "../../../context/myContext";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -24,10 +24,10 @@ interface ProductFormProps {
   code?: string,
   typeUse: usageType,
   product?: Iprod,
-  feirinha?: boolean
+  setRegisterInListCart?: any,
 }
 
-const ProductForm = ({ product, code, typeUse, /*feirinha*/ }: ProductFormProps) => {
+const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductFormProps) => {
   const [disable, setDisable] = useState(true);
   const [noCode, setNoCode] = useState(false);
   const [addProd, setAddProd] = useState<Iprod>({
@@ -40,11 +40,11 @@ const ProductForm = ({ product, code, typeUse, /*feirinha*/ }: ProductFormProps)
     image: product ? product.image : undefined,
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
-  })
+  });
 
-  // const {
-  //   setRegisterNewProdInAddItemToCart
-  // } = useContext(context);
+  const {
+    setRegisterNewProdInAddItemToCart
+  } = useContext(context);
   
   const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = event.target;
@@ -108,9 +108,15 @@ const ProductForm = ({ product, code, typeUse, /*feirinha*/ }: ProductFormProps)
     }, [addProd])
     
   const querieClient = useQueryClient();
-
   const { mutate: registerProd, isLoading: registerLoading, isSuccess: registerSucess, isError: registerError } = useMutation(() => registerProduct(addProd).then(
-    () => querieClient.invalidateQueries('products')
+    (data) => {
+      const productCart = {productId: data['_id'], productName: data.name}
+      if (setRegisterInListCart) {
+        setRegisterInListCart(productCart)
+      }
+      setRegisterNewProdInAddItemToCart(false)
+      querieClient.invalidateQueries('products')
+    }
   ))
   const handleRegistered = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -144,6 +150,7 @@ const ProductForm = ({ product, code, typeUse, /*feirinha*/ }: ProductFormProps)
             >nome do produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
               type="text"
+              autoFocus
               required
               id='name'
               value={ addProd.name }

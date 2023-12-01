@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import context from "../../../../../context/myContext";
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -6,6 +6,7 @@ import ItemForm from "./ItemForm";
 import ProductForm from "../../../../Product/components/ProductForm";
 
 const AddItem = ({feirinhaId}) => {
+  const [productAlredRegister, setProductAlredRegister] = useState();
 
   const {
     setShowItem,
@@ -30,9 +31,9 @@ const AddItem = ({feirinhaId}) => {
             }}/>
         </div>
         {!registerNewProdInAddItemToCart ? (
-          <ItemForm typeUse='Cadastrar' feirinhaId={feirinhaId}/>
+          <ItemForm typeUse='Cadastrar' prodAlredyRegister={productAlredRegister} feirinhaId={feirinhaId}/>
           ) : (
-            <ProductForm typeUse='Cadastrar' feirinha={true} code={codeScanner}/>
+            <ProductForm typeUse='Cadastrar' setRegisterInListCart={setProductAlredRegister} code={codeScanner}/>
           )
         }
         
