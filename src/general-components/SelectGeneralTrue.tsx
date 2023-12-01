@@ -130,9 +130,9 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
                     {img && item[img] ? (<img src={item[img]} className='scale-100'/>) : <PhotoIcon className="h-5 text-gray-600 opacity-20"/>}
                   </div>
                 }
-                <div className='flex flex-col w-full lowercase'>
+                <div className='flex flex-col justify-center w-full lowercase'>
                   <h1 className='text-xs font-medium'>{item && title.map(t => `${item[t]} `)}</h1>
-                  <h2 className='text-xs font-thin'>{item && subTitle && subTitle.map(t => `${item[t]} `)}</h2>
+                  <h2 className='text-xs h-4 font-thin'>{item && subTitle && subTitle.map(t => `${item[t]} `)}</h2>
                   <hr className='h-0.5 opacity-10 bg-gray-500'/>
                 </div>
               </li>
