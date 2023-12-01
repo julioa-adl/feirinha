@@ -8,13 +8,13 @@ interface mySelect {
   setMyState: React.Dispatch<React.SetStateAction<any>>,
   selected?: string,
   setNotFind?: React.Dispatch<React.SetStateAction<boolean>>,
-  arrayToSelect: []
+  arrayToSelect: any[]
 }
 
 const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind, arrayToSelect }: mySelect) => {
   const [view, setView] = useState(false);
   const [search, setSearch] = useState('');
-  const [itensSearching, setItensSearching] = useState([]);
+  const [itensSearching, setItensSearching] = useState<any[]>([]);
   const [infos, setInfos] = useState<object | undefined | string>();
 
   function replaceSpecialChars(str) {
@@ -115,9 +115,9 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
           <ul className='overflow-x-hidden overflow-y-scroll'>
 
           {
-            itensSearching && itensSearching.map((item) => (
+            itensSearching && itensSearching.map((item, i) => (
               <li
-                key={`lista-produtos-feirinha-${item['_id']}`}
+                key={`lista-produtos-feirinha-${item['_id']}-${item[1]}-${i}`}
                 className='flex justify-between items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md cursor-pointer'
                 onClick={() => {
                   setInfos(item);

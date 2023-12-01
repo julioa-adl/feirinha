@@ -11,6 +11,7 @@ import { Iprod } from "../../../interfaces/IProduct";
 import { useMutation, useQueryClient } from 'react-query';
 import imageCompression from 'browser-image-compression';
 import context from "../../../context/myContext";
+import SelectGeneral from "../../../general-components/SelectGeneralTrue";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -30,6 +31,7 @@ interface ProductFormProps {
 const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductFormProps) => {
   const [disable, setDisable] = useState(true);
   const [noCode, setNoCode] = useState(false);
+  const [selectCategory, setSelectCategory] = useState();
   const [addProd, setAddProd] = useState<Iprod>({
     id: product ? product['_id'] : '',
     name: product ? product.name : '',
@@ -41,6 +43,16 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   });
+
+  useEffect(() => {
+    if (selectCategory) {
+      const { name } = selectCategory;
+      setAddProd((prev) => ({
+        ...prev,
+        category: name
+      }))
+    }
+  }, [selectCategory])
 
   const {
     setRegisterNewProdInAddItemToCart
@@ -193,7 +205,13 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
             <label
               className="text-gray-100 flex justify-between items-end text-sm"
             >categoria: <span className="text-gray-600 text-xs">obrigatório</span></label>
-            <select
+            <SelectGeneral
+                title={['icon', 'name']}
+                img='none'
+                arrayToSelect={categories}
+                setMyState={setSelectCategory}
+              />
+            {/* <select
               required
               id='category'
               name='category'
@@ -209,7 +227,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
                   value={ category.name }>{ category.name }</option>
                 ))
               }
-            </select>
+            </select> */}
           </div>
 
           <div className="relative flex flex-col gap-1">
