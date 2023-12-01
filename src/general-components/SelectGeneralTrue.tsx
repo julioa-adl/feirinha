@@ -59,7 +59,9 @@ const SelectGeneral = ({ img, title, subTitle, setMyState, selected, setNotFind,
         )
       );
       if (sectedItem) {
-        return setInfos(sectedItem);
+        setMyState(sectedItem)
+        setInfos(sectedItem)
+        return
       } else if (setNotFind) {
         setNotFind(true)
         setTimeout(() => {
