@@ -9,12 +9,12 @@ const Scanner = ({ onDetected }) => {
         inputStream: {
           name: "Live",
           type: "LiveStream",
-          size: 800,
-          // constraints: {
-          //   width: 640,
-          //   height: 320,
-          //   facingMode: "environment"
-          // },
+          size: 1080,
+          constraints: {
+            width: 640,
+            height: 320,
+            facingMode: "environment"
+          },
           area: { // defines rectangle of the detection/localization area
             top: "0%",    // top offset
             right: "0%",  // right offset
@@ -22,8 +22,15 @@ const Scanner = ({ onDetected }) => {
             bottom: "0%"  // bottom offset
           },
         },
+        locator: {
+          patchSize: "medium",
+          halfSample: true,
+          // Defina o seguinte parâmetro para ativar o ajuste automático de zoom
+          // Ele tentará ajustar automaticamente o zoom para enquadrar o código de barras
+          zoom: 1.5,
+        },
         halfSample: true,
-        patchSize: "medium",
+        patchSize: "small",
         photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
         frequency: 4,
         showCanvas: false,
