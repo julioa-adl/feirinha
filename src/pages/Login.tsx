@@ -7,6 +7,7 @@ import { EyeIcon, UserIcon, EyeSlashIcon, LockClosedIcon } from '@heroicons/reac
 import { loginUser } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
+import { revalidateToken } from '../helpers/httpClient/userClient';
 
 const Login = () => {  
   const [typePass, setTypePass] = useState(false);
@@ -24,10 +25,14 @@ const Login = () => {
 
   const history = useNavigate();
 
+  const auth = async () => {
+    const res = await revalidateToken();
+    if (res) return history('/login')
+  }
+
   useEffect(() => {
-    const localToken = localStorage.getItem('userTokenFeirinha');
-    localToken && history('/')
-  }, [])
+    auth();
+  })
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();

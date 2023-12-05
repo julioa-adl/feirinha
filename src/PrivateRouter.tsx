@@ -7,11 +7,12 @@ const PrivateRouter = () => {
 
   const auth = async () => {
     const res = await revalidateToken();
-    if (!res) return history('login')
+    if (!res) return history('/login')
   }
 
   useEffect(() => {
     auth();
+    console.log('testei')
   })
   
   return <Outlet />

@@ -15,10 +15,10 @@ const Scanner = ({ onDetected }) => {
             facingMode: "environment"
           },
         },
-        halfSample: false,
-        patchSize: "x-small",
+        halfSample: true,
+        patchSize: "small",
         photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
-        frequency: 2,
+        frequency: 5,
         showCanvas: false,
         multiple: false,
         decoder: {
