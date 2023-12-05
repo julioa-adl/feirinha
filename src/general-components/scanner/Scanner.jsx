@@ -9,16 +9,23 @@ const Scanner = ({ onDetected }) => {
         inputStream: {
           name: "Live",
           type: "LiveStream",
-          constraints: {
-            width: 640,
-            height: 320,
-            facingMode: "environment"
+          size: 800,
+          // constraints: {
+          //   width: 640,
+          //   height: 320,
+          //   facingMode: "environment"
+          // },
+          area: { // defines rectangle of the detection/localization area
+            top: "0%",    // top offset
+            right: "0%",  // right offset
+            left: "0%",   // left offset
+            bottom: "0%"  // bottom offset
           },
         },
         halfSample: true,
-        patchSize: "small",
+        patchSize: "medium",
         photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
-        frequency: 5,
+        frequency: 4,
         showCanvas: false,
         multiple: false,
         decoder: {

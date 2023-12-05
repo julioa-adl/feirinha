@@ -12,7 +12,6 @@ const PrivateRouter = () => {
 
   useEffect(() => {
     auth();
-    console.log('testei')
   })
   
   return <Outlet />
