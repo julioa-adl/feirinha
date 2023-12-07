@@ -3,7 +3,7 @@ import context from "../../context/myContext";
 import MobileMenu from "../../general-components/MobileMenu";
 import Navigator from "../../general-components/Navigator";
 import User from "../../general-components/User";
-import SkeletonCard from "../../general-components/SkeletonCard";
+import SkeletonFeirinha from "./components/SkeletonCard";
 import { Ifeirinha } from "../../interfaces/IFeirinha";
 import FeirinhaCard from "./components/FeirinhaCard";
 import CallFeirinhaButton from "./components/CallFeirinhaButton";
@@ -36,7 +36,7 @@ const Home = () => {
             data.length >= 1 ? data.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
             )) : <NotFindFeirinhas />
-          ) : <SkeletonCard type={'feirinha'}/>
+          ) : <SkeletonFeirinha />
         }
       </ul>
       {
