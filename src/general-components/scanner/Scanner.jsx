@@ -7,13 +7,11 @@ const Scanner = ({ onDetected }) => {
     Quagga.init(
       {
         inputStream: {
-          name: "Live",
-          type: "LiveStream",
-          size: 1080,
+          type : "LiveStream",
           constraints: {
-            width: 640,
-            height: 320,
-            facingMode: "environment"
+              width: 640,
+              height: 480,
+              facingMode: "environment" // or user
           },
           area: { // defines rectangle of the detection/localization area
             top: "0%",    // top offset
@@ -22,22 +20,11 @@ const Scanner = ({ onDetected }) => {
             bottom: "0%"  // bottom offset
           },
         },
-        locator: {
-          patchSize: "medium",
-          halfSample: true,
-          // Defina o seguinte parâmetro para ativar o ajuste automático de zoom
-          // Ele tentará ajustar automaticamente o zoom para enquadrar o código de barras
-          zoom: 1.5,
-        },
-        halfSample: true,
-        patchSize: "small",
-        photoSettings: { fillLightMode: "torch", /* or "flash" */ focusMode: "continuous" },
-        frequency: 4,
-        showCanvas: false,
-        multiple: false,
+        numOfWorkers: 4,
         decoder: {
-          readers: ["ean_reader"],
+          readers : ["ean_reader"]
         },
+        locate: true
       },
       function(err) {
         if (err) {
