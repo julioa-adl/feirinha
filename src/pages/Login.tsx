@@ -27,7 +27,10 @@ const Login = () => {
 
   const auth = async () => {
     const res = await revalidateToken();
-    if (res) return history('/login')
+    if (res) {
+      history('/login');
+      localStorage.removeItem('userTokenFeirinha');
+    }
   }
 
   useEffect(() => {

@@ -114,7 +114,7 @@ const ItemCard = ({ listCart }:itemCard) => {
     >
 
       <div className='w-1/5 flex justify-center items-center h-full overflow-hidden bg-white rounded-md shadow-md'>
-        {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='scale-100'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
+        {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='scale-125'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
       </div>
       <div className="w-3/5 md:w-full h-full">
         <div className="flex flex-row items-start justify-between h-full font-regular text-xs md:text-base lowercase">

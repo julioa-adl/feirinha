@@ -8,9 +8,10 @@ const Scanner = ({ onDetected }) => {
       {
         inputStream: {
           type : "LiveStream",
+          size: 1080,
           constraints: {
-              width: 640,
-              height: 480,
+              width: 1080,
+              height: 1920,
               facingMode: "environment" // or user
           },
           area: { // defines rectangle of the detection/localization area
