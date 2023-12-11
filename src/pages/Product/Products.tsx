@@ -36,7 +36,7 @@ const Products = () => {
         <User />
       </div>
       <ul className='w-screem pt-20 pb-36 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
-        { !isLoading ? (
+        { !isLoading && data ? (
             !mySearch ? (productsSort.map((prod:Iprod) => (
               <ProductCard key={ `product-item-list-${prod._id}` } prod={prod} />
             ))) : mySearch.length > 0 ? (mySearch.map((prod:Iprod) => (

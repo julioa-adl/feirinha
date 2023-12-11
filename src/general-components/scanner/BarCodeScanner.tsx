@@ -26,7 +26,7 @@ const BarCodeScanner = ({mySetCode, title}) => {
           )
         }
       <div className="flex items-center justify-center h-36 md:h-full relative overflow-hidden">
-        <Scanner onDetected={handleDetected} />
+        <Scanner onDetected={handleDetected} className="scale-150"/>
       </div>
     </div>
   );
