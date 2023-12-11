@@ -4,38 +4,61 @@ import Quagga from 'quagga';
 
 const Scanner = ({ onDetected }) => {
   useEffect(() => {
+    const configureCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        const track = stream.getVideoTracks()[0];
+
+        // Verifique se a funcionalidade de controle de zoom está disponível
+        if ('getCapabilities' in track.getSettings()) {
+          const capabilities = track.getCapabilities();
+
+          // Verifique se 'zoom' é uma propriedade suportada
+          if ('zoom' in capabilities) {
+            // Ajuste o zoom da câmera para o valor desejado (por exemplo, 2)
+            await track.applyConstraints({ advanced: [{ zoom: capabilities.zoom.max }] });
+          }
+        }
+      } catch (error) {
+        console.error('Error configuring camera:', error);
+      }
+    };
+
     Quagga.init(
       {
         inputStream: {
-          type : "LiveStream",
+          type: 'LiveStream',
           size: 1080,
           constraints: {
-              width: 1080,
-              height: 1920,
-              facingMode: "environment" // or user
+            width: 1080,
+            height: 1920,
+            facingMode: 'environment',
           },
-          area: { // defines rectangle of the detection/localization area
-            top: "0%",    // top offset
-            right: "0%",  // right offset
-            left: "0%",   // left offset
-            bottom: "0%"  // bottom offset
+          area: {
+            top: '0%',
+            right: '0%',
+            left: '0%',
+            bottom: '0%',
           },
         },
         numOfWorkers: 4,
         decoder: {
-          readers : ["ean_reader"]
+          readers: ['ean_reader'],
         },
-        locate: true
+        locate: true,
       },
-      function(err) {
+      function (err) {
         if (err) {
           console.log(err);
           return;
         }
         Quagga.start();
+        configureCamera(); // Chame a função de configuração da câmera aqui
       }
     );
+
     Quagga.onDetected(onDetected);
+
     return () => {
       Quagga.offDetected(onDetected);
       Quagga.stop();
