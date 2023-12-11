@@ -52,8 +52,10 @@ const Scanner = ({ onDetected }) => {
           console.log(err);
           return;
         }
-        Quagga.start();
         configureCamera(); // Chame a função de configuração da câmera aqui
+        setTimeout(() => {
+          Quagga.start(); // Inicie o Quagga após um pequeno atraso
+        }, 500);
       }
     );
 
