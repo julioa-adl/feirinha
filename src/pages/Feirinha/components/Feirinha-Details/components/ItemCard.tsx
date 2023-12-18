@@ -143,7 +143,7 @@ const ItemCard = ({ listCart }:itemCard) => {
 
               <span className='flex gap-1 items-center'>
                 <PlusCircleIcon className='h-4 text-gray-500'/>
-                <p className=''>{listCart && `${listCart.quantity}`}</p>
+                <p className=''>{listCart && prod && `${listCart.quantity} ${prod.unitSelling}`}</p>
               </span>
 
               <span className='flex gap-1 items-center'>

@@ -11,7 +11,6 @@ import { Iprod } from "../../../interfaces/IProduct";
 import { useMutation, useQueryClient } from 'react-query';
 import imageCompression from 'browser-image-compression';
 import context from "../../../context/myContext";
-// import SelectGeneral from "../../../general-components/SelectGeneralTrue";
 
 type usageType = 'Cadastrar' | 'Atualizar';
 
@@ -31,28 +30,18 @@ interface ProductFormProps {
 const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductFormProps) => {
   const [disable, setDisable] = useState(true);
   const [noCode, setNoCode] = useState(false);
-  // const [selectCategory, setSelectCategory] = useState();
   const [addProd, setAddProd] = useState<Iprod>({
     id: product ? product['_id'] : '',
     name: product ? product.name : '',
     subName: product ? product.subName : '',
     manufacturer: product ? product.manufacturer : '',
+    unitSelling: product ? product.unitSelling : '',
     category: product ? product.category : '',
     code: product ? product.code : code ? code : '',
     image: product ? product.image : undefined,
     unitMeasure: product ? product.unitMeasure : '',
     size: product ? product.size : 0
   });
-
-  // useEffect(() => {
-  //   if (selectCategory) {
-  //     const { name } = selectCategory;
-  //     setAddProd((prev) => ({
-  //       ...prev,
-  //       category: name
-  //     }))
-  //   }
-  // }, [selectCategory])
 
   const {
     setRegisterNewProdInAddItemToCart
@@ -158,7 +147,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
         <form className="flex flex-col gap-1">
           <div className="flex flex-col gap-1">
             <label
-              className="text-gray-100 flex justify-between items-end text-sm"
+              className="text-gray-100 flex justify-between items-end text-xs"
             >nome do produto: <span className="text-gray-600 text-xs">obrigatório</span></label>
             <input
               type="text"
@@ -174,7 +163,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
 
           <div className="flex flex-col gap-1">
             <label
-              className="text-gray-100 text-sm"
+              className="text-gray-100 text-xs"
             >outros detalhes: </label>
             <input
               type="text"
@@ -186,31 +175,49 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label
-              className="text-gray-100 flex justify-between items-end text-sm"
-            >fabricante: <span className="text-gray-600 text-xs">obrigatório</span></label>
-            <input
-              type="text"
-              required
-              id='manufacturer'
-              value={ addProd.manufacturer }
-              onChange={ handleChange }
-              placeholder="Ex. Nestlé"
-              className="px-4 py-1 w-full rounded-md"
-            />
+          <div className="flex w-full justify-between gap-1">
+            <div className="flex flex-col gap-1 w-1/4">
+                <label
+                  className="text-gray-100 text-xs"
+                >unid. venda: </label>
+                <select
+                  id='unitSelling'
+                  name='unitSelling'
+                  value={ addProd.unitSelling }
+                  onChange={ handleChange }
+                  className={`px-4 py-1 w-full rounded-md ${addProd.unitSelling === '' ? 'text-gray-400' : 'text-gray-900'}`}
+            >
+              <option value={''} disabled>-</option>
+                  {
+                    unidadeDeMedida.map((category, i) => (
+                    <option
+                      key={`addProd${category.sigla}-${i}`}
+                      value={ category.sigla }>{ category.sigla }</option>
+                    ))
+                  }
+                </select>
+            </div>
+
+            <div className="flex flex-col gap-1 w-3/4">
+              <label
+                className="text-gray-100 flex justify-between items-end text-xs"
+              >fabricante: <span className="text-gray-600 text-xs">obrigatório</span></label>
+              <input
+                type="text"
+                required
+                id='manufacturer'
+                value={ addProd.manufacturer }
+                onChange={ handleChange }
+                placeholder="Ex. Nestlé"
+                className="px-4 py-1 w-full rounded-md"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-1">
             <label
-              className="text-gray-100 flex justify-between items-end text-sm"
+              className="text-gray-100 flex justify-between items-end text-xs"
             >categoria: <span className="text-gray-600 text-xs">obrigatório</span></label>
-            {/* <SelectGeneral
-              title={['icon', 'name']}
-              img='none'
-              arrayToSelect={categories}
-              setMyState={setSelectCategory}
-            /> */}
             <select
               required
               id='category'
@@ -232,7 +239,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
 
           <div className="relative flex flex-col gap-1">
             <label htmlFor="code"
-              className="text-gray-100 flex justify-between items-end text-sm"
+              className="text-gray-100 flex justify-between items-end text-xs"
             >código de barras:
 
               <div className="flex items-center gap-1">
@@ -283,7 +290,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
 
           <div className="flex flex-col gap-1">
             <label
-              className="text-gray-100 flex justify-between items-end text-sm"
+              className="text-gray-100 flex justify-between items-end text-xs"
             >imagem: </label>
             <input
               type="file"
@@ -304,8 +311,8 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
           <div className="flex justify-start items-center gap-5">
             <div className="flex flex-col gap-1">
               <label
-                className="text-gray-100 text-sm"
-              >valor: </label>
+                className="text-gray-100 text-xs"
+              >quantidade: </label>
               <div className="flex">
                 <div
                   onClick={ decrementSize }
@@ -354,8 +361,8 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
 
             <div className="flex flex-col gap-1">
                 <label
-                  className="text-gray-100 text-sm"
-                >métrica: </label>
+                  className="text-gray-100 text-xs"
+                >unid. medida: </label>
                 <select
                   id='unitMeasure'
                   name='unitMeasure'

@@ -24,7 +24,7 @@ const fetchProducts = async () => {
   }
 }
 
-const registerProduct = async ({ name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
+const registerProduct = async ({ name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image }: Iprod) => {
   try {
     let urlImgBB;
     if (image) {
@@ -34,8 +34,8 @@ const registerProduct = async ({ name, subName, manufacturer, category, code, un
     if (localToken === null) return false;
     const token = JSON.parse(localToken);
 
-    const dataImg = { name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
-    const dataWithoutImg = { name, subName, manufacturer, category, code, unitMeasure, size }
+    const dataImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB };
+    const dataWithoutImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size }
 
     const res = await axios({
       method: "post",
@@ -54,7 +54,7 @@ const registerProduct = async ({ name, subName, manufacturer, category, code, un
 };
 
 
-const updateProduct = async ({ id, name, subName, manufacturer, category, code, unitMeasure, size, image }: Iprod) => {
+const updateProduct = async ({ id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image }: Iprod) => {
   let urlImgBB;
   if (image) {
     urlImgBB = await postImgbb(image) || '';
@@ -63,8 +63,8 @@ const updateProduct = async ({ id, name, subName, manufacturer, category, code, 
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
 
-  const dataImg = { id, name, subName, manufacturer, category, code, unitMeasure, size, image: urlImgBB };
-  const dataWithoutImg = { id, name, subName, manufacturer, category, code, unitMeasure, size }
+  const dataImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB };
+  const dataWithoutImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size }
   
   const res = await axios({
     method: "put",

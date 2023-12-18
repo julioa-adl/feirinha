@@ -5,6 +5,28 @@ import { Ifeirinha } from '../../interfaces/IFeirinha';
 
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
 
+const fetchAllFeirinhas = async () => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl(`feirinha`),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 const fetchFeirinhas = async () => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
@@ -88,6 +110,7 @@ const deleteFeirinha = async (feirinhaId) => {
 }
 
 export {
+  fetchAllFeirinhas,
   fetchFeirinhas,
   registerFeirinha,
   updateFeirinha,
