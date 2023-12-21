@@ -42,6 +42,7 @@ const Scanner = ({ onDetected }) => {
           },
         },
         numOfWorkers: 4,
+        patchSize: "small",
         decoder: {
           readers: ['ean_reader'],
         },
