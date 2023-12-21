@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
+// import { fetchAllFeirinhas } from '../../../../../helpers/httpClient/feirinhaClient';
 
 interface itemCard {
   listCart: IlistCart,
@@ -42,6 +43,10 @@ const ItemCard = ({ listCart }:itemCard) => {
 
   const { data: products } = useQuery('products', () => fetchProducts(), {retry: 10});
   const prod = products && products.find((p) => p._id === listCart.productId)
+
+  // const { data: allFeirinhas } = useQuery('allFeirinhas', () => fetchAllFeirinhas(), {retry: 10});
+  // const mediaPricesAllFeirinhas = allFeirinhas && allFeirinhas.map((f) => f['listCart'].filter((ff) => ff['productId'] === prod._id))
+  // console.log(mediaPricesAllFeirinhas)
 
   const querieClient = useQueryClient();
   const { mutate: upItem, isLoading: updateLoading, isSuccess } = useMutation(() => updateItem(feirinhaId, editItem).then(

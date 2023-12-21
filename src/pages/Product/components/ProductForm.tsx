@@ -175,8 +175,8 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
             />
           </div>
 
-          <div className="flex w-full justify-between gap-1">
-            <div className="flex flex-col gap-1 w-1/4">
+          <div className="flex w-full justify-between gap-2">
+            <div className="flex flex-col gap-1 w-2/6">
                 <label
                   className="text-gray-100 text-xs"
                 >unid. venda: </label>
@@ -198,7 +198,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
                 </select>
             </div>
 
-            <div className="flex flex-col gap-1 w-3/4">
+            <div className="flex flex-col gap-1 w-4/6">
               <label
                 className="text-gray-100 flex justify-between items-end text-xs"
               >fabricante: <span className="text-gray-600 text-xs">obrigatório</span></label>

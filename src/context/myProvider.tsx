@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
-import { fetchFeirinhas } from "../helpers/httpClient/feirinhaClient";
+import { fetchAllFeirinhas, fetchFeirinhas } from "../helpers/httpClient/feirinhaClient";
 import { fetchProducts } from '../helpers/httpClient/productClient';
 import { fetchMarkets } from '../helpers/httpClient/marketsClient';
 import { Iprod } from '../interfaces/IProduct';
@@ -42,6 +42,7 @@ function Provider({ children }:AuxProps) {
   const products = useQuery('products', () => fetchProducts(), {retry: 10});
   const markets = useQuery('markets', () => fetchMarkets(), {retry: 10});
   const feirinhas = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
+  const allFeirinhas = useQuery('allFeirinhas', () => fetchAllFeirinhas(), {retry: 10});
 
   const contextValue = useMemo(() => ({
     tokenDecode,
@@ -50,14 +51,14 @@ function Provider({ children }:AuxProps) {
     setToken,
     registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
     markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
-    feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+    allFeirinhas, feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
   }), [tokenDecode,
       products, showProd, editProd, codeScanner, setCodeScanner,
       token,
       registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
       markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
-      feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+      allFeirinhas, feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       showItem, setShowItem, editItem, setEditItem,
       ]);
 
