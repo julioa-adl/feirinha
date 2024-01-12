@@ -4,26 +4,6 @@ import Quagga from 'quagga';
 
 const Scanner = ({ onDetected }) => {
   useEffect(() => {
-    const configureCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-        const track = stream.getVideoTracks()[0];
-
-        // Verifique se a funcionalidade de controle de zoom está disponível
-        if ('getCapabilities' in track.getSettings()) {
-          const capabilities = track.getCapabilities();
-
-          // Verifique se 'zoom' é uma propriedade suportada
-          if ('zoom' in capabilities) {
-            // Ajuste o zoom da câmera para o valor desejado (por exemplo, 2)
-            await track.applyConstraints({ advanced: [{ zoom: capabilities.zoom.max }] });
-          }
-        }
-      } catch (error) {
-        console.error('Error configuring camera:', error);
-      }
-    };
-
     Quagga.init(
       {
         inputStream: {
@@ -48,16 +28,6 @@ const Scanner = ({ onDetected }) => {
         },
         locate: true,
       },
-      function (err) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        configureCamera(); // Chame a função de configuração da câmera aqui
-        setTimeout(() => {
-          Quagga.start(); // Inicie o Quagga após um pequeno atraso
-        }, 500);
-      }
     );
 
     const myZoom = () => {
