@@ -60,6 +60,13 @@ const Scanner = ({ onDetected }) => {
       }
     );
 
+    const myZoom = () => {
+      const track = Quagga.CameraAccess.getActiveTrack();
+      var capabilities = track.getCapabilities();
+      track.applyConstraints({ advanced: [{zoom: capabilities.zoom.max}]}).catch(e => console.log(e));
+    }
+    setTimeout(myZoom, 5000);
+
     Quagga.onDetected(onDetected);
 
     return () => {
