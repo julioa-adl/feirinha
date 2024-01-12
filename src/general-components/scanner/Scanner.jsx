@@ -42,7 +42,7 @@ const Scanner = ({ onDetected }) => {
       var capabilities = track.getCapabilities();
       track.applyConstraints({ advanced: [{zoom: capabilities.zoom.max}]}).catch(e => console.log(e));
     }
-    setTimeout(myZoom, 500);
+    setTimeout(myZoom, 1000);
 
     Quagga.onDetected(onDetected);
 
