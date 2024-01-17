@@ -33,10 +33,7 @@ const Scanner = ({ onDetected }) => {
           console.log(err);
           return;
         }
-        setTimeout(
-          Quagga.start(),
-          500
-        )
+        Quagga.start()
         
       }
     );
