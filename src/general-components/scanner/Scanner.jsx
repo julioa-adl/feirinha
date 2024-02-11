@@ -41,7 +41,11 @@ const Scanner = ({ onDetected, zoom }) => {
     const myZoom = () => {
       const track = Quagga.CameraAccess.getActiveTrack();
       var capabilities = track.getCapabilities();
-      track.applyConstraints({ advanced: [{zoom: capabilities.zoom[zoom]}]}).catch(e => console.log(e));
+      try {
+        track.applyConstraints({ advanced: [{zoom: capabilities.zoom[zoom]}]})
+      } catch(error) {
+        console.log('zoom não funciona neste dispositivo')
+      }
     }
     setTimeout(myZoom, 1000);
 
