@@ -51,7 +51,7 @@ const Scanner = ({ onDetected, zoom }) => {
       Quagga.offDetected(onDetected);
       Quagga.stop();
     };
-  }, []);
+  }, [zoom]);
 
   return <div id="interactive" className="viewport" />;
 };

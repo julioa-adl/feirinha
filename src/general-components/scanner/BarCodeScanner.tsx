@@ -31,11 +31,11 @@ const BarCodeScanner = ({mySetCode, title}) => {
         <Scanner onDetected={handleDetected} zoom={zoom} className="scale-150"/>
         <MagnifyingGlassMinusIcon
           className="h-7 text-gray-100 absolute top-1 right-9 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
-          onClick={() => setZoom('min')}
+          onClick={() => { setZoom('min'); }}
         />
         <MagnifyingGlassPlusIcon
           className="h-7 text-gray-100 absolute top-1 right-1 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
-          onClick={() => setZoom('max')}
+          onClick={() => { setZoom('max'); }}
         />
       </div>
     </div>
