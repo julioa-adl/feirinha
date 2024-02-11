@@ -1,5 +1,6 @@
-import { ViewfinderCircleIcon } from '@heroicons/react/24/outline';
+import { ViewfinderCircleIcon, MagnifyingGlassPlusIcon, MagnifyingGlassMinusIcon } from '@heroicons/react/24/outline';
 import Scanner from './Scanner';
+import { useState } from 'react';
 
 interface Result {
   codeResult: {
@@ -8,6 +9,7 @@ interface Result {
 }
 
 const BarCodeScanner = ({mySetCode, title}) => {
+  const [zoom, setZoom] = useState('min')
   const handleDetected = (result:Result) => {
     if (result) {
       mySetCode(result.codeResult.code);
@@ -26,7 +28,15 @@ const BarCodeScanner = ({mySetCode, title}) => {
           )
         }
       <div className="flex items-center justify-center h-36 md:h-full relative overflow-hidden">
-        <Scanner onDetected={handleDetected} className="scale-150"/>
+        <Scanner onDetected={handleDetected} zoom={zoom} className="scale-150"/>
+        <MagnifyingGlassMinusIcon
+          className="h-7 text-gray-100 absolute top-1 right-9 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
+          onClick={() => setZoom('min')}
+        />
+        <MagnifyingGlassPlusIcon
+          className="h-7 text-gray-100 absolute top-1 right-1 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
+          onClick={() => setZoom('max')}
+        />
       </div>
     </div>
   );

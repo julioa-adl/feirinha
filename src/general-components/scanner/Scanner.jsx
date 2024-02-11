@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Quagga from 'quagga';
 
-const Scanner = ({ onDetected }) => {
+const Scanner = ({ onDetected, zoom }) => {
   useEffect(() => {
     Quagga.init(
       {
@@ -41,7 +41,7 @@ const Scanner = ({ onDetected }) => {
     const myZoom = () => {
       const track = Quagga.CameraAccess.getActiveTrack();
       var capabilities = track.getCapabilities();
-      track.applyConstraints({ advanced: [{zoom: capabilities.zoom.max}]}).catch(e => console.log(e));
+      track.applyConstraints({ advanced: [{zoom: capabilities.zoom[zoom]}]}).catch(e => console.log(e));
     }
     setTimeout(myZoom, 1000);
 
