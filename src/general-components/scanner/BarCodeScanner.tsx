@@ -27,16 +27,20 @@ const BarCodeScanner = ({mySetCode, title}) => {
           </div>
           )
         }
-      <div className="flex items-center justify-center h-36 md:h-full relative overflow-hidden">
+      <div className="flex transition-all ease-in animate-[fadeIn_3s] items-center justify-center h-36 md:h-full relative overflow-hidden">
         <Scanner onDetected={handleDetected} zoom={zoom} className="scale-150"/>
-        <MagnifyingGlassMinusIcon
-          className="h-7 text-gray-100 absolute top-1 right-9 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
-          onClick={() => { setZoom('min'); }}
-        />
-        <MagnifyingGlassPlusIcon
-          className="h-7 text-gray-100 absolute top-1 right-1 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
-          onClick={() => { setZoom('max'); }}
-        />
+        { zoom === 'min' ? (
+          <MagnifyingGlassPlusIcon
+            className="h-7 text-gray-100 absolute top-1 right-1 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
+            onClick={() => { setZoom('max'); }}
+          />
+        ) : (
+          <MagnifyingGlassMinusIcon
+            className="h-7 text-gray-100 absolute top-1 right-1 bg-gray-700 rounded-sm p-1 hover:cursor-pointer"
+            onClick={() => { setZoom('min'); }}
+          />
+        )
+        }
       </div>
     </div>
   );
