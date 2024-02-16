@@ -27,17 +27,15 @@ const validateEmail = async (email: string) => {
   try {
     const res = await axios.post(
       backendUrl('verificationCode'),
-      {
-        email
-      },
+      { email }
     );
-      console.log(res.data.message)
+    console.log(res.data.message);
     return res;
-  } catch (err) {
-    throw new console.error(err);
-    ;
+  } catch (err: any) {
+    throw err.response?.data?.message; // Lança o erro novamente para que possa ser tratado em outro lugar, se necessário
   }
 };
+
 
 const registUser = async ({ name, email, password, verificationCode, role = 'User' }: Iuser) => {
   try {

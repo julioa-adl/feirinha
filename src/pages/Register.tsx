@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
-import { UserIcon, LockClosedIcon, EnvelopeIcon, KeyIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid';
+import { UserIcon, LockClosedIcon, EnvelopeIcon, KeyIcon, InboxArrowDownIcon } from '@heroicons/react/24/solid';
 import { registUser, validateEmail } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
@@ -19,10 +19,11 @@ const Register = () => {
   const [terms, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
+  const [disableVC, setDisableVC] = useState(true);
   const [error, setError] = useState(false);
 
   const { email } = values;
-  const { mutate, isLoading, isError } = useMutation(() => validateEmail(email)
+  const { mutate, isLoading, isError, error: setCodeError } = useMutation(() => validateEmail(email)
   )
 
   const {
@@ -51,8 +52,8 @@ const Register = () => {
     }
   };
 
+  const emailIsValid = values.email.match(/^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+\.[a-zA-Z0-9_.+-]+$/gm);
   useEffect(() => {
-    const emailIsValid = values.email.match(/^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+\.[a-zA-Z0-9_.+-]+$/gm);
     if (
       values.email.length > 0 &&
       emailIsValid &&
@@ -64,6 +65,15 @@ const Register = () => {
     }
     return setDisable(true);
   }, [values, terms])
+
+  useEffect(() => {
+    if (
+      values.email.length > 0 &&
+      emailIsValid ) {
+      return setDisableVC(false);
+    }
+    return setDisableVC(true);
+  }, [values])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -132,7 +142,7 @@ const Register = () => {
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
             >validar email: </label>
           <KeyIcon className="h-5 absolute text-gray-800 top-6 left-3"/>
-          <div className='flex justify-between gap-1'>
+          <div className='flex justify-between'>
             <input
               type='text'
               required
@@ -140,15 +150,17 @@ const Register = () => {
               value={ values.verificationCode }
               onChange={ handleChange }
               placeholder="código de validação"
-              className={`rounded-full px-8 w-5/6 h-10 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+              className={`px-8 rounded-l-full w-5/6 h-10 text-center dark:bg-gray-600 dark:text-gray-100`}/>
               <button
                 type="button"
-                className={`flex justify-center text-center duration-300 ease-in-out items-center font-medium rounded-full text-xs px-3 py-2 h-10 w-1/6 text-white bg-green-500 shadow-md shadow-green-600 dark:shadow-green-900 hover:bg-green-600 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700`}
+                disabled={ disableVC }
+                className={`flex justify-center text-center duration-300 ease-in-out items-center shadow-md shadow-green-800 font-medium rounded-r-full text-xs px-3 py-2 h-10 w-1/6
+                          text-white ${ disableVC ? 'bg-gray-800 opacity-75' : 'bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700'}`}
                 onClick={ () => mutate() }
-              >{ isLoading ? <Loading loading /> : <ArrowDownTrayIcon className='h-5'/> }</button>
+              >{ isLoading ? <Loading loading /> : <InboxArrowDownIcon className='h-5'/> }</button>
           </div>
               {
-                isError && <p className='text-xs text-center text-red-500'>Email já cadastrado</p>
+                isError && <p className='text-xs text-center text-red-500'>{`${setCodeError || 'erro'}`}</p>
               }
         </div>
         
