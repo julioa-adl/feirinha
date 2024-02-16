@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
@@ -174,7 +174,7 @@ const Register = () => {
             type='checkbox'
             required
           />
-          <span className='dark:text-gray-100 text-sm'>Eu aceito os termos de uso</span>
+          <span className='dark:text-gray-100 text-sm'>Eu aceito os <Link to={'/termos'} className="font-bold cursor-pointer text-gray-900 hover:text-gray-100 dark:text-blue-400 dark:hover:text-blue-600">termos de uso</Link></span>
         </div>
         
         <button

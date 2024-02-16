@@ -30,7 +30,7 @@ const Products = () => {
 
   return(
     <div className='bg-white h-screen dark:bg-gray-900'>
-      <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900 py-5 flex items-center w-full justify-center'>
+      <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900 p-5 flex items-center w-full justify-center'>
         <Navigator />
         <Search arrayToSearch={productsSort} typeUse='produtos' setResultSearchState={setMySearch}/>
         <User />

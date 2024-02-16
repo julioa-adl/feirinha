@@ -7,6 +7,7 @@ import Home from './pages/Feirinha/Home';
 import Products from './pages/Product/Products';
 import Markets from './pages/Market/Markets';
 import FeirinhaDetails from './pages/Feirinha/components/Feirinha-Details/FeirinhaDetails';
+import Termos from './pages/Termos/Termos';
 
 import PrivateRouter from './PrivateRouter';
 
@@ -34,6 +35,7 @@ const App = () => {
         <Routes>
           <Route path={"/login"} element = { <Login /> }/>
           <Route path={"/register"} element = { <Register /> }/>
+          <Route path={"/termos"} element = { <Termos /> }/>
           <Route element = { <PrivateRouter /> }>
             <Route path={"/"} element = { <Home /> }/>
             <Route path={"/feirinha/:id"} element = { <FeirinhaDetails /> }/>
