@@ -3,22 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
-import { UserIcon, LockClosedIcon, EnvelopeIcon, CalendarDaysIcon, /*CheckCircleIcon, XCircleIcon*/ } from '@heroicons/react/24/solid';
-import { registUser } from '../helpers/httpClient/userClient';
+import { UserIcon, LockClosedIcon, EnvelopeIcon, KeyIcon, PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { registUser, validateEmail } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
+import { useMutation } from 'react-query';
 
 const Register = () => {
   const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
-    birthday: '',
+    verificationCode: ''
   });
   const [terms, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
   const [error, setError] = useState(false);
+
+  const { email } = values;
+  const { mutate, isLoading, isError } = useMutation(() => validateEmail(email)
+  )
 
   const {
     setToken
@@ -53,7 +58,7 @@ const Register = () => {
       emailIsValid &&
       values.password.length > 5 &&
       values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 3 &&
-      values.birthday.length > 0 &&
+      values.verificationCode.length === 6 &&
       terms === true) {
       return setDisable(false);
     }
@@ -74,12 +79,12 @@ const Register = () => {
 
   return (
     <div className= "h-screen w-screen bg-blue-400 bg-market-75 bg-cover dark:bg-gray-900 dark:bg-market-75 m-auto flex flex-col justify-evenly items-center">
-      <form className="relative flex flex-col items-center">
-        <img src={logo} alt='logo' className="w-20 md:w-36 dark:invert"/>
+      <img src={logo} alt='logo' className="w-20 md:w-36 dark:invert"/>
+      <form className="relative flex flex-col items-center gap-1">
         {
           error && <span className='text-xs text-gray-900 dark:text-red-500'>{ error }</span>
         }
-        <div className="relative">
+        <div className="relative w-80">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
             >nome: </label>
@@ -93,7 +98,7 @@ const Register = () => {
             placeholder="Ex. João Silva"
             className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
-        <div className='relative'>
+        <div className='relative w-80'>
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
             >email: </label>
@@ -107,7 +112,7 @@ const Register = () => {
             placeholder="Digite seu email"
             className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
-        <div className="relative">
+        <div className="relative w-80">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
             >senha: </label>
@@ -121,20 +126,32 @@ const Register = () => {
             placeholder="mínimo 6 caracteres"
             className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
-        <div className="relative">
+        
+        <div className="relative w-80">
           <label
               className="ml-5 text-gray-900 dark:text-gray-100 flex justify-between items-end text-xs"
-            >nascimento: </label>
-          <CalendarDaysIcon className="h-5 absolute text-gray-800 top-7 left-3"/>
-          <input
-            type="date"
-            required
-            id='birthday'
-            value={ values.birthday }
-            onChange={ handleChange }
-            // placeholder='dd/mm/aaaa'
-            className={`appearance-none rounded-full px-8 w-80 text-center h-10 bg-white dark:bg-gray-600 dark:text-gray-100`}/>
+            >validar email: </label>
+          <KeyIcon className="h-5 absolute text-gray-800 top-6 left-3"/>
+          <div className='flex justify-between gap-1'>
+            <input
+              type='text'
+              required
+              id='verificationCode'
+              value={ values.verificationCode }
+              onChange={ handleChange }
+              placeholder="código de validação"
+              className={`rounded-full px-8 w-5/6 h-10 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+              <button
+                type="button"
+                className={`flex justify-center text-center duration-300 ease-in-out items-center font-medium rounded-full text-xs px-3 py-2 h-10 w-1/6 text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700`}
+                onClick={ () => mutate() }
+              >{ isLoading ? <Loading loading /> : <PaperAirplaneIcon className='h-4'/> }</button>
+          </div>
+              {
+                isError && <p className='text-xs text-center text-red-500'>Email já cadastrado</p>
+              }
         </div>
+        
         <div className='flex my-4 flex-row gap-3 items-center w-80 ml-6'>
           
           <input
@@ -156,7 +173,7 @@ const Register = () => {
         >
           { loading ? <Loading loading /> : 'Criar' }
         </button>
-        <div className='text-xs dark:text-gray-100'>
+        <div className='text-xs dark:text-gray-100 w-80 flex justify-center gap-1'>
           <span>Já possui uma conta?</span><span className="font-bold cursor-pointer text-gray-900 hover:text-gray-100 dark:text-blue-400 dark:hover:text-blue-600" onClick={ loginHere }> Entre aqui!</span>
         </div>
       </form>

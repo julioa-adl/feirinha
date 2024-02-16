@@ -23,12 +23,28 @@ const loginUser = async ({ email, password }: Iuser) => {
   }
 };
 
-const registUser = async ({ name, email, password, birthday, role = 'User' }: Iuser) => {
+const validateEmail = async (email: string) => {
+  try {
+    const res = await axios.post(
+      backendUrl('verificationCode'),
+      {
+        email
+      },
+    );
+      console.log(res.data.message)
+    return res;
+  } catch (err) {
+    throw new console.error(err);
+    ;
+  }
+};
+
+const registUser = async ({ name, email, password, verificationCode, role = 'User' }: Iuser) => {
   try {
     const res = await axios.post(
       backendUrl('user'),
       {
-        name, email, password, birthday, role,
+        name, email, password, verificationCode, role,
       },
     );
     const { token } = res.data;
@@ -66,5 +82,6 @@ const revalidateToken = async (): Promise<boolean> => {
 export {
   loginUser,
   registUser,
-  revalidateToken
+  revalidateToken,
+  validateEmail
 }
