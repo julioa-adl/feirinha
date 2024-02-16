@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../assets/feirinha-logo.png";
 import Loading from '../general-components/Loading';
 import ToggleTheme from "../general-components/ToggleTheame";
-import { UserIcon, LockClosedIcon, EnvelopeIcon, KeyIcon, PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { UserIcon, LockClosedIcon, EnvelopeIcon, KeyIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 import { registUser, validateEmail } from '../helpers/httpClient/userClient';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import context from '../context/myContext';
@@ -143,9 +143,9 @@ const Register = () => {
               className={`rounded-full px-8 w-5/6 h-10 text-center dark:bg-gray-600 dark:text-gray-100`}/>
               <button
                 type="button"
-                className={`flex justify-center text-center duration-300 ease-in-out items-center font-medium rounded-full text-xs px-3 py-2 h-10 w-1/6 text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700`}
+                className={`flex justify-center text-center duration-300 ease-in-out items-center font-medium rounded-full text-xs px-3 py-2 h-10 w-1/6 text-white bg-green-500 shadow-md shadow-green-600 dark:shadow-green-900 hover:bg-green-600 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700`}
                 onClick={ () => mutate() }
-              >{ isLoading ? <Loading loading /> : <PaperAirplaneIcon className='h-4'/> }</button>
+              >{ isLoading ? <Loading loading /> : <ArrowDownTrayIcon className='h-5'/> }</button>
           </div>
               {
                 isError && <p className='text-xs text-center text-red-500'>Email já cadastrado</p>

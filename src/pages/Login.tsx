@@ -135,7 +135,7 @@ const Login = () => {
         >
           { loading ? <Loading loading /> : 'Entrar' }
         </button>
-        <div className='-mt-4 text-xs dark:text-gray-100'>
+        <div className='-mt-3 text-xs dark:text-gray-100'>
           <span>Ainda não tem uma conta?</span><span className="font-bold
           cursor-pointer text-blue-700 hover:text-blue-500 dark:text-blue-400
           dark:hover:text-blue-600" onClick={ createAcount }> Crie aqui.</span>
