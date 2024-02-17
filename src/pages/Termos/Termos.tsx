@@ -16,7 +16,7 @@ const Termos = () => {
         <div className="dark:text-gray-100 text-gray-900 text-center w-screem pt-20 pb-36 md:py-0 lg:h-4/5 md:px-40 px-5 overflow-auto flex
         flex-col items-center gap-2 drop-shadow-lg">
             <h1 className="w-full font-bold">FEIRINHA DA GENTE - LICENÇA DE USO</h1>
-            <p className="text-left md:text-md">
+            <div className="text-left md:text-md">
                 <p>O aplicativo Feirinha da Gente é um projeto Full-Stack desenvolvido com o propósito de facilitar a organização das suas compras e 
                     promover uma experiência colaborativa entre os usuários. Ao utilizar o aplicativo, você concorda com os seguintes termos de uso:
                 </p>
@@ -56,7 +56,7 @@ const Termos = () => {
                     <img src={logo} alt='logo' className="w-24 dark:invert"/>
                     <p className="font-bold text-sm dark:text-gray-200 text-gray-800 -ml-1">DA GENTE</p>
                 </div>
-            </p>
+            </div>
         </div>
         <MobileMenu />
     </div>

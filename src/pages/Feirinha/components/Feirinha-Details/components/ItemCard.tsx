@@ -3,7 +3,7 @@ import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
@@ -111,6 +111,11 @@ const ItemCard = ({ listCart }:itemCard) => {
     }
   };
 
+  const history = useNavigate();
+  const goToProductDetails = (id) => {
+    history(`/produtos/${id}`);
+  };
+
   return(
     <li
       className={`flex justify-between items-center gap-1 ease-in-out duration-300
@@ -118,8 +123,12 @@ const ItemCard = ({ listCart }:itemCard) => {
       rounded-xl p-2 bg-gray-50 dark:bg-gray-800 ${showEdit ? 'h-28' : 'h-24 md:h-28'}`}
     >
 
-      <div className='w-1/5 flex justify-center items-center h-full overflow-hidden bg-white rounded-md shadow-md'>
-        {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='scale-125'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
+      <div
+        className='w-1/5 flex justify-center items-center h-full overflow-hidden bg-white rounded-md shadow-md
+        border-2 border-gray-100 dark:border-gray-800 hover:border-lime-500 dark:hover:border-lime-500 duration-300 ease-in-out'
+        onClick={() => goToProductDetails(prod._id) }
+      >
+        {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='scale-110 hover:scale-125 cursor-pointer duration-300 ease-in-out'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
       </div>
       <div className="w-3/5 md:w-full h-full">
         <div className="flex flex-row items-start justify-between h-full font-regular text-xs md:text-base lowercase">

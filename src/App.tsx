@@ -10,6 +10,7 @@ import FeirinhaDetails from './pages/Feirinha/components/Feirinha-Details/Feirin
 import Termos from './pages/Termos/Termos';
 
 import PrivateRouter from './PrivateRouter';
+import ProductDetails from './pages/Product/details/ProductDetails';
 
 const App = () => {
   const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -40,6 +41,7 @@ const App = () => {
             <Route path={"/"} element = { <Home /> }/>
             <Route path={"/feirinha/:id"} element = { <FeirinhaDetails /> }/>
             <Route path={"/produtos"} element = { <Products /> }/>
+            <Route path={"/produtos/:id"} element = { <ProductDetails /> }/>
             <Route path={"/mercados"} element = { <Markets /> }/>
           </Route>
         </Routes>

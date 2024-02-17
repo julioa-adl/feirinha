@@ -40,7 +40,7 @@ const ProductForm = ({ product, code, typeUse, setRegisterInListCart }: ProductF
     code: product ? product.code : code ? code : '',
     image: product ? product.image : undefined,
     unitMeasure: product ? product.unitMeasure : '',
-    size: product ? product.size : 0
+    size: product ? product.size : 0,
   });
 
   const {

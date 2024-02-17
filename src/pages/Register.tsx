@@ -154,7 +154,7 @@ const Register = () => {
               <button
                 type="button"
                 disabled={ disableVC }
-                className={`flex justify-center text-center duration-300 ease-in-out items-center shadow-md shadow-green-800 font-medium rounded-r-full text-xs px-3 py-2 h-10 w-1/6
+                className={`flex justify-center text-center duration-300 ease-in-out items-center font-medium rounded-r-full text-xs px-3 py-2 h-10 w-1/6
                           text-white ${ disableVC ? 'bg-gray-800 opacity-75' : 'bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-1 dark:bg-green-600 dark:hover:bg-green-700'}`}
                 onClick={ () => mutate() }
               >{ isLoading ? <Loading loading /> : <InboxArrowDownIcon className='h-5'/> }</button>

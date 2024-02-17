@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Iprod } from '../../interfaces/IProduct';
+import decode from '../jwtDecode';
 
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
 
@@ -24,6 +25,27 @@ const fetchProducts = async () => {
   }
 }
 
+const getProductById = async (id: string | undefined) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl(`product/${id}`),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 const registerProduct = async ({ name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image }: Iprod) => {
   try {
     let urlImgBB;
@@ -33,9 +55,10 @@ const registerProduct = async ({ name, subName, manufacturer, unitSelling, categ
     const localToken = localStorage.getItem('userTokenFeirinha');
     if (localToken === null) return false;
     const token = JSON.parse(localToken);
+    const userId = decode(token).data['_id'];
 
-    const dataImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB };
-    const dataWithoutImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size }
+    const dataImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId };
+    const dataWithoutImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId }
 
     const res = await axios({
       method: "post",
@@ -62,9 +85,10 @@ const updateProduct = async ({ id, name, subName, manufacturer, unitSelling, cat
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
+  const userId = decode(token).data['_id'];
 
-  const dataImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB };
-  const dataWithoutImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size }
+  const dataImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId };
+  const dataWithoutImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId }
   
   const res = await axios({
     method: "put",
@@ -100,6 +124,7 @@ const postImgbb = async (file) => {
 
 export {
   fetchProducts,
+  getProductById,
   registerProduct,
   updateProduct
 }

@@ -10,4 +10,5 @@ export type Iprod = {
   image: ArrayBuffer | string | undefined,
   unitMeasure?: string | undefined,
   size?: number | string,
+  lastChange?: string | undefined
 }
