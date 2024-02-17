@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from '../../../context/myContext';
-import { PencilSquareIcon, /*BuildingStorefrontIcon*/ } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
 import { Imarket } from "../../../interfaces/IMarket";
 
 interface marketCards {
@@ -24,7 +24,7 @@ const MarketCard = ({ mrkt }:marketCards) => {
       </div> */}
       <div className="w-5/6">
         <div className="flex flex-row gap-2 font-semibold text-xs md:text-base lowercase items-center">
-          <span>{ `${mrkt.name} - ${mrkt.neighborhood}` }</span>
+          <span className="flex gap-1 items-center"><BuildingStorefrontIcon className="h-4 text-red-400"/>{ `${mrkt.name} - ${mrkt.neighborhood}` }</span>
         </div>
         <div className="dark:text-gray-500 font-light text-xs uppercase">
           <h2><span className="font-bold">Endereço:</span>{ ` ${mrkt.address?.slice(0, 20)}` }</h2>

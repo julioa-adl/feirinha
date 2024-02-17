@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { ArchiveBoxXMarkIcon, PresentationChartLineIcon, DocumentDuplicateIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxXMarkIcon, ChartPieIcon, DocumentDuplicateIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import MobileMenu from "../../../general-components/MobileMenu";
 import Navigator from "../../../general-components/Navigator";
 import User from '../../../general-components/User';
@@ -38,7 +38,7 @@ const ProductDetails = () => {
               before:from-transparent before:via-white/40 before:animate-[shimmer_1.5s_infinite]'/>
             ) : (
             <h1 className="rounded-full flex items-start justify-center gap-1 max-w-xs text-xs px-2 py-2 mr-2 md:m-0 w-full bg-gray-100 dark:bg-gray-800 md:font-bold text-gray-900 dark:text-white">
-              <PresentationChartLineIcon className="hidden md:block h-4" />
+              <ChartPieIcon className="h-4" />
               {itemData && `${itemData.name} - ${itemData.subName.slice(0, 10)}`}
             </h1>)
           }
