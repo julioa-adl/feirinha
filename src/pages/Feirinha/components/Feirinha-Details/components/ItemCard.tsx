@@ -167,7 +167,7 @@ const ItemCard = ({ listCart }:itemCard) => {
                 }
                 {
                   statisticsData && <p className='text-gray-400 text-xs flex gap-1'>
-                    preço médio: {upOrDownPriceByMedia()}
+                    {upOrDownPriceByMedia()}
                   </p>
                 }
               </div>

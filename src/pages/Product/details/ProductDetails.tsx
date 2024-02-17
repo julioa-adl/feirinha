@@ -16,7 +16,7 @@ const ProductDetails = () => {
 
   const { data: itemData, isLoading: itemLoading} = useQuery('product-detail', () => getProductById(id), {retry: 10});
 
-  const { data: statisticsData } = useQuery(`statistics-details-${id}`, () => getAllByProductId(id), {retry: 10});
+  const { data: statisticsData, isLoading: statisticsLoading } = useQuery(`statistics-details-${id}`, () => getAllByProductId(id), {retry: 10});
   const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
   const totalVendas = statisticsData && statisticsData.length;
 
@@ -86,7 +86,19 @@ const ProductDetails = () => {
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Unidade de venda: </strong>{itemData && itemData.unitSelling}</p>
                     </div>
                     {
-                      statisticsData && maisCaro && maisBarato ? (
+                      statisticsData && maisCaro && maisBarato ? statisticsLoading ? (
+                        <div className='flex justify-between gap-1 w-full'>
+                          <div className="relative flex w-full h-28 md:w-1/2 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 gap-2
+                                          p-3 shadow before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r
+                                          before:from-transparent before:via-white/20 hover:shadow-lg before:animate-[shimmer_1.5s_infinite]" />
+                          <div className="relative flex w-full h-28 md:w-1/2 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 gap-2
+                                          p-3 shadow before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r
+                                          before:from-transparent before:via-white/20 hover:shadow-lg before:animate-[shimmer_1.5s_infinite]"/>
+                          <div className="relative flex w-full h-28 md:w-1/2 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 gap-2
+                                          p-3 shadow before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r
+                                          before:from-transparent before:via-white/20 hover:shadow-lg before:animate-[shimmer_1.5s_infinite]"/>
+                        </div>
+                      ) : (
                         <div className='flex justify-between gap-1 w-full'>
                           <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
                             <p className='font-bold text-left text-sm md:text-md text-gray-500'>Preço Médio:</p>
