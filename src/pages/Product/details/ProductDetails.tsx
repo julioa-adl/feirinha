@@ -1,16 +1,34 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { ArchiveBoxXMarkIcon, ChartPieIcon, DocumentDuplicateIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxXMarkIcon, ChartPieIcon, DocumentDuplicateIcon, CheckCircleIcon, CurrencyDollarIcon,
+  ArrowTrendingUpIcon, ArrowUpCircleIcon, ArrowDownCircleIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import MobileMenu from "../../../general-components/MobileMenu";
 import Navigator from "../../../general-components/Navigator";
 import User from '../../../general-components/User';
 import { getProductById } from '../../../helpers/httpClient/productClient';
-import { useState } from 'react';
+import { getAllByProductId } from '../../../helpers/httpClient/feirinhaClient';
 
 const ProductDetails = () => {
-  const { id } = useParams();
   const [copyIcon, setCopyIcon] = useState(<DocumentDuplicateIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' />)
+
+  const { id } = useParams();
+
   const { data: itemData, isLoading: itemLoading} = useQuery('product-detail', () => getProductById(id), {retry: 10});
+
+  const { data: statisticsData } = useQuery(`statistics-details-${id}`, () => getAllByProductId(id), {retry: 10});
+  const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
+  const totalVendas = statisticsData && statisticsData.length;
+
+  const maisCaro = statisticsData && statisticsData.reduce((max, cur) => {
+    return (max.price > cur.price) ? max : cur;
+  }, statisticsData[0]);
+  
+  const maisBarato = statisticsData && statisticsData.reduce((min, cur) => {
+    return (min.price < cur.price) ? min : cur;
+  }, statisticsData[0]);
+
+
   const copyToClipboard = async (mytext: string) => {
     try {
       await navigator.clipboard.writeText(mytext);
@@ -21,7 +39,10 @@ const ProductDetails = () => {
   };
 
   const copyEffect = () => {
-    setCopyIcon(<CheckCircleIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' />)
+    setCopyIcon(<ArrowPathIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out animate-spin' />)
+    setTimeout(() => {
+      setCopyIcon(<><CheckCircleIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' /><span className='text-xs'>copiado</span></>)
+  }, 1000)
     setTimeout(() => {
         setCopyIcon(<DocumentDuplicateIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' />)
     }, 3000)
@@ -54,16 +75,44 @@ const ProductDetails = () => {
                     }
                 </div>
 
-                <div className='md:w-1/3 flex flex-col justify-start items-start gap-2'>
+                <div className='md:w-1/3 flex flex-col justify-between items-start gap-2'>
                     <div  className='flex text-sm md:text-md h-2/3 w-full flex-col justify-start items-start gap-2'>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Nome do produto: </strong>{itemData && itemData.name}</p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Outros detalhes: </strong>{itemData && itemData.subName}</p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Fabricante: </strong>{itemData && itemData.manufacturer}</p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Categoria: </strong>{itemData && itemData.category}</p>
-                        <p onClick={() => { copyToClipboard(itemData.code); copyEffect() }} className='flex items-center gap-1 rounded-full cursor-pointer px-5 text-left w-full bg-white dark:bg-gray-800 group'><strong className='text-gray-500'>Codigo de barras: </strong>{itemData && itemData.code } {copyIcon} </p>
+                        <p onClick={() => { copyToClipboard(itemData.code); copyEffect() }} className='flex items-center gap-1 rounded-full cursor-pointer px-5 text-left w-full bg-white dark:bg-gray-800 group'><strong className='text-gray-500'>CodBar: </strong>{itemData && itemData.code } {copyIcon} </p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Dimensões: </strong>{itemData && `${itemData.size} / ${itemData.unitMeasure}`}</p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Unidade de venda: </strong>{itemData && itemData.unitSelling}</p>
                     </div>
+                    {
+                      statisticsData && maisCaro && maisBarato ? (
+                        <div className='flex justify-between gap-1 w-full'>
+                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
+                            <p className='font-bold text-left text-sm md:text-md text-gray-500'>Preço Médio:</p>
+                            <p className='flex text-sm md:text-md gap-1 justify-center items-center'><CurrencyDollarIcon className='h-5 text-blue-500'/>{media}</p>
+                          </div>
+
+                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
+                            <p className='font-bold text-left text-sm md:text-md text-gray-500'>Total de Feirinhas:</p>
+                            <p className='flex text-sm md:text-md gap-1 justify-center items-center'><ArrowTrendingUpIcon className='h-5 text-yellow-500'/>{totalVendas}</p>
+                          </div>
+
+                          <div className='flex flex-col text-left items-start w-2/3 p-2 bg-gray-800 rounded-md'>
+                            <div  className='flex flex-col text-left items-start'>
+                              <p className='font-bold text-sm md:text-md text-gray-500'>Mercado + Barato:</p>
+                              <p className='flex text-xs gap-1 justify-center items-center'><ArrowDownCircleIcon className='h-5 text-green-500'/>{statisticsData && maisBarato && `${maisBarato.marketName} - ${maisBarato.marketNeighborhood} | ${maisBarato.marketState}`}</p>
+                            </div>
+
+                            <div className='flex flex-col text-left items-start'>
+                              <p className='font-bold text-sm md:text-md text-gray-500'>Mercado + Caro:</p>
+                              <p className='flex text-xs gap-1 justify-center items-center'><ArrowUpCircleIcon className='h-5 text-red-500'/>{statisticsData && maisCaro && `${maisCaro.marketName} - ${maisCaro.marketNeighborhood} | ${maisCaro.marketState}`}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (<p className='w-full h-full p-2 rounded-md bg-gray-800 flex items-center justify-center gap-1 font-bold text-gray-600'><ArrowTrendingUpIcon className='h-5 text-gray-600'/> Sem Estastisticas de Compras!</p>)
+                    }
+                    
                 </div>
             </div>
         </div>

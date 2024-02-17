@@ -1,5 +1,6 @@
 import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
-  PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+  PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon,
+  ArrowTrendingUpIcon, ArrowTrendingDownIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -7,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
+import { getAllByProductId } from '../../../../../helpers/httpClient/feirinhaClient';
 // import { fetchAllFeirinhas } from '../../../../../helpers/httpClient/feirinhaClient';
 
 interface itemCard {
@@ -44,10 +46,6 @@ const ItemCard = ({ listCart }:itemCard) => {
   const { data: products } = useQuery('products', () => fetchProducts(), {retry: 10});
   const prod = products && products.find((p) => p._id === listCart.productId)
 
-  // const { data: allFeirinhas } = useQuery('allFeirinhas', () => fetchAllFeirinhas(), {retry: 10});
-  // const mediaPricesAllFeirinhas = allFeirinhas && allFeirinhas.map((f) => f['listCart'].filter((ff) => ff['productId'] === prod._id))
-  // console.log(mediaPricesAllFeirinhas)
-
   const querieClient = useQueryClient();
   const { mutate: upItem, isLoading: updateLoading, isSuccess } = useMutation(() => updateItem(feirinhaId, editItem).then(
     () => querieClient.invalidateQueries('feirinhas')
@@ -72,6 +70,25 @@ const ItemCard = ({ listCart }:itemCard) => {
   useEffect(() => {
     handleUpdateBuyed()
   }, [editItem.buyed])
+
+  const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
+  const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
+
+  const upOrDownPriceByMedia = () => {
+    const thisPrice = listCart && listCart.price;
+    if (!media) return <span>X</span>
+    if (Number(thisPrice) > Number(media)) {
+      return <><strong className='uppercase text-red-400'>R$ {media}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>
+    } if (Number(thisPrice) < Number(media)) {
+      return <><strong className='uppercase text-green-500'>R$ {media}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>
+    }
+    return <><strong className='uppercase text-yellow-500'>R$ {media}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>
+  }
+
+  setInterval(() => {
+    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
+  }, 5000)
+
 
   const { mutate: delItem, isLoading: deleteLoading } = useMutation(() => deleteItem(feirinhaId, listCart['_id']).then(
     () => querieClient.invalidateQueries('feirinhas')
@@ -136,17 +153,24 @@ const ItemCard = ({ listCart }:itemCard) => {
           <div className='flex flex-col items-start justify-between h-full w-full'>
 
             <div className='flex justify-between w-full'>
-              { !deleteLoading ? (
-                <TrashIcon
-                  onClick={() => {
-                    handleDelete()
-                  }}
-                  className='h-4 cursor-pointer duration-300 ease-in-out hover:text-yellow-500'
-                />
-              ) : ( 
-                <ArrowPathIcon className="h-4 animate-spin text:red-500 dark:text:gray-100"/>
-              )
-              }
+              <div className='flex items-center gap-1'>
+                { !deleteLoading ? (
+                  <TrashIcon
+                    onClick={() => {
+                      handleDelete()
+                    }}
+                    className='h-4 cursor-pointer duration-300 ease-in-out hover:text-yellow-500'
+                  />
+                ) : ( 
+                  <ArrowPathIcon className="h-4 animate-spin text:red-500 dark:text:gray-100"/>
+                )
+                }
+                {
+                  statisticsData && <p className='text-gray-400 text-xs flex gap-1'>
+                    preço médio: {upOrDownPriceByMedia()}
+                  </p>
+                }
+              </div>
               <span className="text-xs font-thin">{ prod && `${prod.size}${prod.unitMeasure}` }</span>
               
             </div>

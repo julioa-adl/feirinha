@@ -50,6 +50,28 @@ const fetchFeirinhas = async () => {
   }
 }
 
+const getAllByProductId = async (productId: string | undefined) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl(`feirinha/statistic/${productId}`),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 const registerFeirinha = async ({ title, marketId, availableToSpend }: Ifeirinha) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
@@ -114,5 +136,6 @@ export {
   fetchFeirinhas,
   registerFeirinha,
   updateFeirinha,
-  deleteFeirinha
+  deleteFeirinha,
+  getAllByProductId
 }

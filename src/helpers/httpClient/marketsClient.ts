@@ -24,6 +24,27 @@ const fetchMarkets = async () => {
   }
 }
 
+const getMarketById = async (id: string | undefined) => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken)
+  try {
+    const res = await axios({
+      method: "get",
+      url: backendUrl(`market/${id}`),
+      data: {},
+      headers: {
+        Authorization: token
+      },
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    return false;
+  }
+}
+
 const registerMarket = async ({ name, address, neighborhood, city, state }: Imarket) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
   if (localToken === null) return false;
@@ -58,6 +79,7 @@ const updateMarket = async ({ id, name, address, neighborhood, city, state }: Im
 
 export {
   fetchMarkets,
+  getMarketById,
   registerMarket,
   updateMarket,
 }
