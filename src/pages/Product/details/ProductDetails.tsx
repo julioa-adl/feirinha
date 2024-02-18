@@ -49,7 +49,7 @@ const ProductDetails = () => {
   }
 
     return (
-        <div className="bg-white h-screen dark:bg-gray-900">
+        <div className="bg-white dark:bg-gray-900">
         <div className='fixed top-0 z-30 md:relative bg-white dark:bg-gray-900 p-5 flex items-center gap-1 w-full justify-center'>
             <Navigator />
             {
@@ -102,7 +102,7 @@ const ProductDetails = () => {
                         <div className='flex justify-between gap-1 w-full'>
                           <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
                             <p className='font-bold text-left text-sm md:text-md text-gray-500'>Preço Médio:</p>
-                            <p className='flex text-sm md:text-md gap-1 justify-center items-center'><CurrencyDollarIcon className='h-5 text-blue-500'/>{media}</p>
+                            <p className='flex text-sm md:text-md gap-1 justify-center items-center'><CurrencyDollarIcon className='h-5 text-blue-500'/>{media.toFixed(2)}</p>
                           </div>
 
                           <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
