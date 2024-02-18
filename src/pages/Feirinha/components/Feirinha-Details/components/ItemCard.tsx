@@ -51,11 +51,11 @@ const ItemCard = ({ listCart }:itemCard) => {
     const thisPrice = listCart && listCart.price;
     if (!media) return setupDownPrice(<span>Sem estatísticas</span>)
     if (Number(thisPrice) > Number(media)) {
-      return setupDownPrice(<><strong className='uppercase text-red-400'>R$ {media}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>)
+      return setupDownPrice(<><strong className='uppercase text-red-400'>R$ {media.toFixed(2)}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>)
     } if (Number(thisPrice) < Number(media)) {
-      return setupDownPrice(<><strong className='uppercase text-green-500'>R$ {media}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>)
+      return setupDownPrice(<><strong className='uppercase text-green-500'>R$ {media.toFixed(2)}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>)
     }
-    return setupDownPrice(<><strong className='uppercase text-yellow-500'>R$ {media}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
+    return setupDownPrice(<><strong className='uppercase text-yellow-500'>R$ {media.toFixed(2)}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
   }
 
   const { data: products } = useQuery('products', () => fetchProducts(), {retry: 10});
