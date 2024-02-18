@@ -39,10 +39,12 @@ const ItemCard = ({ listCart }:itemCard) => {
     if (
       Number(quantity) > 0 &&
       Number(price) > 0 ) {
-        return setDisable(false);
+        return (
+          setDisable(false)
+        );
       }
       return setDisable(true);
-    }, [editItem])
+  }, [editItem])
 
   const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
   const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
@@ -303,8 +305,9 @@ const ItemCard = ({ listCart }:itemCard) => {
         <div className='relative flex justify-center items-center'>
           <input
             type="checkbox"
-            className='form-checkbox h-8 w-8 cursor-pointer rounded-full border-blue-500 dark:border-blue-400 border-2 bg-gray-50 dark:bg-gray-800 text-green-600 focus:ring-green-200'
+            className={`${disable ? 'opacity-30' : 'opacity-100'} form-checkbox h-8 w-8 cursor-pointer rounded-full border-blue-500 dark:border-blue-400 border-2 bg-gray-50 dark:bg-gray-800 text-green-600 focus:ring-green-200`}
             id='buyed'
+            disabled={disable}
             checked={editItem.buyed}
             onChange={(e) => {
               handleChange(e);
