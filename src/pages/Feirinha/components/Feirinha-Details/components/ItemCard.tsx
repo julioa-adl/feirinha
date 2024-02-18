@@ -18,6 +18,7 @@ interface itemCard {
 const ItemCard = ({ listCart }:itemCard) => {
   const [disable, setDisable] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
+  const [upDownPrice, setupDownPrice] = useState(<span>X</span>);
   const [editItem, setEditItem] = useState<IlistCart>({
     id: listCart ? listCart._id : '',
     productId: listCart ? listCart.productId : '',
@@ -26,7 +27,7 @@ const ItemCard = ({ listCart }:itemCard) => {
     price: listCart ? listCart.price : 0,
     buyed: listCart ? listCart.buyed : false
   })
-
+  
   useEffect(() => {
     setShowEdit(false); // Resetar showEdit quando a prop listCart mudar
   }, [listCart]);
@@ -40,8 +41,22 @@ const ItemCard = ({ listCart }:itemCard) => {
       Number(price) > 0 ) {
         return setDisable(false);
       }
-    return setDisable(true);
-  }, [editItem])
+      return setDisable(true);
+    }, [editItem])
+
+  const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
+  const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
+
+  const upOrDownPriceByMedia = () => {
+    const thisPrice = listCart && listCart.price;
+    if (!media) return setupDownPrice(<span>Sem estatísticas</span>)
+    if (Number(thisPrice) > Number(media)) {
+      return setupDownPrice(<><strong className='uppercase text-red-400'>R$ {media}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>)
+    } if (Number(thisPrice) < Number(media)) {
+      return setupDownPrice(<><strong className='uppercase text-green-500'>R$ {media}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>)
+    }
+    return setupDownPrice(<><strong className='uppercase text-yellow-500'>R$ {media}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
+  }
 
   const { data: products } = useQuery('products', () => fetchProducts(), {retry: 10});
   const prod = products && products.find((p) => p._id === listCart.productId)
@@ -52,6 +67,7 @@ const ItemCard = ({ listCart }:itemCard) => {
   ))
   const handleUpdate = async () => {
     upItem();
+    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
   };
 
   const { mutate: upBuyed, isLoading: buyedLoading } = useMutation(() => updateItem(feirinhaId, editItem).then(
@@ -59,7 +75,12 @@ const ItemCard = ({ listCart }:itemCard) => {
   ))
   const handleUpdateBuyed = async () => {
     upBuyed();
+    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
   };
+
+  useEffect(() => {
+    upOrDownPriceByMedia()
+  }, [statisticsData, media, editItem, listCart])
 
   useEffect(() => {
     if (isSuccess) {
@@ -70,25 +91,6 @@ const ItemCard = ({ listCart }:itemCard) => {
   useEffect(() => {
     handleUpdateBuyed()
   }, [editItem.buyed])
-
-  const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
-  const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
-
-  const upOrDownPriceByMedia = () => {
-    const thisPrice = listCart && listCart.price;
-    if (!media) return <span>X</span>
-    if (Number(thisPrice) > Number(media)) {
-      return <><strong className='uppercase text-red-400'>R$ {media}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>
-    } if (Number(thisPrice) < Number(media)) {
-      return <><strong className='uppercase text-green-500'>R$ {media}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>
-    }
-    return <><strong className='uppercase text-yellow-500'>R$ {media}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>
-  }
-
-  setInterval(() => {
-    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
-  }, 5000)
-
 
   const { mutate: delItem, isLoading: deleteLoading } = useMutation(() => deleteItem(feirinhaId, listCart['_id']).then(
     () => querieClient.invalidateQueries('feirinhas')
@@ -167,7 +169,7 @@ const ItemCard = ({ listCart }:itemCard) => {
                 }
                 {
                   statisticsData && <p className='text-gray-400 text-xs flex gap-1'>
-                    {upOrDownPriceByMedia()}
+                    {upDownPrice}
                   </p>
                 }
               </div>

@@ -113,12 +113,12 @@ const ProductDetails = () => {
                           <div className='flex flex-col text-left items-start w-2/3 p-2 bg-gray-800 rounded-md'>
                             <div  className='flex flex-col text-left items-start'>
                               <p className='font-bold text-sm md:text-md text-gray-500'>Mercado + Barato:</p>
-                              <p className='flex text-xs gap-1 justify-center items-center'><ArrowDownCircleIcon className='h-5 text-green-500'/>{statisticsData && maisBarato && `${maisBarato.marketName} - ${maisBarato.marketNeighborhood} | ${maisBarato.marketState}`}</p>
+                              <div className='flex text-xs gap-1 justify-center items-center'><div className='w-4/12'><ArrowDownCircleIcon className='h-5 text-green-500'/></div>{statisticsData && maisBarato && `${maisBarato.marketName.slice(0, 20)} - ${maisBarato.marketNeighborhood.slice(0, 10)} | ${maisBarato.marketState}`}</div>
                             </div>
 
                             <div className='flex flex-col text-left items-start'>
                               <p className='font-bold text-sm md:text-md text-gray-500'>Mercado + Caro:</p>
-                              <p className='flex text-xs gap-1 justify-center items-center'><ArrowUpCircleIcon className='h-5 text-red-500'/>{statisticsData && maisCaro && `${maisCaro.marketName} - ${maisCaro.marketNeighborhood} | ${maisCaro.marketState}`}</p>
+                              <div className='flex text-xs gap-1 justify-center items-center'><div className='w-4/12'><ArrowUpCircleIcon className='h-5 text-red-500'/></div>{statisticsData && maisCaro && `${maisCaro.marketName.slice(0, 20)} - ${maisCaro.marketNeighborhood.slice(0, 10)} | ${maisCaro.marketState}`}</div>
                             </div>
                           </div>
                         </div>
