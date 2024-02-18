@@ -1,6 +1,7 @@
 import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
   PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon,
   ArrowTrendingUpIcon, ArrowTrendingDownIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
+import { PlayIcon } from '@heroicons/react/20/solid';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -302,7 +303,16 @@ const ItemCard = ({ listCart }:itemCard) => {
       </div>
       
       <div className='flex flex-col h-full justify-between items-end px-1 gap-2'>
-        <div className='relative flex justify-center items-center'>
+        <div className='group relative flex justify-center items-center'>
+          {
+            disable && (
+              <div className='text-xs p-1 flex-col opacity-0 hover:opacity-90 absolute w-40 z-50 right-3 rounded-sm bg-gray-600 text-gray-100'>
+                <span>Preencha quantidade</span>
+                <span className='flex'>e preço em <PencilSquareIcon className='h-3 ml-1'/></span>
+                <PlayIcon className='h-4 absolute text-gray-600 -right-2.5 top-3'/>
+              </div>
+            )
+          }
           <input
             type="checkbox"
             className={`${disable ? 'opacity-30' : 'opacity-100'} form-checkbox h-8 w-8 cursor-pointer rounded-full border-blue-500 dark:border-blue-400 border-2 bg-gray-50 dark:bg-gray-800 text-green-600 focus:ring-green-200`}
