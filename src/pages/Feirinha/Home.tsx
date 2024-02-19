@@ -20,6 +20,7 @@ const Home = () => {
   } = useContext(context);
 
   const { data, isLoading } = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
+  const dataReverse = data && data.slice(0).reverse()
 
   return(
     <div className="bg-white dark:bg-gray-900">
@@ -32,8 +33,9 @@ const Home = () => {
         <User />
       </div>
       <ul className='w-screem full py-20 md:py-0 lg:h-4/5 px-5 overflow-auto flex flex-col items-center gap-2 drop-shadow-lg'>
+        <CallFeirinhaButton />
         { !isLoading ? (
-            data.length >= 1 ? data.map((feira:Ifeirinha) => (
+            data.length >= 1 ? dataReverse.map((feira:Ifeirinha) => (
               <FeirinhaCard key={ `market-item-list-${feira._id}`} feirinha={feira}/>
             )) : <NotFindFeirinhas />
           ) : <SkeletonFeirinha />
@@ -48,7 +50,6 @@ const Home = () => {
           )
         )
       }
-      <CallFeirinhaButton />
       <MobileMenu />
     </div>
   )

@@ -100,17 +100,17 @@ const ProductDetails = () => {
                         </div>
                       ) : (
                         <div className='flex justify-between gap-1 w-full'>
-                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
+                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md'>
                             <p className='font-bold text-left text-sm md:text-md text-gray-500'>Preço Médio:</p>
                             <p className='flex text-sm md:text-md gap-1 justify-center items-center'><CurrencyDollarIcon className='h-5 text-blue-500'/>{media.toFixed(2)}</p>
                           </div>
 
-                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-800 rounded-md'>
+                          <div className='flex flex-col items-center gap-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md'>
                             <p className='font-bold text-left text-sm md:text-md text-gray-500'>Total de Feirinhas:</p>
                             <p className='flex text-sm md:text-md gap-1 justify-center items-center'><ArrowTrendingUpIcon className='h-5 text-yellow-500'/>{totalVendas}</p>
                           </div>
 
-                          <div className='flex flex-col text-left items-start w-2/3 p-2 bg-gray-800 rounded-md'>
+                          <div className='flex flex-col text-left items-start w-2/3 p-2 bg-gray-100 dark:bg-gray-800 rounded-md'>
                             <div  className='flex flex-col text-left items-start'>
                               <p className='font-bold text-sm md:text-md text-gray-500'>Mercado + Barato:</p>
                               <div className='flex text-xs gap-1 justify-center items-center'><div className='w-4/12'><ArrowDownCircleIcon className='h-5 text-green-500'/></div>{statisticsData && maisBarato && `${maisBarato.marketName.slice(0, 20)} - ${maisBarato.marketNeighborhood.slice(0, 10)} | ${maisBarato.marketState}`}</div>
