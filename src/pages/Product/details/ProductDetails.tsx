@@ -3,18 +3,23 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { ArchiveBoxXMarkIcon, ChartPieIcon, DocumentDuplicateIcon, CheckCircleIcon, CurrencyDollarIcon,
   ArrowTrendingUpIcon, ArrowUpCircleIcon, ArrowDownCircleIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/20/solid";
 import MobileMenu from "../../../general-components/MobileMenu";
 import Navigator from "../../../general-components/Navigator";
 import User from '../../../general-components/User';
 import { getProductById } from '../../../helpers/httpClient/productClient';
 import { getAllByProductId } from '../../../helpers/httpClient/feirinhaClient';
+import { getRecommendations } from '../../../helpers/httpClient/recommendationClient';
 
 const ProductDetails = () => {
   const [copyIcon, setCopyIcon] = useState(<DocumentDuplicateIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' />)
 
   const { id } = useParams();
 
-  const { data: itemData, isLoading: itemLoading} = useQuery('product-detail', () => getProductById(id), {retry: 10});
+  const { data: itemData, isLoading: itemLoading} = useQuery(`product-detail-${id}`, () => getProductById(id), {retry: 10});
+
+  const { data: recommendationsData } = useQuery(`recommendations-detail-${id}`, () => getRecommendations(id), {retry: 10});
+  const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
 
   const { data: statisticsData, isLoading: statisticsLoading } = useQuery(`statistics-details-${id}`, () => getAllByProductId(id), {retry: 10});
   const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
@@ -84,6 +89,13 @@ const ProductDetails = () => {
                         <p onClick={() => { copyToClipboard(itemData.code); copyEffect() }} className='flex items-center gap-1 rounded-full cursor-pointer px-5 text-left w-full bg-white dark:bg-gray-800 group'><strong className='text-gray-500'>CodBar: </strong>{itemData && itemData.code } {copyIcon} </p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Dimensões: </strong>{itemData && `${itemData.size} / ${itemData.unitMeasure}`}</p>
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Unidade de venda: </strong>{itemData && itemData.unitSelling}</p>
+                    </div>
+                    <div className='flex'>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 0 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 1 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 2 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 3 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 4 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
                     </div>
                     {
                       statisticsData && maisCaro && maisBarato ? statisticsLoading ? (
