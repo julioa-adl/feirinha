@@ -53,10 +53,8 @@ const FeirinhaForm = ({ feirinha, typeUse }: MarketFormProps) => {
   }, [selectedMrkt])
 
   const { data } = useQuery('markets', () => fetchMarkets(), {retry: 10});
-  const marketsSort = data && data.sort((a,b) => {
-    if(a.name < b.name) return -1;
-    if(a.name > b.name) return 1;
-    return 0;
+  const marketsSort = data && data.sort(function(a,b) {
+    return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
