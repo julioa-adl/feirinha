@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Iuser } from "../../interfaces/IUser";
+import decode from '../jwtDecode';
 
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
 
@@ -77,9 +78,19 @@ const revalidateToken = async (): Promise<boolean> => {
   }
 };
 
+const myUser = () => {
+  const localToken = localStorage.getItem('userTokenFeirinha');
+  if (localToken === null) return false;
+  const token = JSON.parse(localToken);
+  const userName = decode(token).data['name'];
+
+  return userName
+}
+
 export {
   loginUser,
   registUser,
   revalidateToken,
-  validateEmail
+  validateEmail,
+  myUser
 }

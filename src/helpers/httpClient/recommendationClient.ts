@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { IRecommendation } from '../../interfaces/IRecommendation';
 import decode from '../jwtDecode';
 
 const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
@@ -25,7 +24,7 @@ const getRecommendations = async (productId: string | undefined) => {
   }
 }
 
-const postRecommendation = async ({ productId, rating, comment }: IRecommendation) => {
+const postRecommendation = async ({ productId, rating, comment }) => {
     const localToken = localStorage.getItem('userTokenFeirinha');
     if (localToken === null) return false;
     const token = JSON.parse(localToken);
@@ -40,11 +39,14 @@ const postRecommendation = async ({ productId, rating, comment }: IRecommendatio
     const year = today.getFullYear().toString().slice(-2);
   
     const formattedDate = `${month}-${day}-${year}`;
+
+    const postThis = { userId, userName, productId, rating, comment, date: formattedDate }
+    console.log(postThis)
   
     const res = await axios({
       method: "post",
       url: backendUrl('recommendation'),
-      data: { userId, userName, productId, rating, comment, date: formattedDate },
+      data: postThis,
       headers: {
         Authorization: token || ''
       },
@@ -69,8 +71,19 @@ const postRecommendation = async ({ productId, rating, comment }: IRecommendatio
     return res;
   }
 
+  const thisIsMyComment = (commentUserId) => {
+    const localToken = localStorage.getItem('userTokenFeirinha');
+    if (localToken === null) return false;
+    const token = JSON.parse(localToken);
+    const userId = decode(token).data['_id'];
+
+    if (commentUserId === userId) return true;
+    return false
+  }
+
 export {
     getRecommendations,
     postRecommendation,
-    deleteRecomendation
+    deleteRecomendation,
+    thisIsMyComment
 }
