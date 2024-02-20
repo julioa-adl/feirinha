@@ -22,6 +22,11 @@ const Register = () => {
   const [disableVC, setDisableVC] = useState(true);
   const [error, setError] = useState(false);
 
+
+  const errorNameLength = values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 1 || values.name.length === 0;
+  console.log(errorNameLength)
+
+
   const { email } = values;
   const { mutate, isLoading, isError, error: setCodeError } = useMutation(() => validateEmail(email)
   )
@@ -106,7 +111,7 @@ const Register = () => {
             value={ values.name }
             onChange={ handleChange }
             placeholder="Ex. João Silva"
-            className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`focus:ring-0 ${errorNameLength ? 'border-2 border-transparent' : 'border-2 focus:border-red-500 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className='relative w-80'>
           <label
