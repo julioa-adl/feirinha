@@ -10,6 +10,7 @@ import User from '../../../general-components/User';
 import { getProductById } from '../../../helpers/httpClient/productClient';
 import { getAllByProductId } from '../../../helpers/httpClient/feirinhaClient';
 import { getRecommendations } from '../../../helpers/httpClient/recommendationClient';
+import RecommendationCard from './components/RecommendationsCard';
 
 const ProductDetails = () => {
   const [copyIcon, setCopyIcon] = useState(<DocumentDuplicateIcon className='h-4 group-hover:text-green-400 duration-300 ease-in-out' />)
@@ -71,7 +72,7 @@ const ProductDetails = () => {
             <User />
         </div>
         <div className="dark:text-gray-100 text-gray-900 text-center w-screem pt-20 pb-36 md:py-0 lg:h-4/5 md:px-40 px-5 overflow-auto flex
-        flex-col items-center gap-2 drop-shadow-lg">
+                          flex-col items-center gap-2 drop-shadow-lg">
             <div className='w-full md:h-1/2 flex flex-col md:flex-row justify-center gap-5'>
                 <div className={`md:w-1/3 flex justify-center items-center h-52 md:h-full overflow-hidden bg-white rounded-2xl`}>
                     { itemData ? (
@@ -91,11 +92,11 @@ const ProductDetails = () => {
                         <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Unidade de venda: </strong>{itemData && itemData.unitSelling}</p>
                     </div>
                     <div className='flex'>
-                      <StarIcon className={`h-4 ${mediaRecommendation > 0 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
-                      <StarIcon className={`h-4 ${mediaRecommendation > 1 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
-                      <StarIcon className={`h-4 ${mediaRecommendation > 2 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
-                      <StarIcon className={`h-4 ${mediaRecommendation > 3 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
-                      <StarIcon className={`h-4 ${mediaRecommendation > 4 ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 0 ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 1 ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 2 ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 3 ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-800'}`}/>
+                      <StarIcon className={`h-4 ${mediaRecommendation > 4 ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-800'}`}/>
                     </div>
                     {
                       statisticsData && maisCaro && maisBarato ? statisticsLoading ? (
@@ -134,10 +135,20 @@ const ProductDetails = () => {
                             </div>
                           </div>
                         </div>
-                      ) : (<p className='w-full h-full p-2 rounded-md bg-gray-800 flex items-center justify-center gap-1 font-bold text-gray-600'><ArrowTrendingUpIcon className='h-5 text-gray-600'/> Sem Estastisticas de Compras!</p>)
+                      ) : (<p className='w-full h-full p-2 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center gap-1 font-bold text-gray-500'><ArrowTrendingUpIcon className='h-5 text-gray-600'/> Sem Estastisticas de Compras!</p>)
                     }
                     
                 </div>
+            </div>
+            <div className='w-full flex justify-start'>
+              <ul className='flex gap2 w-full'>
+                {
+                  recommendationsData && recommendationsData.length > 0 ? (
+                    recommendationsData.map((r) => (
+                    <RecommendationCard recommendation={r}/>
+                  ))) : <p>Sem recomendações</p>
+                }
+              </ul>
             </div>
         </div>
         <MobileMenu />
