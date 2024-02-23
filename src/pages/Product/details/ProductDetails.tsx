@@ -19,7 +19,6 @@ const ProductDetails = () => {
   const { id } = useParams();
 
   const { data: itemData, isLoading: itemLoading} = useQuery(`product-detail-${id}`, () => getProductById(id));
-  console.log(itemData)
 
   const { data: recommendationsData } = useQuery(`recommendations-detail-${id}`, () => getRecommendations(id));
   const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
@@ -91,6 +90,7 @@ const ProductDetails = () => {
                 <p onClick={() => { copyToClipboard(itemData.code); copyEffect() }} className='flex items-center gap-1 rounded-full cursor-pointer px-5 text-left w-full bg-white dark:bg-gray-800 group'><strong className='text-gray-500'>CodBar: </strong>{itemData && itemData.code } {copyIcon} </p>
                 <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Dimensões: </strong>{itemData && `${itemData.size} / ${itemData.unitMeasure}`}</p>
                 <p className='rounded-full px-5 text-left w-full bg-white dark:bg-gray-800'><strong className='text-gray-500'>Unidade de venda: </strong>{itemData && itemData.unitSelling}</p>
+                <p className='text-left w-full text-xs text-gray-500'>Última alteração: {itemData && itemData.lastChangeName || ''}</p>
             </div>
 
             <div>

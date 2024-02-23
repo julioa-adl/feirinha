@@ -56,9 +56,10 @@ const registerProduct = async ({ name, subName, manufacturer, unitSelling, categ
     if (localToken === null) return false;
     const token = JSON.parse(localToken);
     const userId = decode(token).data['_id'];
+    const username = decode(token).data['name'];
 
-    const dataImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId };
-    const dataWithoutImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId }
+    const dataImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId, lastChangeName: username };
+    const dataWithoutImg = { name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId, lastChangeName: username }
 
     const res = await axios({
       method: "post",
@@ -86,9 +87,10 @@ const updateProduct = async ({ id, name, subName, manufacturer, unitSelling, cat
   if (localToken === null) return false;
   const token = JSON.parse(localToken);
   const userId = decode(token).data['_id'];
+  const username = decode(token).data['name'];
 
-  const dataImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId };
-  const dataWithoutImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId }
+  const dataImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, image: urlImgBB, lastChange: userId, lastChangeName: username };
+  const dataWithoutImg = { id, name, subName, manufacturer, unitSelling, category, code, unitMeasure, size, lastChange: userId, lastChangeName: username }
   
   const res = await axios({
     method: "put",
