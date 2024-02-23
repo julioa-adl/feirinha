@@ -41,7 +41,6 @@ const postRecommendation = async ({ productId, rating, comment }) => {
     const formattedDate = `${month}-${day}-${year}`;
 
     const postThis = { userId, userName, productId, rating, comment, date: formattedDate }
-    console.log(postThis)
   
     const res = await axios({
       method: "post",

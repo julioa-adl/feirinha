@@ -19,7 +19,7 @@ const Products = () => {
     showProd,
   } = useContext(context);
   
-  const { data, isLoading } = useQuery('products', () => fetchProducts(), {retry: 10});
+  const { data, isLoading } = useQuery('products', () => fetchProducts());
   
   const productsSort = data && data.sort((a,b) => {
     if(a.name < b.name) return -1;

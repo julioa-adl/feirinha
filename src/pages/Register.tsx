@@ -22,11 +22,6 @@ const Register = () => {
   const [disableVC, setDisableVC] = useState(true);
   const [error, setError] = useState(false);
 
-
-  const errorNameLength = values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 1 || values.name.length === 0;
-  console.log(errorNameLength)
-
-
   const { email } = values;
   const { mutate, isLoading, isError, error: setCodeError } = useMutation(() => validateEmail(email)
   )
@@ -57,13 +52,15 @@ const Register = () => {
     }
   };
 
-  const emailIsValid = values.email.match(/^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+\.[a-zA-Z0-9_.+-]+$/gm);
+  const errorNameLength = values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 1 || values.name.length === 0;
+  const emailIsValid = values.email.match(/^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+\.[a-zA-Z0-9_.+-]+$/gm) || values.email.length === 0;
+  const isValirPassword = values.password.length > 5 || values.password.length === 0;
   useEffect(() => {
     if (
       values.email.length > 0 &&
-      emailIsValid &&
+      values.email.match(/^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+\.[a-zA-Z0-9_.+-]+$/gm) &&
       values.password.length > 5 &&
-      values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 3 &&
+      values.name.split(' ').length >= 2 && values.name.split(' ')[1] && values.name.split(' ')[1].length >= 1 &&
       values.verificationCode.length === 6 &&
       terms === true) {
       return setDisable(false);
@@ -125,7 +122,7 @@ const Register = () => {
             value={ values.email }
             onChange={ handleChange }
             placeholder="Digite seu email"
-            className={`${error && 'border-solid border-2 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`focus:ring-0 ${emailIsValid ? 'border-2 border-transparent' : 'border-2 focus:border-red-500 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         <div className="relative w-80">
           <label
@@ -139,7 +136,7 @@ const Register = () => {
             value={ values.password }
             onChange={ handleChange }
             placeholder="mínimo 6 caracteres"
-            className={`rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
+            className={`focus:ring-0 ${isValirPassword ? 'border-2 border-transparent' : 'border-2 focus:border-red-500 border-red-500'} rounded-full px-8 w-80 text-center dark:bg-gray-600 dark:text-gray-100`}/>
         </div>
         
         <div className="relative w-80">
