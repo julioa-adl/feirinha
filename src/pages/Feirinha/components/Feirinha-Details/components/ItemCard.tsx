@@ -6,12 +6,12 @@ import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProductById } from '../../../../../helpers/httpClient/productClient';
+// import { getProductById } from '../../../../../helpers/httpClient/productClient';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
 import { getAllByProductId } from '../../../../../helpers/httpClient/feirinhaClient';
 import { getRecommendations } from '../../../../../helpers/httpClient/recommendationClient';
-// import { fetchAllFeirinhas } from '../../../../../helpers/httpClient/feirinhaClient';
+import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 
 interface itemCard {
   listCart: IlistCart,
@@ -62,7 +62,9 @@ const ItemCard = ({ listCart }:itemCard) => {
     return setupDownPrice(<><strong className='uppercase font-light text-yellow-500'>R$ {media.toFixed(2)}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
   }
 
-  const { data: prod } = useQuery(`product-detail-${listCart.productId}`, () => getProductById(listCart.productId));
+  // const { data: prod } = useQuery(`product-detail-${listCart.productId}`, () => getProductById(listCart.productId));
+  const { data: products } = useQuery('products', () => fetchProducts());
+  const prod = products && products.find((p) => p._id === listCart.productId)
 
   const querieClient = useQueryClient();
   const { mutate: upItem, isLoading: updateLoading, isSuccess } = useMutation(() => updateItem(feirinhaId, editItem).then(
