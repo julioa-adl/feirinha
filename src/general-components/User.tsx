@@ -16,11 +16,11 @@ const User = () => {
       <div className=""><ToggleTheme /></div>
       <div
         className="group flex cursor-pointer w-10 h-10 md:w-12 md:h-12 bg-gray-100 dark:bg-gray-700 justify-center items-center m-0 rounded-full"
-        
+        onClick={logout}
       >
         <ArrowRightOnRectangleIcon
           className="h-5 text-gray-900 dark:text-gray-100 group-hover:text-orange-600 group-dark:hover:text-orange-400 cursor-pointer ease-in-out duration-300"
-          onClick={logout}/>
+          />
       </div>
     </div>
   );
