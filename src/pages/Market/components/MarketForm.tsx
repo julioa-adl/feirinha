@@ -170,10 +170,10 @@ const MarketForm = ({ market, typeUse }: MarketFormProps) => {
 
         <button
               type="submit"
-              disabled={ disable }
+              disabled={ disable || registerLoading }
               className={`flex justify-center text-center items-center font-medium
               rounded-full text-sm px-3 py-2 w-full text-white mt-3
-              ${ disable ? 'bg-blue-400 opacity-50'
+              ${ disable || registerLoading ? 'bg-blue-400 opacity-50'
               : 'bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-1 dark:bg-blue-600 dark:hover:bg-blue-700'}`}
               onClick={ typeUse === 'Cadastrar' ? ( handleRegistered ) : ( handleUpdate ) }
             >
