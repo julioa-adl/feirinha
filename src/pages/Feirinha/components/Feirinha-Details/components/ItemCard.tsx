@@ -1,7 +1,7 @@
 import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
   PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon,
   ArrowTrendingUpIcon, ArrowTrendingDownIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
-import { PlayIcon, StarIcon } from '@heroicons/react/20/solid';
+import { PlayIcon, /*StarIcon*/ } from '@heroicons/react/20/solid';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
 import { getAllByProductId } from '../../../../../helpers/httpClient/feirinhaClient';
-import { getRecommendations } from '../../../../../helpers/httpClient/recommendationClient';
+// import { getRecommendations } from '../../../../../helpers/httpClient/recommendationClient';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 
 interface itemCard {
@@ -83,8 +83,8 @@ const ItemCard = ({ listCart }:itemCard) => {
     querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
   };
 
-  const { data: recommendationsData } = useQuery(`recommendations-detail-${editItem.productId}`, () => getRecommendations(editItem.productId));
-  const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
+  // const { data: recommendationsData } = useQuery(`recommendations-detail-${editItem.productId}`, () => getRecommendations(editItem.productId));
+  // const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
 
   useEffect(() => {
     upOrDownPriceByMedia()
@@ -156,13 +156,13 @@ const ItemCard = ({ listCart }:itemCard) => {
         onClick={() => goToProductDetails(prod._id) }
       >
         {prod && prod.image ? (<img src={prod.image} alt={prod.name} className='scale-110 hover:scale-125 cursor-pointer duration-300 ease-in-out'/>) : <ArchiveBoxXMarkIcon className="h-10 text-gray-600 opacity-20"/>}
-        <div className='flex absolute bottom-1 rounded-md shadow-md shadow-gray-500 bg-gray-900 bg-opacity-90'>
+        {/* <div className='flex absolute bottom-1 rounded-md shadow-md shadow-gray-500 bg-gray-900 bg-opacity-90'>
           <StarIcon className={`h-2 ${mediaRecommendation && mediaRecommendation > 0 ? 'text-yellow-300' : 'text-gray-400'}`}/>
           <StarIcon className={`h-2 ${mediaRecommendation && mediaRecommendation > 1 ? 'text-yellow-300' : 'text-gray-400'}`}/>
           <StarIcon className={`h-2 ${mediaRecommendation && mediaRecommendation > 2 ? 'text-yellow-300' : 'text-gray-400'}`}/>
           <StarIcon className={`h-2 ${mediaRecommendation && mediaRecommendation > 3 ? 'text-yellow-300' : 'text-gray-400'}`}/>
           <StarIcon className={`h-2 ${mediaRecommendation && mediaRecommendation > 4 ? 'text-yellow-300' : 'text-gray-400'}`}/>
-        </div>
+        </div> */}
       </div>
       <div className="w-3/5 md:w-full h-full">
         <div className="flex flex-row items-start justify-between h-full font-regular text-xs md:text-base lowercase">
