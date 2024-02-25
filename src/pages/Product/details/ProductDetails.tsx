@@ -18,12 +18,12 @@ const ProductDetails = () => {
 
   const { id } = useParams();
 
-  const { data: itemData, isLoading: itemLoading} = useQuery(`product-detail-${id}`, () => getProductById(id));
+  const { data: itemData, isLoading: itemLoading} = useQuery(['product', id], () => getProductById(id));
 
-  const { data: recommendationsData } = useQuery(`recommendations-detail-${id}`, () => getRecommendations(id));
+  const { data: recommendationsData } = useQuery(['recommendations', id], () => getRecommendations(id));
   const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
 
-  const { data: statisticsData, isLoading: statisticsLoading } = useQuery(`statistics-details-${id}`, () => getAllByProductId(id));
+  const { data: statisticsData, isLoading: statisticsLoading } = useQuery(['statistics', id], () => getAllByProductId(id));
   const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
   const totalVendas = statisticsData && statisticsData.length;
 

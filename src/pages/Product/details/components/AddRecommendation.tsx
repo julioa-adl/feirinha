@@ -21,7 +21,7 @@ const AddRecommendation = ({ productId }) => {
 
     const querieClient = useQueryClient();
     const { mutate: delRecommendation, isLoading: deleteLoading } = useMutation(() => postRecommendation(addRecommend).then(
-        () => querieClient.invalidateQueries(`recommendations-detail-${productId}`)
+        () => querieClient.invalidateQueries(['recommendations', productId])
     ))
     const handleDelete = async () => {
         delRecommendation();
