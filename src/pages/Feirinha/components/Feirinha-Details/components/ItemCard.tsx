@@ -1,6 +1,6 @@
 import { ArchiveBoxXMarkIcon, ArrowPathIcon, MinusIcon, PlusIcon, TrashIcon,
   PlusCircleIcon, CurrencyDollarIcon, PencilSquareIcon, ArrowUpTrayIcon, BanknotesIcon,
-  ArrowTrendingUpIcon, ArrowTrendingDownIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
+  /*ArrowTrendingUpIcon, ArrowTrendingDownIcon, ArrowLongRightIcon*/ } from '@heroicons/react/24/outline';
 import { PlayIcon, /*StarIcon*/ } from '@heroicons/react/20/solid';
 import { IlistCart } from "../../../../../interfaces/IFeirinha";
 import { deleteItem, updateItem } from '../../../../../helpers/httpClient/cartClient';
@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import { getProductById } from '../../../../../helpers/httpClient/productClient';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Loading from '../../../../../general-components/Loading';
-import { getAllByProductId } from '../../../../../helpers/httpClient/feirinhaClient';
+// import { getAllByProductId } from '../../../../../helpers/httpClient/feirinhaClient';
 // import { getRecommendations } from '../../../../../helpers/httpClient/recommendationClient';
 import { fetchProducts } from '../../../../../helpers/httpClient/productClient';
 
@@ -20,7 +20,7 @@ interface itemCard {
 const ItemCard = ({ listCart }:itemCard) => {
   const [disable, setDisable] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
-  const [upDownPrice, setupDownPrice] = useState(<span>X</span>);
+  // const [upDownPrice, setupDownPrice] = useState(<span>X</span>);
   const [editItem, setEditItem] = useState<IlistCart>({
     id: listCart ? listCart._id : '',
     productId: listCart ? listCart.productId : '',
@@ -48,19 +48,19 @@ const ItemCard = ({ listCart }:itemCard) => {
       return setDisable(true);
   }, [editItem])
 
-  const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
-  const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
+  // const { data: statisticsData } = useQuery(`statistics-${listCart['_id']}`, () => getAllByProductId(listCart['productId']), {retry: 10});
+  // const media = statisticsData && statisticsData.reduce((acc, cur) => acc + Number(cur.price), 0) / statisticsData.length;
 
-  const upOrDownPriceByMedia = () => {
-    const thisPrice = listCart && listCart.price;
-    if (!media) return setupDownPrice(<span>Sem estatísticas</span>)
-    if (Number(thisPrice) > Number(media)) {
-      return setupDownPrice(<><strong className='uppercase font-light text-red-400'>R$ {media.toFixed(2)}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>)
-    } if (Number(thisPrice) < Number(media)) {
-      return setupDownPrice(<><strong className='uppercase font-light text-green-500'>R$ {media.toFixed(2)}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>)
-    }
-    return setupDownPrice(<><strong className='uppercase font-light text-yellow-500'>R$ {media.toFixed(2)}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
-  }
+  // const upOrDownPriceByMedia = () => {
+  //   const thisPrice = listCart && listCart.price;
+  //   if (!media) return setupDownPrice(<span>Sem estatísticas</span>)
+  //   if (Number(thisPrice) > Number(media)) {
+  //     return setupDownPrice(<><strong className='uppercase font-light text-red-400'>R$ {media.toFixed(2)}</strong><ArrowTrendingUpIcon className='h-4 text-red-400'/></>)
+  //   } if (Number(thisPrice) < Number(media)) {
+  //     return setupDownPrice(<><strong className='uppercase font-light text-green-500'>R$ {media.toFixed(2)}</strong><ArrowTrendingDownIcon className='h-4 text-green-500'/></>)
+  //   }
+  //   return setupDownPrice(<><strong className='uppercase font-light text-yellow-500'>R$ {media.toFixed(2)}</strong><ArrowLongRightIcon className='h-4 text-yellow-500'/></>)
+  // }
 
   // const { data: prod } = useQuery(`product-detail-${listCart.productId}`, () => getProductById(listCart.productId));
   const { data: products } = useQuery('products', () => fetchProducts());
@@ -86,9 +86,9 @@ const ItemCard = ({ listCart }:itemCard) => {
   // const { data: recommendationsData } = useQuery(`recommendations-detail-${editItem.productId}`, () => getRecommendations(editItem.productId));
   // const mediaRecommendation = recommendationsData && recommendationsData.reduce((acc, cur) => acc + Number(cur.rating), 0) / recommendationsData.length;
 
-  useEffect(() => {
-    upOrDownPriceByMedia()
-  }, [statisticsData, media, editItem, listCart])
+  // useEffect(() => {
+  //   upOrDownPriceByMedia()
+  // }, [statisticsData, media, editItem, listCart])
 
   useEffect(() => {
     if (isSuccess) {
@@ -182,11 +182,11 @@ const ItemCard = ({ listCart }:itemCard) => {
                   <ArrowPathIcon className="h-4 animate-spin text:red-500 dark:text:gray-100"/>
                 )
                 }
-                {
+                {/* {
                   statisticsData && <p className='text-gray-400 text-xs flex gap-1'>
                     {upDownPrice}
                   </p>
-                }
+                } */}
               </div>
               <span className="text-xs font-thin">{ prod && `${prod.size}${prod.unitMeasure}` }</span>
               
