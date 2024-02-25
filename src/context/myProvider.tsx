@@ -1,11 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import MyContext from './myContext';
 import decode from '../helpers/jwtDecode';
-import { fetchAllFeirinhas, fetchFeirinhas } from "../helpers/httpClient/feirinhaClient";
-import { fetchProducts } from '../helpers/httpClient/productClient';
-import { fetchMarkets } from '../helpers/httpClient/marketsClient';
 import { Iprod } from '../interfaces/IProduct';
-import { useQuery } from 'react-query';
 
 interface AuxProps  { 
   children: React.ReactNode
@@ -39,26 +35,20 @@ function Provider({ children }:AuxProps) {
     setTokenDecode(res)
   }, [token])
 
-  const products = useQuery('products', () => fetchProducts(), {retry: 10});
-  const markets = useQuery('markets', () => fetchMarkets(), {retry: 10});
-  const feirinhas = useQuery('feirinhas', () => fetchFeirinhas(), {retry: 10});
-  const allFeirinhas = useQuery('allFeirinhas', () => fetchAllFeirinhas(), {retry: 10});
-
   const contextValue = useMemo(() => ({
-    tokenDecode,
-    products, showProd, setShowProd, setEditProd, editProd, //produts context
+    tokenDecode, showProd, setShowProd, setEditProd, editProd, //produts context
     token, codeScanner, setCodeScanner,
     setToken,
     registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
-    markets, showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
-    allFeirinhas, feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+    showMarket, setShowMarket, editMrkt, setEditMrkt, //market context
+    showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
     showItem, setShowItem, editItem, setEditItem,
   }), [tokenDecode,
-      products, showProd, editProd, codeScanner, setCodeScanner,
+      showProd, editProd, codeScanner, setCodeScanner,
       token,
       registerNewProdInAddItemToCart, setRegisterNewProdInAddItemToCart,
-      markets, setShowMarket, showMarket, editMrkt, setEditMrkt,
-      allFeirinhas, feirinhas, showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
+      setShowMarket, showMarket, editMrkt, setEditMrkt,
+      showFeirinha, setShowFeirinha, editFeirinha, setEditFeirinha,
       showItem, setShowItem, editItem, setEditItem,
       ]);
 

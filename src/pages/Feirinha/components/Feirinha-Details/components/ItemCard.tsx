@@ -63,7 +63,7 @@ const ItemCard = ({ listCart }:itemCard) => {
   // }
 
   // const { data: prod } = useQuery(`product-detail-${listCart.productId}`, () => getProductById(listCart.productId));
-  const { data: products } = useQuery('products', () => fetchProducts());
+  const { data: products } = useQuery('products', () => fetchProducts(), {retry: 10});
   const prod = products && products.find((p) => p._id === listCart.productId)
 
   const querieClient = useQueryClient();
@@ -72,7 +72,7 @@ const ItemCard = ({ listCart }:itemCard) => {
   ))
   const handleUpdate = async () => {
     upItem();
-    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
+    // querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
   };
 
   const { mutate: upBuyed, isLoading: buyedLoading } = useMutation(() => updateItem(feirinhaId, editItem).then(
@@ -80,7 +80,7 @@ const ItemCard = ({ listCart }:itemCard) => {
   ))
   const handleUpdateBuyed = async () => {
     upBuyed();
-    querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
+    // querieClient.invalidateQueries(`statistics-${listCart['_id']}`)
   };
 
   // const { data: recommendationsData } = useQuery(`recommendations-detail-${editItem.productId}`, () => getRecommendations(editItem.productId));
