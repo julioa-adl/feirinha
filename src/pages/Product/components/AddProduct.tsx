@@ -5,6 +5,8 @@ import { Iprod } from "../../../interfaces/IProduct";
 import ProductForm from "./ProductForm";
 import AlredyRegistered from "../../../general-components/alerts/AlredyRegistered";
 import BarCodeScanner from "../../../general-components/scanner/BarCodeScanner";
+import { useQuery } from "react-query";
+import { fetchProducts } from "../../../helpers/httpClient/productClient";
 
 const AddProduct = () => {
   const [isProductRegistered, setIsproductRegistered] = useState<boolean | React.ReactNode>(false);
@@ -12,10 +14,9 @@ const AddProduct = () => {
 
   const {
     setShowProd,
-    products,
   } = useContext(context);
-
-  const { data } = products;
+  
+  const { data } = useQuery('products', () => fetchProducts());
 
   useEffect(() => {
     const error = <AlredyRegistered />
