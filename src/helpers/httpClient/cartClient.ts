@@ -3,7 +3,7 @@ import decode from '../jwtDecode';
 
 import { IlistCart } from '../../interfaces/IFeirinha';
 
-const backendUrl = (endpoint: string) => `https://feirinha-beckend.vercel.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 const registerItem = async (feirinhaId: string, newItem: IlistCart) => {
   const localToken = localStorage.getItem('userTokenFeirinha');
