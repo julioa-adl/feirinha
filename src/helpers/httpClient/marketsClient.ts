@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Imarket } from '../../interfaces/IMarket';
 
-const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 const fetchMarkets = async () => {
   const localToken = localStorage.getItem('userTokenFeirinha');

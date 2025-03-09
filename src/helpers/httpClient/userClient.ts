@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Iuser } from "../../interfaces/IUser";
 import decode from '../jwtDecode';
 
-const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 const loginUser = async ({ email, password }: Iuser) => {
   try {

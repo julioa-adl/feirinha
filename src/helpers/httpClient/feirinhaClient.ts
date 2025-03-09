@@ -3,7 +3,7 @@ import decode from '../jwtDecode';
 
 import { Ifeirinha } from '../../interfaces/IFeirinha';
 
-const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 const fetchAllFeirinhas = async () => {
   const localToken = localStorage.getItem('userTokenFeirinha');

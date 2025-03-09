@@ -1,7 +1,7 @@
 import axios from 'axios';
 import decode from '../jwtDecode';
 
-const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 const getRecommendations = async (productId: string | undefined) => {
   const localToken = localStorage.getItem('userTokenFeirinha');

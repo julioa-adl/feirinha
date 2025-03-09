@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Iprod } from '../../interfaces/IProduct';
 import decode from '../jwtDecode';
 
-const backendUrl = (endpoint: string) => `feirinha-beckend-production.up.railway.app/${endpoint}`;
+const backendUrl = (endpoint: string) => `https://feirinha-beckend-production.up.railway.app/${endpoint}`;
 
 async function fetchProducts() {
   const localToken = localStorage.getItem('userTokenFeirinha');
